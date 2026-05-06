@@ -628,7 +628,7 @@ export function GallerySection() {
     <section
       id="gallery"
       ref={sectionRef}
-      className="relative bg-gradient-to-b from-white via-gray-50 to-white h-screen lg:min-h-screen overflow-y-auto lg:overflow-hidden lg:snap-center flex items-center py-6 lg:py-32"
+      className="relative bg-gradient-to-b from-white via-gray-50 to-white h-screen lg:min-h-screen overflow-y-auto lg:overflow-hidden lg:snap-center flex items-center py-6 lg:pt-32 lg:pb-48"
       onMouseMove={handleSectionMouseMove}
     >
       {/* Animated background elements */}
@@ -885,7 +885,7 @@ export function GallerySection() {
       <div className="relative max-w-7xl mx-auto px-4 lg:px-16 w-full z-10">
         {/* Header - Matching Portfolio Section Style */}
         <motion.div
-          className="text-center mb-6 lg:mb-40 mt-0 lg:mt-3"
+          className="text-center mb-6 lg:mb-16 mt-0 lg:mt-0"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -953,35 +953,35 @@ export function GallerySection() {
                   opacity = 1;
                   zIndex = 30;
                   xOffset = 0;
-                  width = 800; // Large center image
+                  width = 550; // Reduced from 800 for small laptops
                   height = 500;
                 } else if (offset === -1) {
                   scale = 0.75;
                   opacity = 0.6;
                   zIndex = 20;
-                  xOffset = -400; // More comfortable spacing on left
-                  width = 500;
+                  xOffset = -320; // Reduced spacing for small screens
+                  width = 380; // Reduced from 500
                   height = 400;
                 } else if (offset === 1) {
                   scale = 0.75;
                   opacity = 0.7;
                   zIndex = 20;
-                  xOffset = 400; // More comfortable spacing on right
-                  width = 500;
+                  xOffset = 320; // Reduced spacing for small screens
+                  width = 380; // Reduced from 500
                   height = 400;
                 } else if (offset === -2) {
                   scale = 0.5;
                   opacity = 0.3;
                   zIndex = 10;
-                  xOffset = -660; // Generous spacing on far left
-                  width = 350;
+                  xOffset = -520; // Reduced from -660
+                  width = 280; // Reduced from 350
                   height = 300;
                 } else {
                   scale = 0.5;
                   opacity = 0.2;
                   zIndex = 10;
-                  xOffset = 660; // Generous spacing on far right
-                  width = 350;
+                  xOffset = 520; // Reduced from 660
+                  width = 280; // Reduced from 350
                   height = 300;
                 }
 
