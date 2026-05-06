@@ -1,0 +1,218 @@
+{
+  "project": "SWIFTROOMS Landing Page",
+  "generated": "2026-03-24",
+  "brand": {
+    "name": "SWIFTROOMS",
+    "primaryColor": "#007969",
+    "fonts": ["Exo", "Barlow", "Inter", "Rajdhani"],
+    "location": "UAE",
+    "industry": "Aluminum Structures"
+  },
+  "contact": {
+    "phone": "+971 4 457 1004",
+    "whatsapp": "+971 50 397 7703",
+    "email": "info@swiftroomsuae.com",
+    "contacts": {
+      "yaseen": "056 307 1536",
+      "murad": "+971 55 505 7319"
+    }
+  },
+  "videos": {
+    "hero": {
+      "desktop": {
+        "url": "https://www.youtube.com/embed/aP4L7jnKxYA",
+        "id": "aP4L7jnKxYA",
+        "quality": "hd720"
+      },
+      "mobile": {
+        "url": "https://www.youtube.com/embed/wwrYl-50v2E",
+        "id": "wwrYl-50v2E",
+        "quality": "medium"
+      }
+    },
+    "socialProof": [
+      {
+        "id": "iY7D1xLpTgk",
+        "url": "https://www.youtube.com/embed/iY7D1xLpTgk",
+        "title": "Dubai Showroom Tour",
+        "hashtags": ["SWIFTROOMS", "DubaiShowroom", "DubaiHomes", "AluminiumWindows", "BifoldDoors"]
+      },
+      {
+        "id": "2PiuZIhVJ6g",
+        "url": "https://www.youtube.com/embed/2PiuZIhVJ6g",
+        "title": "Free Plan & Design Service",
+        "hashtags": ["swiftrooms", "cortizo", "windows", "doors", "dubairenovation"]
+      },
+      {
+        "id": "UKKHuFRtLuI",
+        "url": "https://www.youtube.com/embed/UKKHuFRtLuI",
+        "title": "Palm Jumeirah Bifold",
+        "hashtags": ["PalmJumeirah", "BifoldDoors", "SWIFTROOMS", "LuxuryHomes", "DubaiLiving"]
+      },
+      {
+        "id": "rV0EnA0DinE",
+        "url": "https://www.youtube.com/embed/rV0EnA0DinE",
+        "title": "Damac Hills Bifold",
+        "hashtags": ["damachills", "BifoldDoors", "Cortizo", "AluminiumSystems"]
+      },
+      {
+        "id": "lRxS5tV1EZ4",
+        "url": "https://www.youtube.com/embed/lRxS5tV1EZ4",
+        "title": "10-Year Quality",
+        "hashtags": ["swiftrooms", "windows", "dubairenovation", "palmjumeirah", "aluminium", "conservatory"]
+      }
+    ]
+  },
+  "products": [
+    {
+      "name": "Aluminum Sliding Doors",
+      "assetId": "d6422ad60ba0d7acbef896831a31188dca8bc66a.png",
+      "importPath": "figma:asset/d6422ad60ba0d7acbef896831a31188dca8bc66a.png",
+      "category": "Doors",
+      "variable": "imgImageAluminumSlidingDoors"
+    },
+    {
+      "name": "UPVC Windows and Doors",
+      "assetId": "d76e6c1b22e3f7ed8fc8e68c24b7ccfae1eb3155.png",
+      "importPath": "figma:asset/d76e6c1b22e3f7ed8fc8e68c24b7ccfae1eb3155.png",
+      "category": "Windows & Doors",
+      "variable": "imgImageUpvcWindowsAndDoors"
+    },
+    {
+      "name": "Bi-Fold Doors",
+      "assetId": "a873a74894e42cdff9ecd2c1fb02a14d38a18687.png",
+      "importPath": "figma:asset/a873a74894e42cdff9ecd2c1fb02a14d38a18687.png",
+      "category": "Doors",
+      "variable": "imgImageBiFoldDoors"
+    },
+    {
+      "name": "Aluminum Windows",
+      "assetId": "0f08c2480ba1dad0ecba17dddf82fcfe35766557.png",
+      "importPath": "figma:asset/0f08c2480ba1dad0ecba17dddf82fcfe35766557.png",
+      "category": "Windows",
+      "variable": "imgImageAluminumWindows"
+    },
+    {
+      "name": "Skylights and Garden Rooms",
+      "assetId": "265343b936147e3cea1b239d59964ed5e2657d8a.png",
+      "importPath": "figma:asset/265343b936147e3cea1b239d59964ed5e2657d8a.png",
+      "category": "Outdoor Spaces",
+      "variable": "imgImageSkylights"
+    }
+  ],
+  "gallery": [
+    {
+      "location": "SWIFTROOMS",
+      "assetId": "543f4bf8a25135f8a5309f98469cc735abb51163.png",
+      "variable": "imgComponent40"
+    },
+    {
+      "location": "LUXURY HOME",
+      "assetId": "d5f8b1fa2f31142d3146b34b31993458dfa20d62.png",
+      "variable": "imgScreenshot"
+    },
+    {
+      "location": "CONTEMPORARY VILLA",
+      "assetId": "fb642fa8b0498c0c18344a88c44a5659d3d9a1a7.png",
+      "variable": "imgComponent41"
+    },
+    {
+      "location": "JUMEIRAH GOLF ESTATES",
+      "assetId": "b652f7273996c3088ffbdf6b375a00ac50d72203.png",
+      "variable": "imgComponent42"
+    },
+    {
+      "location": "DUBAI HILLS",
+      "assetId": "1cac0798dde90459c7d50ecdaa36c478c66f709a.png",
+      "variable": "imgComponent44"
+    },
+    {
+      "location": "PALM JUMEIRAH",
+      "assetId": "22dea6c44e167d98c69bc78a430be9dee74811ba.png",
+      "variable": "imgComponent45"
+    },
+    {
+      "location": "THE MEADOWS",
+      "assetId": "47aeaa3e673d1d2bb9b8c4e57078e17afa3e3b37.png",
+      "variable": "imgComponent46"
+    },
+    {
+      "location": "PHILLIAS FOGGS",
+      "assetId": "639a0701a47d0ff247dfd6029da5b3d5e4976a0d.png",
+      "variable": "imgGroup143726098"
+    },
+    {
+      "location": "THE SPRINGS",
+      "assetId": "e49332f3e7c1bcb35ae200ff9618a5d4cde800e5.png",
+      "variable": "imgComponent48"
+    },
+    {
+      "location": "AL BARARI - THE NEST",
+      "assetId": "464d9fe1b70fd273266d99bf2014729adeaada53.png",
+      "variable": "imgComponent49"
+    },
+    {
+      "location": "UMM SEQUIMM",
+      "assetId": "2a076fc1e8f572becd354b35b7727696183b5436.png",
+      "variable": "imgComponent50"
+    },
+    {
+      "location": "DAMAC HILLS",
+      "assetId": "c568cc5308d6af54e01491f1a0397cfe754bf68d.png",
+      "variable": "imgComponent51"
+    },
+    {
+      "location": "DAMAC HILLS",
+      "assetId": "7bc7f4a248e23f904fc8529f0c110383f1db67c0.png",
+      "variable": "imgComponent52"
+    },
+    {
+      "location": "ARABIAN RANCHES",
+      "assetId": "4db06d323b51658b3160642751a1dff35e2e6663.png",
+      "variable": "imgComponent53"
+    }
+  ],
+  "brands": [
+    {
+      "name": "SCHÜCO",
+      "type": "SVG",
+      "svgFile": "svg-odqll2j1e4",
+      "pathId": "p32ea0800",
+      "viewBox": "0 0 206 34"
+    },
+    {
+      "name": "Deceuninck",
+      "type": "SVG",
+      "svgFile": "svg-odqll2j1e4",
+      "pathId": "p5e37600",
+      "viewBox": "0 0 192.012 37.003"
+    },
+    {
+      "name": "CORTIZO",
+      "type": "SVG",
+      "svgFile": "svg-odqll2j1e4",
+      "pathIds": ["p33db00", "p2d37bd00", "p364e7e00", "p341fac00", "p3d94d800", "p1b98c000"],
+      "viewBox": "0 0 240.223 60"
+    },
+    {
+      "name": "4GEX",
+      "type": "PNG",
+      "assetId": "5cd65b8dd83a95980f42df07cc16764bc2c77eb0.png",
+      "variable": "img4GexLogo3"
+    },
+    {
+      "name": "VETRO",
+      "type": "PNG",
+      "assetId": "17f0f5e44208889069e3800833da01d1785f5802.png",
+      "variable": "img5Vetro3"
+    }
+  ],
+  "statistics": {
+    "totalVideos": 7,
+    "totalProductImages": 5,
+    "totalGalleryImages": 14,
+    "totalBrandLogos": 5,
+    "totalSvgFiles": 48,
+    "totalAssets": 79
+  }
+}
