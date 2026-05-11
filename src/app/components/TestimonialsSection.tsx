@@ -559,12 +559,14 @@ export function TestimonialsSection() {
   }, []);
 
   return (
-    <section id="testimonials" className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#f0f7f6] py-12 lg:py-16 lg:snap-center overflow-hidden">
+    <section id="testimonials" className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#f0f7f6] pt-20 lg:pt-24 pb-12 lg:pb-16 lg:snap-start overflow-hidden">
       {/* CAD Elements Background */}
-      <TestimonialsCADElements />
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <TestimonialsCADElements />
+      </div>
 
       {/* Container */}
-      <div className="relative z-10 container mx-auto px-4 lg:px-6 w-full">
+      <div className="relative z-30 container mx-auto px-4 lg:px-6 w-full">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

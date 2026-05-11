@@ -105,8 +105,8 @@ export function TransformYourSpaceSection() {
   }, [totalCards]);
 
   return (
-    <section id="transform-space" className="relative bg-white h-screen lg:min-h-screen overflow-y-auto lg:overflow-hidden lg:snap-center flex items-center">
-      <div className="container mx-auto px-4 relative z-10 py-6 lg:py-8 w-full">
+    <section id="transform-space" className="relative bg-white min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
+      <div className="container mx-auto px-4 relative z-30 py-6 lg:py-8 w-full">
 
         {/* Main Header */}
         <motion.div
@@ -114,9 +114,9 @@ export function TransformYourSpaceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-6 lg:mb-12"
+          className="text-center mb-6 lg:mb-12 relative z-40"
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
+          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40">
             Transform Your Space
           </h2>
           <p className="font-['Barlow',sans-serif] text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto">

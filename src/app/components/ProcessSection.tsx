@@ -185,21 +185,23 @@ export function ProcessSection() {
   }, [hasViewed]);
 
   return (
-    <section id="process" className="relative bg-white min-h-screen overflow-hidden lg:snap-center flex items-center" ref={sectionRef}>
+    <section id="process" className="relative bg-white min-h-screen overflow-hidden lg:snap-start flex items-start pt-20 lg:pt-24 pb-12" ref={sectionRef}>
       {/* Animated Background Ornaments */}
-      <FloatingOrnament position="left" size="medium" animationSpeed="slow" opacity={0.08} offsetY="-30%" />
-      <FloatingOrnament position="right" size="small" animationSpeed="fast" opacity={0.12} offsetY="-70%" />
-      
-      <div className="container mx-auto px-4 relative z-10 py-4 lg:py-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <FloatingOrnament position="left" size="medium" animationSpeed="slow" opacity={0.08} offsetY="-30%" />
+        <FloatingOrnament position="right" size="small" animationSpeed="fast" opacity={0.12} offsetY="-70%" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-30 py-4 lg:py-0">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-4 lg:mb-20"
+          className="text-center mb-4 lg:mb-20 relative z-40"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide">
+          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide relative z-40">
             Simple 5-Step Process
           </h2>
           <p className="font-['Barlow',sans-serif] text-[10px] lg:text-xl text-[#3a3a3c]">

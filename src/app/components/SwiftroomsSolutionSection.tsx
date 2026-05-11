@@ -8,21 +8,23 @@ export function SwiftroomsSolutionSection() {
   const [activeTab, setActiveTab] = useState<'problems' | 'solutions'>('problems');
 
   return (
-    <section id="swiftrooms-solution" className="relative bg-gradient-to-b from-gray-50 to-white min-h-screen lg:h-screen overflow-y-auto lg:overflow-hidden lg:snap-center flex items-center">
+    <section id="swiftrooms-solution" className="relative bg-gradient-to-b from-gray-50 to-white min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start lg:items-start pt-20 lg:pt-24">
       {/* CAD Floating Elements */}
-      <ProblemsCADElements />
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <ProblemsCADElements />
+      </div>
 
-      <div className="container mx-auto px-4 relative z-10 py-8 lg:py-16 w-full max-w-7xl">
+      <div className="container mx-auto px-4 relative z-30 py-8 lg:py-12 w-full max-w-7xl">
 
         {/* Solutions Comparison Section */}
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-6 lg:mb-10">
+          <div className="text-center mb-6 lg:mb-10 relative z-40">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3"
+              className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
             >
               The Swiftrooms Solution
             </motion.h2>
@@ -31,14 +33,14 @@ export function SwiftroomsSolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-['Barlow',sans-serif] text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto"
+              className="font-['Barlow',sans-serif] text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto relative z-40"
             >
               From common problems to premium solutions
             </motion.p>
           </div>
 
           {/* Mobile Tabs */}
-          <div className="lg:hidden flex p-1 bg-gray-100 rounded-xl mb-6 mx-auto max-w-sm">
+          <div className="lg:hidden flex p-1 bg-gray-100 rounded-xl mb-6 mx-auto max-w-sm relative z-40">
             <button
               onClick={() => setActiveTab('problems')}
               className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-200 ${
@@ -61,16 +63,16 @@ export function SwiftroomsSolutionSection() {
             </button>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch relative z-30">
             {/* Left Side - Problems */}
             <motion.div
-              className={`space-y-4 ${activeTab === 'problems' ? 'block' : 'hidden lg:block'}`}
+              className={`space-y-4 ${activeTab === 'problems' ? 'block' : 'hidden lg:block'} relative z-30`}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-2xl p-6 lg:p-8 border-2 border-gray-100 shadow-lg h-full">
+              <div className="bg-white rounded-2xl p-6 lg:p-8 border-2 border-gray-100 shadow-lg h-full relative z-30">
                 <h4 className="font-['Barlow',sans-serif] text-lg lg:text-2xl font-semibold text-[#1c1c1e] mb-6 flex items-center gap-3">
                   <span className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-base">✗</span>
                   Common Frustrations
@@ -106,13 +108,13 @@ export function SwiftroomsSolutionSection() {
 
             {/* Right Side - Solutions */}
             <motion.div
-              className={`${activeTab === 'solutions' ? 'block' : 'hidden lg:block'}`}
+              className={`${activeTab === 'solutions' ? 'block' : 'hidden lg:block'} relative z-30`}
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-gradient-to-br from-[#007969] to-[#005a50] rounded-2xl p-6 lg:p-8 text-white h-full relative overflow-hidden group">
+              <div className="bg-gradient-to-br from-[#007969] to-[#005a50] rounded-2xl p-6 lg:p-8 text-white h-full relative overflow-hidden group z-30">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-700" />
 
                 <h4 className="relative z-10 font-['Barlow',sans-serif] text-lg lg:text-2xl font-semibold mb-3 flex items-center gap-3">
@@ -170,7 +172,7 @@ export function SwiftroomsSolutionSection() {
       </div>
 
       {/* Decorative gradient fade at bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent pointer-events-none z-5" />
     </section>
   );
 }

@@ -628,12 +628,12 @@ export function GallerySection() {
     <section
       id="gallery"
       ref={sectionRef}
-      className="relative bg-gradient-to-b from-white via-gray-50 to-white h-screen lg:min-h-screen overflow-y-auto lg:overflow-hidden lg:snap-center flex items-center py-6 lg:pt-32 lg:pb-48"
+      className="relative bg-gradient-to-b from-white via-gray-50 to-white min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start pt-20 lg:pt-24 pb-12 lg:pb-48"
       onMouseMove={handleSectionMouseMove}
     >
       {/* Animated background elements */}
       <motion.div
-        className="absolute inset-0 opacity-30 pointer-events-none"
+        className="absolute inset-0 opacity-30 pointer-events-none z-0"
         style={{
           x: bgX,
           y: bgY,
@@ -646,7 +646,7 @@ export function GallerySection() {
 
       {/* Interactive CAD Pattern Graphic - Reacts to Gallery State */}
       <motion.div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
+        className="absolute inset-0 pointer-events-none overflow-hidden z-0"
         style={{
           opacity: isDragging ? 0.15 : 0.08,
         }}
@@ -882,10 +882,10 @@ export function GallerySection() {
         </motion.div>
       </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-4 lg:px-16 w-full z-10">
+      <div className="relative max-w-7xl mx-auto px-4 lg:px-16 w-full z-30">
         {/* Header - Matching Portfolio Section Style */}
         <motion.div
-          className="text-center mb-6 lg:mb-16 mt-0 lg:mt-0"
+          className="text-center mb-6 lg:mb-12 relative z-50 bg-white/80 backdrop-blur-sm py-4 lg:py-0 lg:bg-transparent lg:backdrop-blur-none"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -893,7 +893,7 @@ export function GallerySection() {
         >
           {/* Heading */}
           <motion.h2
-            className="font-['Exo',sans-serif] font-medium text-base lg:text-4xl text-[#1c1c1e] mb-1 lg:mb-2"
+            className="font-['Exo',sans-serif] font-medium text-base lg:text-4xl text-[#1c1c1e] mb-1 lg:mb-2 relative z-50"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
@@ -901,7 +901,7 @@ export function GallerySection() {
           </motion.h2>
 
           {/* Paragraph */}
-          <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c] mb-1.5 lg:mb-3 px-4">
+          <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c] mb-1.5 lg:mb-3 px-4 relative z-50">
             Feel free to browse our work
           </p>
 
@@ -910,7 +910,7 @@ export function GallerySection() {
             href="https://www.instagram.com/swiftrooms.ae/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 font-['Inter',sans-serif] text-[#008873] hover:text-[#007969] transition-colors text-xs lg:text-sm"
+            className="inline-flex items-center justify-center gap-2 font-['Inter',sans-serif] text-[#008873] hover:text-[#007969] transition-colors text-xs lg:text-sm relative z-50"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -925,10 +925,10 @@ export function GallerySection() {
         </motion.div>
 
         {/* Desktop Fan Layout */}
-        <div className="hidden lg:block relative">
+        <div className="hidden lg:block relative z-30">
           {/* Draggable Container */}
           <motion.div
-            className="relative h-[600px] flex items-center justify-center select-none"
+            className="relative h-[600px] flex items-center justify-center select-none z-30"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.2}
@@ -1015,7 +1015,7 @@ export function GallerySection() {
           {/* Navigation Arrows with enhanced hover */}
           <motion.button
             onClick={goPrev}
-            className="absolute left-8 top-1/2 -translate-y-1/2 z-40 group"
+            className="absolute left-8 top-1/2 -translate-y-1/2 z-50 group"
             aria-label="Previous image"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -1140,7 +1140,7 @@ export function GallerySection() {
           
           <motion.button
             onClick={goNext}
-            className="absolute right-8 top-1/2 -translate-y-1/2 z-40 group"
+            className="absolute right-8 top-1/2 -translate-y-1/2 z-50 group"
             aria-label="Next image"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -1265,10 +1265,10 @@ export function GallerySection() {
         </div>
 
         {/* Mobile: Horizontal Scroll */}
-        <div className="lg:hidden">
+        <div className="lg:hidden relative z-30">
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto scrollbar-hide pb-3"
+            className="flex overflow-x-auto scrollbar-hide pb-3 relative z-30"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -1319,7 +1319,7 @@ export function GallerySection() {
           </div>
 
           {/* Mobile Dots */}
-          <div className="flex justify-center gap-1.5 mt-3">
+          <div className="flex justify-center gap-1.5 mt-3 relative z-40">
             {galleryImages.map((_, index) => (
               <motion.button
                 key={index}

@@ -214,26 +214,29 @@ export function SocialProofSection() {
   }, [isMobile, totalReels]);
 
   return (
-    <section id="social" className="relative bg-white min-h-screen overflow-hidden lg:snap-center flex items-center">{/* Animated Background Ornaments - Only on Desktop */}
-      {!isMobile && (
-        <>
-          <FloatingOrnament position="right" size="large" animationSpeed="slow" opacity={0.05} offsetY="-45%" />
-          <FloatingOrnament position="left" size="medium" animationSpeed="fast" opacity={0.08} offsetY="-75%" />
-          <ImmersiveBackgroundAnimations />
-        </>
-      )}
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 py-4 lg:py-6">
+    <section id="social" className="relative bg-white min-h-screen overflow-hidden lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
+      {/* Animated Background Ornaments - Only on Desktop */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {!isMobile && (
+          <>
+            <FloatingOrnament position="right" size="large" animationSpeed="slow" opacity={0.05} offsetY="-45%" />
+            <FloatingOrnament position="left" size="medium" animationSpeed="fast" opacity={0.08} offsetY="-75%" />
+            <ImmersiveBackgroundAnimations />
+          </>
+        )}
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-30 py-4 lg:py-6">
         {/* Header */}
         {isMobile ? (
-          <div className="relative text-center mb-4">
-            <h2 className="font-['Exo',sans-serif] text-base font-medium text-[#1c1c1e] mb-1">
+          <div className="relative text-center mb-4 z-40">
+            <h2 className="font-['Exo',sans-serif] text-base font-medium text-[#1c1c1e] mb-1 relative z-40">
               Our Portfolio
             </h2>
-            <p className="font-['Barlow',sans-serif] text-xs text-[#3a3a3c] mb-2">
+            <p className="font-['Barlow',sans-serif] text-xs text-[#3a3a3c] mb-2 relative z-40">
               Watch our latest installations
             </p>
-            <div className="inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-[#008873] cursor-default">
+            <div className="inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-[#008873] cursor-default relative z-40">
               <Instagram className="w-3.5 h-3.5" />
               <span className="font-medium text-xs">@swiftrooms.ae</span>
               <span className="text-[10px]">• Follow for more</span>
@@ -241,22 +244,22 @@ export function SocialProofSection() {
           </div>
         ) : (
           <motion.div
-            className="relative text-center mb-6"
+            className="relative text-center mb-6 z-40"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] lg:mb-2">
+            <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
               Our Portfolio
             </h2>
-            <p className="font-['Barlow',sans-serif] lg:text-base text-[#3a3a3c] lg:mb-3">
+            <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 relative z-40">
               Watch our latest installations
             </p>
-            <div className="inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-[#008873] cursor-default">
-              <Instagram className="lg:w-4 lg:h-4" />
-              <span className="font-medium lg:text-sm">@swiftrooms.ae</span>
-              <span className="lg:text-xs">• Follow for more</span>
+            <div className="inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-[#008873] cursor-default relative z-40">
+              <Instagram className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+              <span className="font-medium text-xs lg:text-sm">@swiftrooms.ae</span>
+              <span className="text-[10px] lg:text-xs">• Follow for more</span>
             </div>
           </motion.div>
         )}
