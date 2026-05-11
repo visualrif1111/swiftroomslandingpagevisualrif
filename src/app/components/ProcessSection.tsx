@@ -202,7 +202,7 @@ export function ProcessSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide relative z-40">
-            Simple 5-Step Proces
+            Simple 5-Step Process
           </h2>
           <p className="font-['Barlow',sans-serif] text-[10px] lg:text-xl text-[#3a3a3c]">
             From quote to installation, we make it easy
