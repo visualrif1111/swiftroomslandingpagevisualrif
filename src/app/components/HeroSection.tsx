@@ -80,7 +80,12 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
     >
       {/* CAD Floating Elements */}
       <HeroCADElements />
-      
+
+      {/* Base brand backdrop — always rendered as the first layer so the hero
+          always has a proper background: on mobile (no mobile video is passed)
+          and behind the desktop video/overlay. Prevents white-on-nothing text. */}
+      <div className="absolute inset-0 bg-[#007969]" />
+
       {/* Desktop Video Background */}
       {enableVideo && videoUrl && (
         <div className="absolute inset-0 overflow-hidden hidden lg:block" style={{ contain: 'strict' }}>
@@ -129,11 +134,6 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
         </div>
-      )}
-
-      {/* Static Background (if no video) */}
-      {!enableVideo && (
-        <div className="absolute inset-0 bg-[#007969]" />
       )}
 
       {/* Content */}

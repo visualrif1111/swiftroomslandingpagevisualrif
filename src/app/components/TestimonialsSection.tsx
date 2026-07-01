@@ -439,7 +439,7 @@ function NextArrow({ onClick }: ArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-2 lg:p-3 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95"
+      className="hidden lg:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-2 lg:p-3 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95"
       aria-label="Next testimonial"
     >
       <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -451,7 +451,7 @@ function PrevArrow({ onClick }: ArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-2 lg:p-3 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95"
+      className="hidden lg:block absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-2 lg:p-3 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95"
       aria-label="Previous testimonial"
     >
       <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -529,7 +529,8 @@ export function TestimonialsSection() {
   const [error, setError] = useState(false);
 
   const sliderSettings = {
-    dots: false,
+    dots: true,
+    dotsClass: 'slick-dots sr-dots',
     infinite: true,
     speed: 600,
     slidesToShow: 1,

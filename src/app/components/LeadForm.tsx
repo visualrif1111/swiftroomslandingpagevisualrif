@@ -858,18 +858,19 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             <ArrowRight className="relative z-10 w-6 h-6 lg:w-7 lg:h-7 group-hover:translate-x-1 transition-transform duration-300" />
           </button>
 
-          {/* Trust indicators below CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-white font-body">
+          {/* Trust indicators below CTA — adapt to background: white text on the
+              teal hero (ctaVariant='white'), dark text on light sections. */}
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm font-body ${ctaVariant === 'white' ? 'text-white' : 'text-[#3a3a3c]'}`}>
             <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-white" />
+              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#007969]'}`} />
               <span>Free Consultation</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-white" />
+              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#007969]'}`} />
               <span>24-Hour Response</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-white" />
+              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#007969]'}`} />
               <span>No Obligation</span>
             </div>
           </div>

@@ -234,6 +234,20 @@ section[id] {
   contain-intrinsic-size: auto 100vh;
 }
 
+/* Mobile: the full-viewport section height is a desktop scroll-snap treatment.
+   On mobile (snap already disabled) it forces content-light sections to fill the
+   screen, leaving large dead-space gaps. Let non-hero sections size to their
+   content instead. The hero keeps full height via its inline height + #hero rules. */
+@media screen and (max-width: 1023px) {
+  section:not(#hero) {
+    min-height: auto !important;
+    contain: layout style;
+  }
+  section:not(#hero)[id] {
+    contain-intrinsic-size: auto;
+  }
+}
+
 /* GPU acceleration for animated elements */
 [class*="motion-"],
 [class*="animate-"],
@@ -398,3 +412,16 @@ body {
 }
 .bg-brand-tint { background:var(--brand-tint); }
 .bg-section-alt { background:var(--sr-bg-alt); }
+
+/* Slick carousel dots — brand teal pill indicators (matches gallery/products) */
+.slick-dots {
+  display:flex !important; justify-content:center; align-items:center; gap:.375rem;
+  padding:0; margin:1.25rem 0 0; list-style:none;
+}
+.slick-dots li { width:auto; height:auto; margin:0; }
+.slick-dots li button { width:auto; height:auto; padding:0; }
+.slick-dots li button:before {
+  content:''; display:block; width:8px; height:8px; border-radius:9999px;
+  background:var(--brand); opacity:.25; transition:opacity .3s, width .3s;
+}
+.slick-dots li.slick-active button:before { opacity:1; width:22px; }
