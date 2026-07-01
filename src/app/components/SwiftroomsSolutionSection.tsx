@@ -24,7 +24,7 @@ export function SwiftroomsSolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
+              className="font-heading text-2xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
             >
               Why Choose Swiftrooms
             </motion.h2>
@@ -34,7 +34,7 @@ export function SwiftroomsSolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-body text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto relative z-40"
+              className="font-body text-sm lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto leading-relaxed relative z-40"
             >
               UAE climate expertise and premium systems — from common problems to premium solutions
             </motion.p>
@@ -194,12 +194,12 @@ export function SwiftroomsSolutionSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="flex items-start gap-2.5 bg-white border border-[#e5e7eb] rounded-xl p-3 lg:p-4 card-hover"
+                  className="flex items-start gap-3 bg-white border border-[#e5e7eb] rounded-xl p-4 card-hover"
                 >
                   <div className="flex-shrink-0 w-5 h-5 lg:w-6 lg:h-6 mt-0.5 rounded-full bg-[#007969] flex items-center justify-center">
                     <Check className="w-3 h-3 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
                   </div>
-                  <p className="font-body text-xs lg:text-base text-[#1c1c1e] font-medium leading-snug">
+                  <p className="font-body text-sm lg:text-base text-[#1c1c1e] font-medium leading-relaxed">
                     {point}
                   </p>
                 </motion.div>

@@ -67,7 +67,7 @@ interface ProcessStepProps {
 function ProcessStep({ number, title, description, showConnector = true, index, isActive, onHover }: ProcessStepProps) {
   return (
     <motion.div
-      className="flex flex-col items-center relative cursor-pointer"
+      className="flex flex-row items-start gap-4 relative cursor-pointer lg:flex-col lg:items-center lg:gap-0"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -82,9 +82,14 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
+      {/* Mobile vertical timeline connector - runs through badge centers */}
+      {showConnector && (
+        <div className="lg:hidden absolute left-6 top-12 -bottom-8 w-px -translate-x-1/2 bg-gradient-to-b from-[#007969]/40 to-[#007969]/10 z-0" />
+      )}
+
       {/* Step Number Circle */}
       <motion.div
-        className="w-12 h-12 lg:w-20 lg:h-20 bg-[#007969] rounded-full flex items-center justify-center mb-2 lg:mb-6 relative z-10 shadow-lg"
+        className="w-12 h-12 lg:w-20 lg:h-20 flex-shrink-0 bg-[#007969] rounded-full flex items-center justify-center mb-2 lg:mb-6 relative z-10 shadow-lg"
         animate={{
           scale: isActive ? 1.1 : 1,
           backgroundColor: isActive ? "#007969" : "#007969",
@@ -117,14 +122,14 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
 
       {/* Step Content */}
       <motion.div
-        className="text-center max-w-[280px]"
+        className="flex-1 min-w-0 text-left pt-1 pb-1 lg:pt-0 lg:pb-0 lg:text-center lg:max-w-[280px]"
         animate={{ y: isActive ? -5 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h3 className="font-heading text-sm lg:text-xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 min-h-[2.5rem] lg:min-h-[3.5rem] flex items-center justify-center">
+        <h3 className="font-heading text-base lg:text-xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 lg:min-h-[3.5rem] flex items-center justify-start lg:justify-center">
           {title}
         </h3>
-        <p className="font-body text-[10px] lg:text-base text-[#3a3a3c] leading-snug lg:leading-relaxed">
+        <p className="font-body text-sm lg:text-base text-[#3a3a3c] leading-relaxed">
           {description}
         </p>
       </motion.div>
@@ -195,23 +200,23 @@ export function ProcessSection() {
       <div className="container mx-auto px-4 relative z-30 py-4 lg:py-0">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-4 lg:mb-20 relative z-40"
+          className="text-center mb-8 lg:mb-20 relative z-40"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide relative z-40">
+          <h2 className="font-heading text-2xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-wide relative z-40">
             How It Works
           </h2>
-          <div className="divider-brand mx-auto mb-2 lg:mb-4" />
-          <p className="font-body text-[10px] lg:text-xl text-[#3a3a3c]">
+          <div className="divider-brand mx-auto mb-3 lg:mb-4" />
+          <p className="font-body text-sm lg:text-xl text-[#3a3a3c] max-w-md mx-auto leading-relaxed lg:max-w-none">
             From your free quote to aftercare, we handle every step — so you know exactly what to expect
           </p>
         </motion.div>
 
         {/* Process Steps */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-0 max-w-7xl mx-auto">
+        <div className="flex flex-col space-y-8 lg:grid lg:grid-cols-5 lg:gap-0 lg:space-y-0 max-w-7xl mx-auto">
           <ProcessStep
             number="01"
             title="Get Free Quote"
@@ -248,7 +253,7 @@ export function ProcessSection() {
             isActive={activeStep === 3}
             onHover={setActiveStep}
           />
-          <div className="col-span-2 lg:col-span-1 flex justify-center">
+          <div className="lg:col-span-1 lg:flex lg:justify-center">
             <ProcessStep
               number="05"
               title="Aftercare Support"

@@ -11,22 +11,23 @@ export function FormSection() {
         
         <div className="max-w-4xl mx-auto space-y-8 lg:space-y-12">
           {/* Section Header */}
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-3 lg:space-y-4">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e]"
+              className="font-heading text-xl lg:text-4xl font-medium text-[#1c1c1e]"
             >
               Get Your Free Quote
             </motion.h2>
+            <div className="divider-brand mx-auto lg:hidden" />
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-body text-lg lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto"
+              className="font-body text-base lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-2 lg:px-0"
             >
               Takes under a minute. No obligation. A specialist responds within 12 hours.
             </motion.p>

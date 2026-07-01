@@ -241,13 +241,17 @@ export function TransformYourSpaceSection() {
             <button
               key={i}
               onClick={() => scrollToCard(i)}
-              className={`transition-all duration-300 ${
-                activeCard === i
-                  ? 'bg-[#007969] w-6 h-1.5'
-                  : 'bg-gray-300 hover:bg-[#007969]/50 w-1.5 h-1.5'
-              } rounded-full`}
+              className="group flex items-center justify-center h-11 min-w-[20px] -my-4"
               aria-label={`Go to card ${i + 1}`}
-            />
+            >
+              <span
+                className={`block rounded-full transition-all duration-300 ${
+                  activeCard === i
+                    ? 'bg-[#007969] w-6 h-1.5'
+                    : 'bg-gray-300 group-hover:bg-[#007969]/50 w-1.5 h-1.5'
+                }`}
+              />
+            </button>
           ))}
         </div>
         </div>

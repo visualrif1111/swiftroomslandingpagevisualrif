@@ -270,7 +270,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                       href="https://maps.google.com/?q=ETJAR+J1+Complex+Block+A+Warehouse+11-12+Jebel+Ali+Industrial+Area+1+Dubai"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-center text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm py-1 active:opacity-80 transition-opacity"
+                      className="flex items-center justify-center w-full min-h-[44px] text-center text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm active:opacity-80 transition-opacity"
                     >
                       Visit Showroom
                     </a>

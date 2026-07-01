@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle } from 'lucide-react';
 
@@ -14,6 +14,7 @@ const WHATSAPP_HREF =
  */
 export function StickyMobileCTA() {
   const [visible, setVisible] = useState(false);
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     const scrollContainer = document.querySelector('.overflow-y-scroll.h-screen') as HTMLElement | null;
@@ -30,17 +31,49 @@ export function StickyMobileCTA() {
       return rect.top < window.innerHeight * 0.85 && rect.bottom > window.innerHeight * 0.15;
     };
 
-    const update = () => {
-      const scrolledPastHero = getScrollTop() > window.innerHeight * 0.6;
-      setVisible(scrolledPastHero && !isFormInView());
+    let lastScroll = getScrollTop();
+    let ticking = false;
+
+    const evaluate = () => {
+      ticking = false;
+      const current = getScrollTop();
+      const delta = current - lastScroll;
+      const scrolledPastHero = current > window.innerHeight * 0.6;
+
+      // Scroll-direction aware: reveal on scroll up, hide on a deliberate
+      // scroll down (ignore tiny jitters). Always hidden over the hero and
+      // while the lead form is in view so it never covers form controls.
+      let next = visibleRef.current;
+      if (!scrolledPastHero || isFormInView()) {
+        next = false;
+      } else if (delta < -6) {
+        next = true; // scrolling up
+      } else if (delta > 6) {
+        next = false; // scrolling down
+      }
+
+      // Reset lastScroll only on a meaningful move to keep direction stable.
+      if (Math.abs(delta) > 6) lastScroll = current;
+
+      if (next !== visibleRef.current) {
+        visibleRef.current = next;
+        setVisible(next);
+      }
     };
 
-    update();
-    target.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(evaluate);
+      }
+    };
+
+    evaluate();
+    target.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     return () => {
-      target.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      target.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
 

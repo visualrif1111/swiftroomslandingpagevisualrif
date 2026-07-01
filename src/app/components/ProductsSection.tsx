@@ -194,9 +194,9 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
           </div>
 
           {/* Content */}
-          <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 lg:p-6">
+          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-5 lg:p-6">
             <motion.h3
-              className="font-heading text-sm sm:text-xl lg:text-2xl font-medium text-white mb-1 sm:mb-2 leading-tight"
+              className="font-heading text-xl sm:text-xl lg:text-2xl font-medium text-white mb-2 leading-tight"
               animate={{
                 y: isHovered ? -5 : 0,
               }}
@@ -206,7 +206,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
             </motion.h3>
             
             <motion.p
-              className="font-body text-[10px] sm:text-base text-white/90 leading-snug sm:leading-relaxed mb-1"
+              className="font-body text-sm sm:text-base text-white/90 leading-snug sm:leading-relaxed mb-3 sm:mb-1"
               initial={{ opacity: 0, y: 10 }}
               animate={{
                 opacity: isHovered ? 1 : 0.7,
@@ -220,7 +220,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
             {/* Get A Quote Button - Always visible, no animation on mobile */}
             <CTADecoration>
               <motion.button
-                className="mt-2 sm:mt-4 btn-brand pointer-events-auto"
+                className="mt-4 btn-brand pointer-events-auto"
                 initial={false}
                 animate={{
                   opacity: 1,
@@ -381,17 +381,17 @@ export function ProductsSection() {
       <div className="container mx-auto px-3 sm:px-4 relative z-10 py-4 lg:py-0">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-3 lg:mb-16 px-2"
+          className="text-center mb-6 lg:mb-16 px-2"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
             Featured Products
           </h2>
-          <div className="divider-brand mx-auto mb-2 lg:mb-4" />
-          <p className="font-body text-[10px] lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-4">
+          <div className="divider-brand mx-auto mb-3 lg:mb-4" />
+          <p className="font-body text-sm sm:text-base lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-4">
             Premium systems engineered for comfort, lower cooling costs and brighter living in the UAE climate
           </p>
         </motion.div>
@@ -431,13 +431,17 @@ export function ProductsSection() {
               <button
                 key={index}
                 onClick={() => scrollToSlide(index)}
-                className={`transition-all duration-300 ${
-                  activeSlide === index
-                    ? 'bg-[#007969] w-8 h-2'
-                    : 'bg-gray-300 hover:bg-[#007969]/50 w-2 h-2'
-                } rounded-full`}
+                className="group flex items-center justify-center h-11 min-w-[24px] -my-4"
                 aria-label={`Go to slide ${index + 1}`}
-              />
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    activeSlide === index
+                      ? 'bg-[#007969] w-8 h-2'
+                      : 'bg-gray-300 group-hover:bg-[#007969]/50 w-2 h-2'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>

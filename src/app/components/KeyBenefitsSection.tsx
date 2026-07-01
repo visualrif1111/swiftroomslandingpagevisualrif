@@ -48,41 +48,42 @@ export function KeyBenefitsSection() {
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-6 lg:mb-12 max-w-3xl mx-auto"
+          className="text-center mb-8 lg:mb-12 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
+          <div className="divider-brand mx-auto mb-3 lg:mb-4" />
+          <h2 className="font-heading text-xl lg:text-4xl font-semibold lg:font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
             Why UAE Homeowners Choose Swiftrooms
           </h2>
-          <p className="font-body text-xs lg:text-xl text-[#3a3a3c]">
+          <p className="font-body text-sm lg:text-xl text-[#3a3a3c] leading-relaxed">
             More than windows and doors — real outcomes for comfort, light and value in your home.
           </p>
         </motion.div>
 
         {/* Benefit Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 max-w-6xl mx-auto">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
               <motion.div
                 key={benefit.title}
-                className="group bg-white border border-[#e5e7eb] rounded-xl lg:rounded-2xl p-4 lg:p-6 hover:border-[#007969] card-hover"
+                className="group bg-white border border-[#e5e7eb] rounded-2xl p-5 lg:p-6 hover:border-[#007969] card-hover"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 whileHover={{ y: -6 }}
               >
-                <div className="w-11 h-11 lg:w-14 lg:h-14 rounded-xl bg-[#007969]/10 flex items-center justify-center mb-3 lg:mb-4 group-hover:bg-[#007969] transition-colors duration-300">
-                  <Icon className="w-5 h-5 lg:w-7 lg:h-7 text-[#007969] group-hover:text-white transition-colors duration-300" strokeWidth={2} />
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-[#007969]/10 flex items-center justify-center mb-4 group-hover:bg-[#007969] transition-colors duration-300">
+                  <Icon className="w-6 h-6 lg:w-7 lg:h-7 text-[#007969] group-hover:text-white transition-colors duration-300" strokeWidth={2} />
                 </div>
-                <h3 className="font-heading text-sm lg:text-xl font-semibold text-[#1c1c1e] mb-1.5 lg:mb-2 leading-tight">
+                <h3 className="font-heading text-base lg:text-xl font-semibold text-[#1c1c1e] mb-2 leading-tight">
                   {benefit.title}
                 </h3>
-                <p className="font-body text-xs lg:text-base text-[#3a3a3c] leading-snug lg:leading-relaxed">
+                <p className="font-body text-sm lg:text-base text-[#3a3a3c] leading-relaxed">
                   {benefit.description}
                 </p>
               </motion.div>

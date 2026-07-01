@@ -413,6 +413,20 @@ body {
 .bg-brand-tint { background:var(--brand-tint); }
 .bg-section-alt { background:var(--sr-bg-alt); }
 
+/* ---- Mobile ergonomics -------------------------------------------------- */
+/* Comfortable minimum tap target (WCAG 2.5.5) */
+.tap-target { min-width: 44px; min-height: 44px; }
+
+/* iPhone safe-area helpers */
+.safe-bottom { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
+.safe-top { padding-top: env(safe-area-inset-top); }
+
+/* Mobile section rhythm on an 8px system — consistent vertical breathing room
+   for content-height sections. Desktop keeps its own larger spacing. */
+@media (max-width: 1023px) {
+  .section-rhythm { padding-top: 3rem; padding-bottom: 3rem; }
+}
+
 /* Slick carousel dots — brand teal pill indicators (matches gallery/products) */
 .slick-dots {
   display:flex !important; justify-content:center; align-items:center; gap:.375rem;

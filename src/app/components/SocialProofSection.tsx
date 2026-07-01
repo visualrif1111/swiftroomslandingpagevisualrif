@@ -398,13 +398,14 @@ export function SocialProofSection() {
 
           {/* Stats and Communities */}
           {isMobile ? (
-            <div className="relative space-y-4">
+            <div className="relative space-y-6">
               {/* Heading */}
               <div className="relative">
-                <h3 className="font-heading text-lg font-medium text-[#1c1c1e] mb-2">
+                <div className="divider-brand mb-3" />
+                <h3 className="font-heading text-xl font-semibold text-[#1c1c1e] mb-2 tracking-tight">
                   Real Projects, Real Results
                 </h3>
-                <p className="font-body text-xs text-[#3a3a3c] leading-relaxed">
+                <p className="font-body text-sm text-[#3a3a3c] leading-relaxed">
                   Transforming homes across Dubai's most prestigious communities.
                 </p>
               </div>
@@ -414,12 +415,12 @@ export function SocialProofSection() {
                 {stats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="relative bg-white p-3 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
+                    className="relative bg-white px-4 py-5 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
                   >
-                    <div className="font-heading font-bold text-2xl text-[#007969] leading-tight mb-1">
+                    <div className="font-heading font-bold text-4xl text-[#007969] leading-none mb-1.5">
                       {stat.value}
                     </div>
-                    <div className="font-body text-xs text-[#3a3a3c]">
+                    <div className="font-body text-xs text-[#6b7280] leading-snug">
                       {stat.label}
                     </div>
                   </div>
@@ -428,23 +429,19 @@ export function SocialProofSection() {
 
               {/* Featured Communities */}
               <div className="relative">
-                <h4 className="font-heading text-sm font-medium text-[#1c1c1e] mb-2">
+                <h4 className="text-label text-[#6b7280] mb-3">
                   Featured Communities
                 </h4>
-                <div className="relative space-y-2">
-                  {communities.map((row, rowIndex) => (
-                    <div key={rowIndex} className="relative grid grid-cols-2 gap-3">
-                      {row.map((community) => (
-                        <div
-                          key={community}
-                          className="relative flex items-center gap-1.5"
-                        >
-                          <span className="text-[#007969] font-body text-xs">✓</span>
-                          <span className="font-body text-xs text-[#3a3a3c]">
-                            {community}
-                          </span>
-                        </div>
-                      ))}
+                <div className="relative grid grid-cols-2 gap-2.5">
+                  {communities.flat().map((community) => (
+                    <div
+                      key={community}
+                      className="relative flex items-center gap-2 bg-white px-3 py-2.5 rounded-lg border border-[#e5e7eb]"
+                    >
+                      <span className="text-[#007969] font-body text-sm leading-none">✓</span>
+                      <span className="font-body text-xs text-[#3a3a3c] leading-tight">
+                        {community}
+                      </span>
                     </div>
                   ))}
                 </div>

@@ -893,17 +893,17 @@ export function GallerySection() {
         >
           {/* Heading */}
           <motion.h2
-            className="font-heading font-medium text-base lg:text-4xl text-[#1c1c1e] mb-1 lg:mb-2 relative z-50"
+            className="font-heading font-medium text-2xl sm:text-3xl lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-2 relative z-50"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
             Our Gallery
           </motion.h2>
 
-          <div className="divider-brand mx-auto mb-2 lg:mb-3 relative z-50" />
+          <div className="divider-brand mx-auto mb-3 lg:mb-3 relative z-50" />
 
           {/* Paragraph */}
-          <p className="font-body text-xs lg:text-base text-[#3a3a3c] mb-1.5 lg:mb-3 px-4 relative z-50">
+          <p className="font-body text-sm lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 px-4 relative z-50">
             See how Swiftrooms has transformed villas, gardens and commercial spaces across the UAE.
           </p>
 
@@ -1290,25 +1290,25 @@ export function GallerySection() {
               >
                 <div className="pointer-events-none">
                   <div className="relative overflow-hidden rounded-xl border border-[#e5e7eb] card-hover">
-                    <div className="relative h-[280px] overflow-hidden">
+                    <div className="relative aspect-[4/5] overflow-hidden">
                       <ImageWithFallback
                         src={image.url}
                         alt={image.alt}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
 
                       {/* Location Name Overlay - Always visible on mobile */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3 pointer-events-none">
+                      <div className="absolute bottom-0 left-0 right-0 p-5 pointer-events-none">
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.2 }}
                         >
-                          <h3 className="font-heading font-semibold text-white text-xs mb-0.5 tracking-wide">
+                          <h3 className="font-heading font-semibold text-white text-lg mb-1 tracking-wide">
                             {image.location}
                           </h3>
-                          <p className="font-body text-white/80 text-[11px] leading-relaxed">
+                          <p className="font-body text-white/85 text-sm leading-relaxed">
                             {image.description}
                           </p>
                         </motion.div>
@@ -1321,26 +1321,29 @@ export function GallerySection() {
           </div>
 
           {/* Mobile Dots */}
-          <div className="flex justify-center gap-1.5 mt-3 relative z-40">
+          <div className="flex justify-center items-center gap-1.5 mt-4 relative z-40">
             {galleryImages.map((_, index) => (
               <motion.button
                 key={index}
                 onClick={() => scrollToSlide(index)}
-                className={`transition-all duration-300 pointer-events-auto ${
-                  currentIndex === index
-                    ? 'bg-[#007969] w-6 h-1.5'
-                    : 'bg-gray-300 hover:bg-[#007969]/50 w-1.5 h-1.5'
-                } rounded-full`}
+                className="group flex items-center justify-center h-11 -my-4 px-0.5 pointer-events-auto"
                 aria-label={`Go to image ${index + 1}`}
-                whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
-              />
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    currentIndex === index
+                      ? 'bg-[#007969] w-6 h-1.5'
+                      : 'bg-gray-300 group-hover:bg-[#007969]/50 w-1.5 h-1.5'
+                  }`}
+                />
+              </motion.button>
             ))}
           </div>
 
           {/* Swipe Hint */}
           <motion.p
-            className="text-center text-xs text-gray-400 mt-2 font-['Barlow',sans-serif]"
+            className="text-center text-xs text-gray-400 mt-2 font-body"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
@@ -1357,7 +1360,7 @@ export function GallerySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="font-heading text-sm lg:text-2xl font-medium text-[#1c1c1e] mb-3 lg:mb-4">
+          <p className="font-heading text-lg sm:text-xl lg:text-2xl font-medium text-[#1c1c1e] mb-3 lg:mb-4">
             Inspired by these projects?
           </p>
           <button

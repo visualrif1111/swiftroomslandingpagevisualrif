@@ -189,16 +189,21 @@ export function Navigation() {
     scrollToSection(id);
   };
 
-  // Close mobile menu when scrolling
+  // Lock background scrolling while the mobile menu is open. The app scrolls
+  // via an inner container, so lock that too — not just the body.
   useEffect(() => {
+    const inner = document.querySelector('.overflow-y-scroll.h-screen') as HTMLElement | null;
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      if (inner) inner.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
+      if (inner) inner.style.overflow = '';
     }
 
     return () => {
       document.body.style.overflow = 'unset';
+      if (inner) inner.style.overflow = '';
     };
   }, [mobileMenuOpen]);
 
@@ -333,23 +338,24 @@ export function Navigation() {
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Full Screen Menu - Exact Figma Design */}
+            {/* Full Screen Menu - premium frosted-glass panel */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed inset-0 bg-white z-50 lg:hidden overflow-hidden"
+              initial={{ opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.03 }}
+              transition={{ type: 'tween', duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+              className="fixed inset-0 bg-white/90 backdrop-blur-2xl z-50 lg:hidden overflow-hidden"
+              style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
             >
               {/* Header - Rectangle325 Figma Design */}
-              <motion.div 
+              <motion.div
                 className="relative w-full h-[82px]"
                 initial={{ y: -82 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                {/* White Rectangle Background */}
-                <div className="bg-white absolute inset-0" />
+                {/* Transparent so the frosted panel reads as one surface */}
+                <div className="bg-transparent absolute inset-0" />
                 
                 {/* Logo Centered */}
                 <motion.div 

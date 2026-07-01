@@ -31,16 +31,16 @@ export function Footer() {
               <div className="mb-2">
                 <SwiftRoomsLogo size={48} />
               </div>
-              <p className="font-body text-xs lg:text-sm text-gray-300 leading-relaxed max-w-md">
+              <p className="font-body text-sm text-gray-300 leading-relaxed max-w-md">
                 Premium aluminum solutions for UAE homes and businesses
               </p>
             </div>
             
             {/* Contact Info - Condensed */}
-            <div className="space-y-3">
+            <div className="space-y-2 lg:space-y-3">
               <a
                 href="tel:+97143474240"
-                className="flex items-center gap-2 text-gray-300 hover:text-[#007969] transition-colors group"
+                className="flex items-center gap-3 min-h-[44px] lg:min-h-0 text-gray-300 hover:text-[#007969] transition-colors group"
               >
                 <div className="w-8 h-8 bg-[#007969]/20 rounded-lg flex items-center justify-center group-hover:bg-[#007969]/30 transition-colors">
                   <Phone className="w-4 h-4 text-[#007969]" />
@@ -50,7 +50,7 @@ export function Footer() {
               
               <a
                 href="mailto:sales@swiftrooms.ae"
-                className="flex items-center gap-2 text-gray-300 hover:text-[#007969] transition-colors group"
+                className="flex items-center gap-3 min-h-[44px] lg:min-h-0 text-gray-300 hover:text-[#007969] transition-colors group"
               >
                 <div className="w-8 h-8 bg-[#007969]/20 rounded-lg flex items-center justify-center group-hover:bg-[#007969]/30 transition-colors">
                   <Mail className="w-4 h-4 text-[#007969]" />
@@ -58,7 +58,7 @@ export function Footer() {
                 <span className="font-body text-sm">sales@swiftrooms.ae</span>
               </a>
               
-              <div className="flex items-start gap-2 text-gray-300">
+              <div className="flex items-start gap-3 text-gray-300 pt-1">
                 <div className="w-8 h-8 bg-[#007969]/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                   <MapPin className="w-4 h-4 text-[#007969]" />
                 </div>
@@ -81,37 +81,37 @@ export function Footer() {
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2">
                 <button
                   onClick={() => scrollToSection('hero')}
-                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 px-2 py-1 rounded transition-all duration-200 text-left"
+                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   Home
                 </button>
                 <button
                   onClick={() => scrollToSection('products')}
-                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 px-2 py-1 rounded transition-all duration-200 text-left"
+                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   Products
                 </button>
                 <button
                   onClick={() => scrollToSection('process')}
-                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 px-2 py-1 rounded transition-all duration-200 text-left"
+                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   Process
                 </button>
                 <button
                   onClick={() => scrollToSection('social')}
-                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 px-2 py-1 rounded transition-all duration-200 text-left"
+                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   Portfolio
                 </button>
                 <button
                   onClick={() => scrollToSection('faqs')}
-                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 px-2 py-1 rounded transition-all duration-200 text-left"
+                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   FAQs
                 </button>
                 <button
                   onClick={() => scrollToSection('contact-form')}
-                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 px-2 py-1 rounded transition-all duration-200 text-left"
+                  className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   Get Quote
                 </button>
@@ -128,7 +128,7 @@ export function Footer() {
                   href="https://www.instagram.com/swiftrooms.ae/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#007969] rounded-lg flex items-center justify-center hover:bg-[#007969] transition-all hover:scale-110 duration-200"
+                  className="w-11 h-11 lg:w-10 lg:h-10 bg-[#007969] rounded-lg flex items-center justify-center hover:bg-[#007969] transition-all hover:scale-110 duration-200"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-5 h-5" />
@@ -147,7 +147,7 @@ export function Footer() {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="font-body text-xs text-gray-400 hover:text-[#007969] transition-colors"
+                className="font-body text-xs text-gray-400 hover:text-[#007969] transition-colors inline-flex items-center min-h-[44px] px-2 lg:min-h-0 lg:px-0"
                 onClick={(e) => {
                   e.preventDefault();
                   setShowPrivacy(true);
@@ -157,7 +157,7 @@ export function Footer() {
               </a>
               <a
                 href="#"
-                className="font-body text-xs text-gray-400 hover:text-[#007969] transition-colors"
+                className="font-body text-xs text-gray-400 hover:text-[#007969] transition-colors inline-flex items-center min-h-[44px] px-2 lg:min-h-0 lg:px-0"
                 onClick={(e) => {
                   e.preventDefault();
                   setShowTerms(true);

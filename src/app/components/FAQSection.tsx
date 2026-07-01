@@ -74,7 +74,7 @@ export function FAQSection() {
           </motion.div>
 
           {/* FAQ Items */}
-          <div className="space-y-4 mb-12">
+          <div className="space-y-3 lg:space-y-4 mb-12">
             {faqData.map((faq, index) => (
               <motion.div
                 key={index}
@@ -85,18 +85,18 @@ export function FAQSection() {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className={`w-full bg-white rounded-xl border border-[#e5e7eb] card-hover px-6 py-5 flex items-center justify-between text-left transition-all duration-200 ${openIndex === index ? 'border-[#007969]' : ''}`}
+                  className={`w-full bg-white rounded-xl border card-hover min-h-[44px] px-5 py-4 lg:px-6 lg:py-5 flex items-center justify-between gap-3 text-left transition-all duration-200 shadow-sm lg:shadow-none ${openIndex === index ? 'border-[#007969] shadow-md lg:shadow-none' : 'border-[#e5e7eb]'}`}
                 >
-                  <span className="font-body font-medium text-[#1c1c1e] text-base sm:text-lg leading-7 tracking-[-0.4395px] pr-4">
+                  <span className={`font-body font-medium text-base sm:text-lg leading-7 tracking-[-0.4395px] transition-colors ${openIndex === index ? 'text-[#007969] lg:text-[#1c1c1e]' : 'text-[#1c1c1e]'}`}>
                     {faq.question}
                   </span>
                   <motion.div
-                    className="flex-shrink-0 w-5 h-3 text-[#007969]"
+                    className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 lg:w-5 lg:h-3 lg:rounded-none lg:bg-transparent lg:text-[#007969] ${openIndex === index ? 'bg-[#007969] text-white' : 'bg-[#e6f4f1] text-[#007969]'}`}
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
                     <ChevronDown
-                      className="block size-full"
+                      className="block w-4 h-4 lg:size-full"
                       fill="none"
                       preserveAspectRatio="xMidYMid meet"
                       viewBox="0 0 11.6667 6.66667"
@@ -113,8 +113,8 @@ export function FAQSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="bg-white rounded-b-xl px-6 pb-5 pt-2 -mt-2">
-                        <p className="font-body text-[#3a3a3c] text-base leading-7">
+                      <div className="bg-white rounded-b-xl px-5 lg:px-6 pb-5 pt-3 lg:pt-2 -mt-2">
+                        <p className="font-body text-[#3a3a3c] text-[15px] sm:text-base leading-7">
                           {faq.answer}
                         </p>
                       </div>
