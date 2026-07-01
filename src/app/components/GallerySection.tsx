@@ -129,7 +129,6 @@ interface GalleryImageProps {
   isCenter: boolean;
   onClick: () => void;
   width: number;
-  height: number;
   scale: number;
   opacity: number;
   zIndex: number;
@@ -144,7 +143,6 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
   isCenter,
   onClick,
   width,
-  height,
   scale,
   opacity,
   zIndex,
@@ -221,7 +219,7 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
       style={{
         zIndex: isHovered && !isCenter ? Math.min(zIndex + 5, 25) : zIndex, // Cap hover z-index below center
         width: `${width}px`,
-        height: `${width}px`, // Changed to use width for perfect 1:1 ratio
+        aspectRatio: '1 / 1', // Clean square card instead of duplicated pixel height
         perspective: 1500,
         cursor: isDraggingImage ? 'grabbing' : (isHovered ? 'grab' : 'pointer'),
       }}
@@ -947,44 +945,39 @@ export function GallerySection() {
                 const offset = item.offset;
                 const isCenter = offset === 0;
 
-                // Calculate positions and styles based on offset - embedded/stacked design with comfortable spacing
-                let scale, opacity, zIndex, xOffset, width, height;
+                // Fan layout: scale/opacity/spacing per position offset from center
+                let scale, opacity, zIndex, xOffset, width;
 
                 if (offset === 0) {
                   scale = 1;
                   opacity = 1;
                   zIndex = 30;
                   xOffset = 0;
-                  width = 550; // Reduced from 800 for small laptops
-                  height = 500;
+                  width = 550; // Center card
                 } else if (offset === -1) {
                   scale = 0.75;
                   opacity = 0.6;
                   zIndex = 20;
-                  xOffset = -320; // Reduced spacing for small screens
-                  width = 380; // Reduced from 500
-                  height = 400;
+                  xOffset = -320;
+                  width = 380;
                 } else if (offset === 1) {
                   scale = 0.75;
                   opacity = 0.7;
                   zIndex = 20;
-                  xOffset = 320; // Reduced spacing for small screens
-                  width = 380; // Reduced from 500
-                  height = 400;
+                  xOffset = 320;
+                  width = 380;
                 } else if (offset === -2) {
                   scale = 0.5;
                   opacity = 0.3;
                   zIndex = 10;
-                  xOffset = -520; // Reduced from -660
-                  width = 280; // Reduced from 350
-                  height = 300;
+                  xOffset = -520;
+                  width = 280;
                 } else {
                   scale = 0.5;
                   opacity = 0.2;
                   zIndex = 10;
-                  xOffset = 520; // Reduced from 660
-                  width = 280; // Reduced from 350
-                  height = 300;
+                  xOffset = 520;
+                  width = 280;
                 }
 
                 return (
@@ -1001,7 +994,6 @@ export function GallerySection() {
                       }
                     }}
                     width={width}
-                    height={height}
                     scale={scale}
                     opacity={opacity}
                     zIndex={zIndex}

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Instagram, Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import svgPaths from '../../imports/svg-zxyqwpfxuq';
 
 // SWIFTROOMS Logo Component (for profile picture)
@@ -22,6 +22,70 @@ interface InstagramVideoPlayerProps {
   isInstagramEmbed?: boolean;
 }
 
+// Story-style chrome overlaid on the reel (progress bars, handle, caption, hashtags)
+function ReelOverlay({ caption, hashtags }: { caption: string; hashtags: string[] }) {
+  return (
+    <>
+      {/* Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.6)] pointer-events-none" />
+
+      {/* Story Progress Bars */}
+      <div className="absolute top-4 left-4 right-4 flex gap-1 z-10">
+        {[1, 2, 3, 4, 5].map((index) => (
+          <div
+            key={index}
+            className={`h-0.5 flex-1 rounded-full ${index <= 1 ? 'bg-white' : 'bg-white/30'}`}
+          />
+        ))}
+      </div>
+
+      {/* Top Header - Handle only - Hidden on Mobile */}
+      <div className="hidden lg:flex absolute top-8 left-4 right-4 items-center gap-3 z-10">
+        {/* Profile Picture */}
+        <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-[#FDC700] via-[#F633A9] to-[#9810FA] p-0.5">
+          <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-1.5">
+            <SWIFTROOMSLogo className="w-full h-full" />
+          </div>
+        </div>
+
+        {/* Username */}
+        <div className="flex-1">
+          <p className="font-['Barlow',sans-serif] text-white text-sm font-normal leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            @swiftrooms
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Content - Handle, Caption, Hashtags - Hidden on Mobile */}
+      <div className="hidden lg:block absolute bottom-4 left-4 right-4 z-10">
+        <div className="space-y-2">
+          {/* Username */}
+          <p className="font-['Barlow',sans-serif] text-white text-sm font-semibold leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            @swiftrooms
+          </p>
+
+          {/* Caption */}
+          <p className="font-['Barlow',sans-serif] text-white text-sm font-normal leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            {caption}
+          </p>
+
+          {/* Hashtags */}
+          <div className="flex gap-2 flex-wrap">
+            {hashtags.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full text-white/90 text-xs font-['Barlow',sans-serif] font-normal leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export function InstagramVideoPlayer({
   videoUrl,
   caption,
@@ -40,10 +104,10 @@ export function InstagramVideoPlayer({
         video.muted = true; // Must be muted for autoplay to work
         video.playsInline = true;
         video.loop = true;
-        
+
         // Attempt autoplay immediately
         const playPromise = video.play();
-        
+
         if (playPromise !== undefined) {
           playPromise.catch(() => {
             // Autoplay was prevented - this is expected behavior in some browsers
@@ -62,172 +126,58 @@ export function InstagramVideoPlayer({
     }
   };
 
+  // Shared responsive portrait-reel wrapper (9:16 aspect ratio)
+  const wrapperClasses =
+    'relative bg-black rounded-3xl overflow-hidden shadow-[0px_24px_48px_-12px_rgba(0,0,0,0.25)] w-full max-w-[320px] lg:max-w-[360px] aspect-[9/16]';
+
   // If it's a YouTube embed, render with iframe
   if (isInstagramEmbed) {
     // Extract video ID from URL for playlist parameter (required for loop to work)
     const videoId = videoUrl.split('/').pop()?.split('?')[0] || '';
-    
+
     return (
-      <div className="relative bg-black rounded-[22.5px] overflow-hidden shadow-[0px_24px_48px_-12px_rgba(0,0,0,0.25)] w-full max-w-[320px] lg:max-w-[360px] aspect-[9/16]">
-        {/* YouTube iframe */}
+      <div className={wrapperClasses}>
+        {/* YouTube iframe fills the aspect-ratio wrapper */}
         <iframe
           src={`${videoUrl}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&modestbranding=1&playsinline=1&rel=0&showinfo=0&enablejsapi=1&origin=${window.location.origin}`}
-          className="absolute inset-0 w-full h-full"
-          frameBorder="0"
+          className="absolute inset-0 w-full h-full object-cover border-none overflow-hidden"
           title="Instagram Reel Video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
-          style={{
-            border: 'none',
-            overflow: 'hidden',
-          }}
         />
 
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.6)] pointer-events-none" />
-
-        {/* Story Progress Bars */}
-        <div className="absolute top-[15px] left-[15px] right-[15px] flex gap-[3.75px] z-10">
-          {[1, 2, 3, 4, 5].map((index) => (
-            <div
-              key={index}
-              className={`h-[2px] flex-1 rounded-full ${
-                index <= 1 ? 'bg-white' : 'bg-white/30'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Top Header - Only Handle and Follow - Hidden on Mobile */}
-        <div className="hidden lg:flex absolute top-[30px] left-[15px] right-[15px] items-center gap-[11px] z-10">
-          {/* Profile Picture */}
-          <div className="relative w-[37.5px] h-[37.5px] rounded-full bg-gradient-to-br from-[#FDC700] via-[#F633A9] to-[#9810FA] p-[2px]">
-            <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-[6px]">
-              <SWIFTROOMSLogo className="w-full h-full" />
-            </div>
-          </div>
-
-          {/* Username */}
-          <div className="flex-1">
-            <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-              @swiftrooms
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom Content - Only Handle, Caption, and Hashtags - Hidden on Mobile */}
-        <div className="hidden lg:block absolute bottom-[15px] left-[15px] right-[15px] z-10">
-          <div className="space-y-[7.5px]">
-            {/* Username */}
-            <p className="font-['Barlow',sans-serif] text-white text-[13px] font-semibold leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-              @swiftrooms
-            </p>
-
-            {/* Caption */}
-            <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[21.33px] max-w-[314px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-              {caption}
-            </p>
-
-            {/* Hashtags */}
-            <div className="flex gap-[7.5px] flex-wrap">
-              {hashtags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="bg-white/10 backdrop-blur-sm px-[7.5px] py-[3.75px] rounded-full text-white/90 text-[11px] font-['Barlow',sans-serif] font-normal leading-[15px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+        <ReelOverlay caption={caption} hashtags={hashtags} />
       </div>
     );
   }
 
   return (
-    <div className="relative bg-black rounded-[22.5px] overflow-hidden shadow-[0px_24px_48px_-12px_rgba(0,0,0,0.25)] w-full max-w-[320px] lg:max-w-[360px] aspect-[9/16]">
-      {/* Video Element */}
+    <div className={wrapperClasses}>
+      {/* Video fills the aspect-ratio wrapper */}
       <video
         ref={videoRef}
         src={videoUrl}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-center"
         loop
         muted
         playsInline
         autoPlay
       />
 
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.6)] pointer-events-none" />
+      <ReelOverlay caption={caption} hashtags={hashtags} />
 
-      {/* Story Progress Bars */}
-      <div className="absolute top-[15px] left-[15px] right-[15px] flex gap-[3.75px] z-10">
-        {[1, 2, 3, 4, 5].map((index) => (
-          <div
-            key={index}
-            className={`h-[2px] flex-1 rounded-full ${
-              index <= 1 ? 'bg-white' : 'bg-white/30'
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Top Header - Only Handle and Follow - Hidden on Mobile */}
-      <div className="hidden lg:flex absolute top-[30px] left-[15px] right-[15px] items-center gap-[11px] z-10">
-        {/* Profile Picture */}
-        <div className="relative w-[37.5px] h-[37.5px] rounded-full bg-gradient-to-br from-[#FDC700] via-[#F633A9] to-[#9810FA] p-[2px]">
-          <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-[6px]">
-            <SWIFTROOMSLogo className="w-full h-full" />
-          </div>
-        </div>
-
-        {/* Username */}
-        <div className="flex-1">
-          <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-            @swiftrooms
-          </p>
-        </div>
-      </div>
-
-      {/* Mute/Unmute Button */}
+      {/* Mute/Unmute Button - sits below the header */}
       <button
         onClick={toggleMute}
-        className="absolute top-[75px] right-[15px] w-[30px] h-[30px] bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center z-10 hover:bg-black/60 transition-colors pointer-events-auto"
+        className="absolute top-20 right-4 w-8 h-8 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center z-10 hover:bg-black/60 transition-colors pointer-events-auto"
+        aria-label={isMuted ? 'Unmute video' : 'Mute video'}
       >
         {isMuted ? (
-          <VolumeX className="w-[15px] h-[15px] text-white" />
+          <VolumeX className="w-4 h-4 text-white" />
         ) : (
-          <Volume2 className="w-[15px] h-[15px] text-white" />
+          <Volume2 className="w-4 h-4 text-white" />
         )}
       </button>
-
-      {/* Bottom Content - Only Handle, Caption, and Hashtags - Hidden on Mobile */}
-      <div className="hidden lg:block absolute bottom-[15px] left-[15px] right-[15px] z-10">
-        <div className="space-y-[7.5px]">
-          {/* Username */}
-          <p className="font-['Barlow',sans-serif] text-white text-[13px] font-semibold leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-            @swiftrooms
-          </p>
-
-          {/* Caption */}
-          <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[21.33px] max-w-[314px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-            {caption}
-          </p>
-
-          {/* Hashtags */}
-          <div className="flex gap-[7.5px] flex-wrap">
-            {hashtags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-white/10 backdrop-blur-sm px-[7.5px] py-[3.75px] rounded-full text-white/90 text-[11px] font-['Barlow',sans-serif] font-normal leading-[15px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

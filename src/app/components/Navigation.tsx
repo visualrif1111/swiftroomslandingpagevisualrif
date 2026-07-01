@@ -3,31 +3,26 @@ import { FullLogo, LogoIcon, CompactLogo } from './NewLogo';
 import { motion, AnimatePresence } from 'motion/react';
 import { CTADecoration } from './InteractiveDecorations';
 
-// Mobile Hamburger Menu Icon (from Figma import)
-function HamburgerIcon({ className = '' }: { className?: string }) {
+// Brand teal used across the navigation
+const BRAND_TEAL = '#007969';
+
+// Three evenly-spaced teal bars forming the hamburger icon
+function HamburgerIcon() {
   return (
-    <div className={`${className} relative w-[33.09px] h-[25.605px] flex flex-col justify-between`}>
-      <div className="bg-[#007969] h-[3.122px] w-[33.09px]" />
-      <div className="bg-[#007969] h-[3.122px] w-[33.09px]" />
-      <div className="bg-[#007969] h-[3.122px] w-[33.09px]" />
+    <div className="flex h-6 w-6 flex-col justify-center gap-1.5">
+      <span className="h-0.5 w-6 rounded bg-[#007969]" />
+      <span className="h-0.5 w-6 rounded bg-[#007969]" />
+      <span className="h-0.5 w-6 rounded bg-[#007969]" />
     </div>
   );
 }
 
-// Close X Icon - From Figma Frame43-26-517
-function CloseIcon({ className = '' }: { className?: string }) {
+// Two rotated teal bars forming the close (X) icon
+function CloseIcon() {
   return (
-    <div className={`${className} relative w-[33.09px] h-[25.605px]`}>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="-rotate-45">
-          <div className="bg-[#007969] h-[3.122px] w-[33.09px]" />
-        </div>
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="rotate-45">
-          <div className="bg-[#007969] h-[3.122px] w-[33.09px]" />
-        </div>
-      </div>
+    <div className="relative h-6 w-6">
+      <span className="absolute left-1/2 top-1/2 h-0.5 w-6 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded bg-[#007969]" />
+      <span className="absolute left-1/2 top-1/2 h-0.5 w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded bg-[#007969]" />
     </div>
   );
 }
@@ -59,6 +54,7 @@ export function Navigation() {
     };
   }, []);
 
+  // Desktop horizontal nav links
   const navItems = [
     { key: 'hero', id: 'hero', label: 'Home' },
     { key: 'benefits', id: 'benefits', label: 'Benefits' },
@@ -69,6 +65,19 @@ export function Navigation() {
     { key: 'social', id: 'social', label: 'Portfolio' },
     { key: 'contact-form', id: 'contact-form', label: 'Get Free Quote' },
     { key: 'faqs', id: 'faqs', label: 'FAQs' },
+  ];
+
+  // Mobile full-screen menu links (order/content preserved from original)
+  const mobileNavItems = [
+    { id: 'hero', label: 'Home' },
+    { id: 'products', label: 'Products' },
+    { id: 'process', label: 'Process' },
+    { id: 'brands', label: 'Brands' },
+    { id: 'social', label: 'Portfolio' },
+    { id: 'contact-form', label: 'Get Free Quote', isCTA: true },
+    { id: 'gallery', label: 'Gallery' },
+    { id: 'testimonials', label: 'Testimonials' },
+    { id: 'faqs', label: 'FAQs' },
   ];
 
   // Intersection Observer for active section tracking - Deferred to idle time.
@@ -109,10 +118,10 @@ export function Navigation() {
 
   const scrollToSection = (id: string) => {
     console.log(`[Navigation] Attempting to scroll to section: ${id}`);
-    
+
     // Find the target element
     const element = document.getElementById(id);
-    
+
     if (!element) {
       console.error(`[Navigation] Element with id="${id}" not found!`);
       return;
@@ -127,19 +136,19 @@ export function Navigation() {
     setTimeout(() => {
       // Method 1: Try to find the custom scroll container
       const scrollContainer = document.querySelector('.overflow-y-scroll.h-screen') as HTMLElement;
-      
+
       if (scrollContainer) {
         console.log(`[Navigation] Using scroll container method for ${id}`);
-        
+
         // Get the element's position relative to the scroll container
         const containerRect = scrollContainer.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
         const scrollTop = scrollContainer.scrollTop;
-        
+
         // Calculate the target scroll position
         // We want the element at the top of the viewport
         const targetScroll = scrollTop + elementRect.top - containerRect.top;
-        
+
         console.log(`[Navigation] Scroll calculation:`, {
           currentScroll: scrollTop,
           elementTop: elementRect.top,
@@ -162,16 +171,16 @@ export function Navigation() {
       } else {
         // Method 2: Fallback to window scroll (for edge cases)
         console.log(`[Navigation] Using window scroll method for ${id}`);
-        
+
         try {
-          const yOffset = -82; // Navigation height
+          const yOffset = -80; // Navigation height
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          
+
           window.scrollTo({
             top: elementPosition,
             behavior: 'smooth'
           });
-          
+
           console.log(`[Navigation] ✅ Scrolled to ${id} using window.scrollTo`);
         } catch (e) {
           // Ultimate fallback
@@ -216,13 +225,14 @@ export function Navigation() {
         style={{ willChange: 'auto' }}
       >
         <div className="container mx-auto px-4 lg:px-6">
-          <div className="flex items-center justify-between h-[82px] lg:h-20">
-            {/* Mobile Header - Figma Design with Centered Logo */}
-            <div className="flex lg:hidden items-center justify-center w-full relative h-[82px]">
-              {/* Centered Mobile Logo */}
-              <motion.button 
+          <div className="flex items-center justify-between h-20">
+            {/* Mobile / tablet header: centered logo with hamburger on the right */}
+            <div className="flex lg:hidden items-center justify-center w-full relative h-20">
+              {/* Centered logo */}
+              <motion.button
                 onClick={() => scrollToSection('hero')}
                 className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center"
+                aria-label="Go to home"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
@@ -236,10 +246,10 @@ export function Navigation() {
                 </motion.div>
               </motion.button>
 
-              {/* Mobile Hamburger Menu on Right */}
-              <motion.button 
+              {/* Hamburger menu button */}
+              <motion.button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="absolute right-6 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-gray-50 transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-md hover:bg-gray-50 transition-colors"
                 aria-label="Toggle menu"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -249,9 +259,9 @@ export function Navigation() {
               </motion.button>
             </div>
 
-            {/* Desktop Navigation */}
+            {/* Desktop: logo on the left */}
             <div className="hidden lg:flex items-center flex-shrink-0">
-              <motion.button 
+              <motion.button
                 onClick={() => scrollToSection('hero')}
                 className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
                 aria-label="Go to home"
@@ -263,8 +273,8 @@ export function Navigation() {
               </motion.button>
             </div>
 
-            {/* Desktop Navigation - Horizontal Scrollable */}
-            <div 
+            {/* Desktop: horizontal, scrollable nav links */}
+            <div
               ref={scrollContainerRef}
               className="hidden lg:flex items-center overflow-x-auto scrollbar-hide space-x-1 mx-4 flex-1 max-w-3xl"
               style={{
@@ -280,8 +290,8 @@ export function Navigation() {
                     key={item.key}
                     onClick={() => scrollToSection(item.id)}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                      isActive 
-                        ? 'text-[#007969] bg-[#f0fdf4] font-semibold' 
+                      isActive
+                        ? 'text-[#007969] bg-[#f0fdf4] font-semibold'
                         : 'text-[#3a3a3c] hover:text-[#007969] hover:bg-[#f0fdf4]'
                     }`}
                     initial={{ opacity: 0, y: -20 }}
@@ -296,7 +306,7 @@ export function Navigation() {
               })}
             </div>
 
-            {/* Desktop CTA Button */}
+            {/* Desktop: primary CTA on the right */}
             <div className="hidden lg:block flex-shrink-0">
               <motion.button
                 onClick={() => {
@@ -324,7 +334,7 @@ export function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Drawer - Frame43-26-449 Figma Design */}
+      {/* Mobile full-screen menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -338,7 +348,7 @@ export function Navigation() {
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Full Screen Menu - premium frosted-glass panel */}
+            {/* Full-screen frosted-glass panel */}
             <motion.div
               initial={{ opacity: 0, scale: 1.03 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -347,18 +357,15 @@ export function Navigation() {
               className="fixed inset-0 bg-white/90 backdrop-blur-2xl z-50 lg:hidden overflow-hidden"
               style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
             >
-              {/* Header - Rectangle325 Figma Design */}
+              {/* Menu header: centered logo, close button on the right */}
               <motion.div
-                className="relative w-full h-[82px]"
-                initial={{ y: -82 }}
+                className="relative w-full h-20"
+                initial={{ y: -80 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                {/* Transparent so the frosted panel reads as one surface */}
-                <div className="bg-transparent absolute inset-0" />
-                
-                {/* Logo Centered */}
-                <motion.div 
+                {/* Centered logo */}
+                <motion.div
                   className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-11 h-11"
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
@@ -366,11 +373,11 @@ export function Navigation() {
                 >
                   <LogoIcon className="w-11 h-11" />
                 </motion.div>
-                
-                {/* Close Button on Right */}
-                <motion.button 
+
+                {/* Close button */}
+                <motion.button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-50 rounded-md transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-md hover:bg-gray-50 transition-colors"
                   aria-label="Close menu"
                   initial={{ scale: 0, rotate: 90 }}
                   animate={{ scale: 1, rotate: 0 }}
@@ -382,295 +389,79 @@ export function Navigation() {
                 </motion.button>
               </motion.div>
 
-              {/* Navigation Items - Compact Layout to Fit One Fold */}
-              <div className="relative h-[calc(100vh-82px)] flex flex-col justify-between py-6">
-                {/* Navigation Links Container */}
-                <div className="flex-1 flex flex-col justify-center items-center space-y-6">
-                  {/* Home */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('hero')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'hero' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Home
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'hero' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.2, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* Products */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('products')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'products' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Products
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'products' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.25, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* Process */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('process')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'process' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Process
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'process' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.3, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* Brands */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.25, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('brands')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'brands' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Brands
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'brands' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.35, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* Portfolio */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('social')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'social' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Portfolio
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'social' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.4, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* Get Quote */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.35, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <CTADecoration>
+              {/* Menu body: links (scrollable) with contact details pinned below */}
+              <div className="relative h-[calc(100vh-5rem)] flex flex-col justify-between py-6">
+                {/* Navigation links */}
+                <div className="flex-1 flex flex-col justify-center items-center gap-6 overflow-y-auto px-4">
+                  {mobileNavItems.map((item, index) => {
+                    const isActive = activeSection === item.id;
+                    const itemDelay = 0.1 + index * 0.05;
+                    const link = (
                       <button
-                        onClick={() => scrollToSection('contact-form')}
-                        className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                          activeSection === 'contact-form' ? 'text-[#007969]' : 'text-[#3a3a3c]'
+                        onClick={() => scrollToSection(item.id)}
+                        className={`inline-flex min-h-11 items-center justify-center px-4 font-['Rajdhani',sans-serif] font-medium uppercase text-2xl leading-none tracking-wide ${
+                          isActive ? 'text-[#007969]' : 'text-[#3a3a3c]'
                         } active:scale-95 transition-transform touch-manipulation`}
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
-                        Get Free Quote
+                        {item.label}
                       </button>
-                    </CTADecoration>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'contact-form' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.45, duration: 0.3 }}
-                    />
-                  </motion.div>
+                    );
 
-                  {/* Gallery */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('gallery')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'gallery' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Gallery
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'gallery' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.5, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* Testimonials */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.45, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('testimonials')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'testimonials' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      Testimonials
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'testimonials' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.55, duration: 0.3 }}
-                    />
-                  </motion.div>
-
-                  {/* FAQs */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5, type: 'spring', stiffness: 200, damping: 20 }}
-                    className="text-center"
-                  >
-                    <button
-                      onClick={() => scrollToSection('faqs')}
-                      className={`font-['Rajdhani',sans-serif] font-medium text-[24px] leading-[24px] whitespace-pre-wrap ${
-                        activeSection === 'faqs' ? 'text-[#007969]' : 'text-[#3a3a3c]'
-                      } active:scale-95 transition-transform touch-manipulation`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      FAQs
-                    </button>
-                    <motion.div 
-                      className="h-px w-[62px] mt-[3px] mx-auto"
-                      style={{ 
-                        backgroundColor: activeSection === 'faqs' ? '#007969' : '#e5e7eb',
-                        transition: 'background-color 0.3s ease'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.6, duration: 0.3 }}
-                    />
-                  </motion.div>
+                    return (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: itemDelay, type: 'spring', stiffness: 200, damping: 20 }}
+                        className="text-center"
+                      >
+                        {item.isCTA ? <CTADecoration>{link}</CTADecoration> : link}
+                        <motion.div
+                          className="h-px w-16 mt-1 mx-auto"
+                          style={{
+                            backgroundColor: isActive ? BRAND_TEAL : '#e5e7eb',
+                            transition: 'background-color 0.3s ease'
+                          }}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ delay: itemDelay + 0.1, duration: 0.3 }}
+                        />
+                      </motion.div>
+                    );
+                  })}
                 </div>
 
-                {/* Footer Content - Bottom */}
-                <motion.div 
+                {/* Contact details pinned to the bottom */}
+                <motion.div
                   className="px-6 space-y-3"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.5 }}
                 >
                   {/* Tagline */}
-                  <motion.p 
-                    className="font-['Barlow',sans-serif] text-[14px] text-[#99a1af] text-center leading-[20px] tracking-[-0.3139px]"
+                  <motion.p
+                    className="font-['Barlow',sans-serif] text-sm text-[#99a1af] text-center tracking-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.7 }}
                   >
                     Dubai's trusted aluminium windows and doors specialist since 2009
                   </motion.p>
-                  
+
                   {/* Email */}
-                  <motion.p 
-                    className="font-['Barlow',sans-serif] text-[14px] text-[#99a1af] text-center leading-[20px] tracking-[-0.3139px]"
+                  <motion.p
+                    className="font-['Barlow',sans-serif] text-sm text-[#99a1af] text-center tracking-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.8 }}
                   >
                     hello@swiftrooms.ae
                   </motion.p>
-                  
+
                   {/* Phone */}
-                  <motion.p 
-                    className="font-['Barlow',sans-serif] text-[14px] text-[#99a1af] text-center leading-[20px] tracking-[-0.3139px]"
+                  <motion.p
+                    className="font-['Barlow',sans-serif] text-sm text-[#99a1af] text-center tracking-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.9 }}

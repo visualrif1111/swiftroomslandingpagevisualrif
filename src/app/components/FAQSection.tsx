@@ -87,20 +87,15 @@ export function FAQSection() {
                   onClick={() => toggleFAQ(index)}
                   className={`w-full bg-white rounded-xl border card-hover min-h-[44px] px-5 py-4 lg:px-6 lg:py-5 flex items-center justify-between gap-3 text-left transition-all duration-200 shadow-sm lg:shadow-none ${openIndex === index ? 'border-[#007969] shadow-md lg:shadow-none' : 'border-[#e5e7eb]'}`}
                 >
-                  <span className={`font-body font-medium text-base sm:text-lg leading-7 tracking-[-0.4395px] transition-colors ${openIndex === index ? 'text-[#007969] lg:text-[#1c1c1e]' : 'text-[#1c1c1e]'}`}>
+                  <span className={`font-body font-medium text-base sm:text-lg leading-7 tracking-tight transition-colors ${openIndex === index ? 'text-[#007969] lg:text-[#1c1c1e]' : 'text-[#1c1c1e]'}`}>
                     {faq.question}
                   </span>
                   <motion.div
-                    className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 lg:w-5 lg:h-3 lg:rounded-none lg:bg-transparent lg:text-[#007969] ${openIndex === index ? 'bg-[#007969] text-white' : 'bg-[#e6f4f1] text-[#007969]'}`}
+                    className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 lg:w-5 lg:h-5 lg:rounded-none lg:bg-transparent lg:text-[#007969] ${openIndex === index ? 'bg-[#007969] text-white' : 'bg-[#e6f4f1] text-[#007969]'}`}
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ChevronDown
-                      className="block w-4 h-4 lg:size-full"
-                      fill="none"
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 11.6667 6.66667"
-                    />
+                    <ChevronDown className="block w-4 h-4 lg:w-5 lg:h-5" />
                   </motion.div>
                 </button>
 
@@ -133,7 +128,7 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            <p className="font-body text-lg text-[#3a3a3c] leading-7 tracking-[-0.4395px] mb-6">
+            <p className="font-body text-lg text-[#3a3a3c] leading-7 tracking-tight mb-6">
               Still have questions?
             </p>
             <button

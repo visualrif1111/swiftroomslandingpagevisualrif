@@ -115,41 +115,6 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
     }, 3000);
   }, []);
 
-  // Get image positioning styles based on product ID (matching Figma design board)
-  const getImageStyle = () => {
-    switch (product.id) {
-      case 1: // Aluminum Sliding Doors
-        return {
-          className: 'absolute max-w-none pointer-events-none w-full',
-          style: { height: '120%', left: '0', top: '-10%' }
-        };
-      case 2: // Bi-Fold Doors
-        return { 
-          className: 'absolute max-w-none pointer-events-none w-full',
-          style: { height: '220.31%', left: '-0.03%', top: '-76.92%' }
-        };
-      case 3: // Aluminum Windows
-        return { 
-          className: 'absolute max-w-none pointer-events-none w-full',
-          style: { height: '146.88%', left: '0', top: '-6.94%' }
-        };
-      case 4: // UPVC Windows and Doors
-        return { 
-          className: 'absolute max-w-none pointer-events-none w-full',
-          style: { height: '146.88%', left: '0', top: '-16.11%' }
-        };
-      case 5: // Skylights and Garden Rooms
-        return { 
-          className: 'absolute max-w-none pointer-events-none w-full',
-          style: { height: '110.16%', left: '0', top: '0.16%' }
-        };
-      default:
-        return { className: 'absolute inset-0 max-w-none object-cover pointer-events-none size-full' };
-    }
-  };
-
-  const imageConfig = getImageStyle();
-
   return (
     <div className="px-2 sm:px-3 lg:px-4 py-2 sm:py-4">
       <motion.div
@@ -162,20 +127,18 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.3 }}
       >
-        {/* Image Container */}
+        {/* Image Container: fixed-height area with a cover image */}
         <div className="relative h-64 sm:h-72 lg:h-80 overflow-hidden">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.img
-              src={product.imageUrl}
-              alt={product.name}
-              className={imageConfig.className}
-              style={imageConfig.style}
-              animate={{
-                scale: isHovered ? 1.1 : 1,
-              }}
-              transition={{ duration: 0.4 }}
-            />
-          </div>
+          <motion.img
+            src={product.imageUrl}
+            alt={product.name}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+            animate={{
+              scale: isHovered ? 1.1 : 1,
+            }}
+            transition={{ duration: 0.4 }}
+          />
           
           {/* Overlay */}
           <motion.div
