@@ -254,14 +254,14 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
       onMouseLeave={handleMouseLeave}
     >
       <motion.div
-        className="relative overflow-hidden w-full h-full"
+        className="relative overflow-hidden rounded-xl w-full h-full"
         style={{
           rotateX: !isDraggingImage && isCenter && isHovered ? rotateX : 0,
           rotateY: !isDraggingImage && isCenter && isHovered ? rotateY : 0,
           transformStyle: 'preserve-3d',
           boxShadow: isCenter && isHovered
-            ? '0 40px 80px -20px rgba(0, 136, 115, 0.5), 0 0 40px rgba(0, 136, 115, 0.3)'
-            : '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
+            ? '0 24px 60px -20px rgba(0, 121, 105, 0.35), 0 0 32px rgba(0, 121, 105, 0.18)'
+            : '0 16px 40px rgba(0, 121, 105, 0.12)',
         }}
         animate={{
           z: isCenter && isHovered ? 50 : 0,
@@ -362,7 +362,7 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
         {/* Drag indicator - shows when hovering */}
         {isHovered && !isDraggingImage && (
           <motion.div
-            className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1.5 rounded-full font-['Inter',sans-serif] text-xs font-medium pointer-events-none"
+            className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1.5 rounded-full font-body text-xs font-medium pointer-events-none"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -385,10 +385,10 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-white font-['Exo',sans-serif] font-semibold text-lg mb-1.5 tracking-wide">
+            <h3 className="text-white font-heading font-semibold text-lg mb-1.5 tracking-wide">
               {image.location}
             </h3>
-            <p className="text-white/90 font-['Barlow',sans-serif] text-sm leading-relaxed">
+            <p className="text-white/90 font-body text-sm leading-relaxed">
               {image.description}
             </p>
           </motion.div>
@@ -403,7 +403,7 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white/90 text-[#008873] px-4 py-2 rounded-full font-['Inter',sans-serif] font-medium text-sm"
+              className="bg-white/90 text-[#007969] px-4 py-2 rounded-full font-body font-medium text-sm"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -639,9 +639,9 @@ export function GallerySection() {
           y: bgY,
         }}
       >
-        <div className="absolute top-20 left-10 w-32 h-32 bg-[#008873]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#008873]/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-[#008873]/5 rounded-full blur-2xl" />
+        <div className="absolute top-20 left-10 w-32 h-32 bg-[#007969]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#007969]/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-[#007969]/5 rounded-full blur-2xl" />
       </motion.div>
 
       {/* Interactive CAD Pattern Graphic - Reacts to Gallery State */}
@@ -893,15 +893,17 @@ export function GallerySection() {
         >
           {/* Heading */}
           <motion.h2
-            className="font-['Exo',sans-serif] font-medium text-base lg:text-4xl text-[#1c1c1e] mb-1 lg:mb-2 relative z-50"
+            className="font-heading font-medium text-base lg:text-4xl text-[#1c1c1e] mb-1 lg:mb-2 relative z-50"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
             Our Gallery
           </motion.h2>
 
+          <div className="divider-brand mx-auto mb-2 lg:mb-3 relative z-50" />
+
           {/* Paragraph */}
-          <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c] mb-1.5 lg:mb-3 px-4 relative z-50">
+          <p className="font-body text-xs lg:text-base text-[#3a3a3c] mb-1.5 lg:mb-3 px-4 relative z-50">
             See how Swiftrooms has transformed villas, gardens and commercial spaces across the UAE.
           </p>
 
@@ -910,7 +912,7 @@ export function GallerySection() {
             href="https://www.instagram.com/swiftrooms.ae/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 font-['Inter',sans-serif] text-[#008873] hover:text-[#007969] transition-colors text-xs lg:text-sm relative z-50"
+            className="inline-flex items-center justify-center gap-2 font-body text-[#007969] hover:text-[#007969] transition-colors text-xs lg:text-sm relative z-50"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -1040,7 +1042,7 @@ export function GallerySection() {
 
               {/* Inner animated ring */}
               <motion.div
-                className="absolute inset-2 rounded-full border-2 border-[#008873]/20 group-hover:border-[#008873]/60"
+                className="absolute inset-2 rounded-full border-2 border-[#007969]/20 group-hover:border-[#007969]/60"
                 animate={{
                   rotate: 360,
                 }}
@@ -1060,7 +1062,7 @@ export function GallerySection() {
                   whileHover={{ x: -3 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#008873] group-hover:text-[#007969]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#007969] group-hover:text-[#007969]">
                     <motion.path
                       d="M15 18L9 12L15 6"
                       stroke="currentColor"
@@ -1081,7 +1083,7 @@ export function GallerySection() {
                   whileHover={{ x: 0 }}
                   transition={{ duration: 0.3, delay: 0.05 }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#008873]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#007969]">
                     <path
                       d="M15 18L9 12L15 6"
                       stroke="currentColor"
@@ -1099,7 +1101,7 @@ export function GallerySection() {
                   whileHover={{ x: 3 }}
                   transition={{ duration: 0.3, delay: 0.1 }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#008873]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#007969]">
                     <path
                       d="M15 18L9 12L15 6"
                       stroke="currentColor"
@@ -1113,7 +1115,7 @@ export function GallerySection() {
 
               {/* Corner accent marks */}
               <motion.div
-                className="absolute top-1 left-1 w-2 h-2 border-l-2 border-t-2 border-[#008873]/30 group-hover:border-[#008873]/60"
+                className="absolute top-1 left-1 w-2 h-2 border-l-2 border-t-2 border-[#007969]/30 group-hover:border-[#007969]/60"
                 animate={{
                   scale: [1, 1.2, 1],
                 }}
@@ -1124,7 +1126,7 @@ export function GallerySection() {
                 }}
               />
               <motion.div
-                className="absolute bottom-1 right-1 w-2 h-2 border-r-2 border-b-2 border-[#008873]/30 group-hover:border-[#008873]/60"
+                className="absolute bottom-1 right-1 w-2 h-2 border-r-2 border-b-2 border-[#007969]/30 group-hover:border-[#007969]/60"
                 animate={{
                   scale: [1, 1.2, 1],
                 }}
@@ -1165,7 +1167,7 @@ export function GallerySection() {
 
               {/* Inner animated ring */}
               <motion.div
-                className="absolute inset-2 rounded-full border-2 border-[#008873]/20 group-hover:border-[#008873]/60"
+                className="absolute inset-2 rounded-full border-2 border-[#007969]/20 group-hover:border-[#007969]/60"
                 animate={{
                   rotate: -360,
                 }}
@@ -1185,7 +1187,7 @@ export function GallerySection() {
                   whileHover={{ x: 3 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#008873] group-hover:text-[#007969]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#007969] group-hover:text-[#007969]">
                     <motion.path
                       d="M9 18L15 12L9 6"
                       stroke="currentColor"
@@ -1206,7 +1208,7 @@ export function GallerySection() {
                   whileHover={{ x: 0 }}
                   transition={{ duration: 0.3, delay: 0.05 }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#008873]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#007969]">
                     <path
                       d="M9 18L15 12L9 6"
                       stroke="currentColor"
@@ -1224,7 +1226,7 @@ export function GallerySection() {
                   whileHover={{ x: -3 }}
                   transition={{ duration: 0.3, delay: 0.1 }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#008873]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#007969]">
                     <path
                       d="M9 18L15 12L9 6"
                       stroke="currentColor"
@@ -1238,7 +1240,7 @@ export function GallerySection() {
 
               {/* Corner accent marks */}
               <motion.div
-                className="absolute top-1 left-1 w-2 h-2 border-l-2 border-t-2 border-[#008873]/30 group-hover:border-[#008873]/60"
+                className="absolute top-1 left-1 w-2 h-2 border-l-2 border-t-2 border-[#007969]/30 group-hover:border-[#007969]/60"
                 animate={{
                   scale: [1, 1.2, 1],
                 }}
@@ -1249,7 +1251,7 @@ export function GallerySection() {
                 }}
               />
               <motion.div
-                className="absolute bottom-1 right-1 w-2 h-2 border-r-2 border-b-2 border-[#008873]/30 group-hover:border-[#008873]/60"
+                className="absolute bottom-1 right-1 w-2 h-2 border-r-2 border-b-2 border-[#007969]/30 group-hover:border-[#007969]/60"
                 animate={{
                   scale: [1, 1.2, 1],
                 }}
@@ -1287,7 +1289,7 @@ export function GallerySection() {
                 style={{ touchAction: 'none' }}
               >
                 <div className="pointer-events-none">
-                  <div className="relative overflow-hidden rounded-lg shadow-lg">
+                  <div className="relative overflow-hidden rounded-xl border border-[#e5e7eb] card-hover">
                     <div className="relative h-[280px] overflow-hidden">
                       <ImageWithFallback
                         src={image.url}
@@ -1303,10 +1305,10 @@ export function GallerySection() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.2 }}
                         >
-                          <h3 className="font-['Exo',sans-serif] font-semibold text-white text-xs mb-0.5 tracking-wide">
+                          <h3 className="font-heading font-semibold text-white text-xs mb-0.5 tracking-wide">
                             {image.location}
                           </h3>
-                          <p className="font-['Barlow',sans-serif] text-white/80 text-[11px] leading-relaxed">
+                          <p className="font-body text-white/80 text-[11px] leading-relaxed">
                             {image.description}
                           </p>
                         </motion.div>
@@ -1326,8 +1328,8 @@ export function GallerySection() {
                 onClick={() => scrollToSlide(index)}
                 className={`transition-all duration-300 pointer-events-auto ${
                   currentIndex === index
-                    ? 'bg-[#008873] w-6 h-1.5'
-                    : 'bg-gray-300 hover:bg-[#008873]/50 w-1.5 h-1.5'
+                    ? 'bg-[#007969] w-6 h-1.5'
+                    : 'bg-gray-300 hover:bg-[#007969]/50 w-1.5 h-1.5'
                 } rounded-full`}
                 aria-label={`Go to image ${index + 1}`}
                 whileHover={{ scale: 1.2 }}
@@ -1355,7 +1357,7 @@ export function GallerySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="font-['Exo',sans-serif] text-sm lg:text-2xl font-medium text-[#1c1c1e] mb-3 lg:mb-4">
+          <p className="font-heading text-sm lg:text-2xl font-medium text-[#1c1c1e] mb-3 lg:mb-4">
             Inspired by these projects?
           </p>
           <button
@@ -1366,7 +1368,7 @@ export function GallerySection() {
                 setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 500);
               }
             }}
-            className="inline-flex items-center justify-center gap-2 bg-[#008873] text-white px-7 py-3.5 lg:px-9 lg:py-4 rounded-xl font-['Rajdhani',sans-serif] text-base lg:text-lg font-bold shadow-lg hover:bg-white hover:text-[#008873] hover:ring-2 hover:ring-[#008873] active:scale-95 transition-all duration-200"
+            className="btn-brand text-base lg:text-lg"
           >
             Get Your Free Quote
           </button>

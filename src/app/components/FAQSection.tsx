@@ -64,10 +64,11 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-4">
+            <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="font-['Barlow',sans-serif] text-sm lg:text-lg text-[#3a3a3c]">
+            <div className="divider-brand mx-auto mb-3 lg:mb-4" />
+            <p className="font-body text-sm lg:text-lg text-[#3a3a3c]">
               Find answers to common questions about our products and services
             </p>
           </motion.div>
@@ -84,13 +85,13 @@ export function FAQSection() {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full bg-white rounded-[14px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] px-6 py-5 flex items-center justify-between text-left hover:shadow-xl hover:bg-gray-50 active:scale-[0.98] transition-all duration-200"
+                  className={`w-full bg-white rounded-xl border border-[#e5e7eb] card-hover px-6 py-5 flex items-center justify-between text-left transition-all duration-200 ${openIndex === index ? 'border-[#007969]' : ''}`}
                 >
-                  <span className="font-['Barlow',sans-serif] font-medium text-[#1c1c1e] text-base sm:text-lg leading-7 tracking-[-0.4395px] pr-4">
+                  <span className="font-body font-medium text-[#1c1c1e] text-base sm:text-lg leading-7 tracking-[-0.4395px] pr-4">
                     {faq.question}
                   </span>
                   <motion.div
-                    className="flex-shrink-0 w-5 h-3"
+                    className="flex-shrink-0 w-5 h-3 text-[#007969]"
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -112,8 +113,8 @@ export function FAQSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="bg-white rounded-b-[14px] px-6 pb-5 pt-2 -mt-2">
-                        <p className="font-['Barlow',sans-serif] text-[#3a3a3c] text-base leading-7">
+                      <div className="bg-white rounded-b-xl px-6 pb-5 pt-2 -mt-2">
+                        <p className="font-body text-[#3a3a3c] text-base leading-7">
                           {faq.answer}
                         </p>
                       </div>
@@ -132,12 +133,12 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            <p className="font-['Barlow',sans-serif] text-lg text-[#3a3a3c] leading-7 tracking-[-0.4395px] mb-6">
+            <p className="font-body text-lg text-[#3a3a3c] leading-7 tracking-[-0.4395px] mb-6">
               Still have questions?
             </p>
             <button
               onClick={scrollToForm}
-              className="bg-[#008873] text-white px-8 py-4 rounded-[10px] shadow-[0px_10px_15px_0px_rgba(0,0,0,0.1),0px_4px_6px_0px_rgba(0,0,0,0.1)] font-['Rajdhani',sans-serif] font-medium text-lg leading-7 tracking-[-0.4395px] hover:bg-white hover:text-[#008873] hover:ring-2 hover:ring-[#008873] transform hover:scale-105 active:scale-95 transition-all duration-300"
+              className="btn-brand text-lg"
             >
               Get Free Consultation
             </button>

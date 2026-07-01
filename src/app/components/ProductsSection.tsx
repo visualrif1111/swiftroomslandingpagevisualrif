@@ -153,7 +153,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
   return (
     <div className="px-2 sm:px-3 lg:px-4 py-2 sm:py-4">
       <motion.div
-        className="relative overflow-hidden rounded-lg sm:rounded-2xl bg-white shadow-lg cursor-pointer h-full pointer-events-none lg:pointer-events-auto"
+        className="relative overflow-hidden rounded-xl bg-white border border-[#e5e7eb] card-hover cursor-pointer h-full pointer-events-none lg:pointer-events-auto"
         onMouseEnter={() => !isTouched && !isMobile && setIsHovered(true)}
         onMouseLeave={() => !isTouched && !isMobile && setIsHovered(false)}
         onTouchStart={handleTouchStart}
@@ -188,7 +188,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
 
           {/* Category Badge */}
           <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
-            <span className="bg-[#007969] text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-['Inter',sans-serif] font-medium shadow-lg">
+            <span className="bg-[#007969] text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-accent font-medium tracking-wide uppercase">
               {product.category}
             </span>
           </div>
@@ -196,7 +196,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
           {/* Content */}
           <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 lg:p-6">
             <motion.h3
-              className="font-['Exo',sans-serif] text-sm sm:text-xl lg:text-2xl font-medium text-white mb-1 sm:mb-2 leading-tight"
+              className="font-heading text-sm sm:text-xl lg:text-2xl font-medium text-white mb-1 sm:mb-2 leading-tight"
               animate={{
                 y: isHovered ? -5 : 0,
               }}
@@ -206,7 +206,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
             </motion.h3>
             
             <motion.p
-              className="font-['Barlow',sans-serif] text-[10px] sm:text-base text-white/90 leading-snug sm:leading-relaxed mb-1"
+              className="font-body text-[10px] sm:text-base text-white/90 leading-snug sm:leading-relaxed mb-1"
               initial={{ opacity: 0, y: 10 }}
               animate={{
                 opacity: isHovered ? 1 : 0.7,
@@ -220,7 +220,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
             {/* Get A Quote Button - Always visible, no animation on mobile */}
             <CTADecoration>
               <motion.button
-                className="mt-2 sm:mt-4 bg-white text-[#007969] px-3 py-1.5 sm:px-6 sm:py-2.5 rounded-lg font-['Rajdhani',sans-serif] font-medium hover:bg-[#007969] hover:text-white hover:ring-2 hover:ring-white hover:shadow-xl active:scale-95 transition-all duration-300 text-xs sm:text-base shadow-lg pointer-events-auto"
+                className="mt-2 sm:mt-4 btn-brand pointer-events-auto"
                 initial={false}
                 animate={{
                   opacity: 1,
@@ -387,10 +387,11 @@ export function ProductsSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3">
+          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3">
             Featured Products
           </h2>
-          <p className="font-['Barlow',sans-serif] text-[10px] lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-4">
+          <div className="divider-brand mx-auto mb-2 lg:mb-4" />
+          <p className="font-body text-[10px] lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-4">
             Premium systems engineered for comfort, lower cooling costs and brighter living in the UAE climate
           </p>
         </motion.div>

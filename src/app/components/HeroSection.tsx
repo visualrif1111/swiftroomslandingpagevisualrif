@@ -228,7 +228,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     <CTADecoration>
                       <button
                         onClick={handleMobileCTA}
-                        className="w-full bg-white text-[#008873] px-6 py-4 rounded-xl font-['Rajdhani',sans-serif] text-base font-bold hover:bg-[#008873] hover:text-white hover:ring-2 hover:ring-white active:scale-95 transition-all duration-200 shadow-2xl"
+                        className="btn-brand w-full !bg-white !text-[#007969] hover:!bg-[#007969] hover:!text-white shadow-2xl"
                       >
                         Get Free Quote
                       </button>
@@ -239,7 +239,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                       href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-xl font-['Rajdhani',sans-serif] text-base font-semibold shadow-lg active:scale-95 transition-all duration-200"
+                      className="btn-whatsapp w-full shadow-lg"
                     >
                       <MessageCircle className="w-5 h-5" />
                       WhatsApp Expert

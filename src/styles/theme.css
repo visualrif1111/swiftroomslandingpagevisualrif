@@ -8,8 +8,8 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
+  --primary: #007969;
+  --primary-foreground: #ffffff;
   --secondary: oklch(0.95 0.0058 264.53);
   --secondary-foreground: #030213;
   --muted: #ececf0;
@@ -303,13 +303,98 @@ body {
   padding-top: 0;
 }
 
-/* Prevent font-swap layout shift by using system fonts initially */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
 /* Optimize first contentful paint */
 #hero {
   contain: layout style;
   content-visibility: auto;
 }
+
+/* ==========================================================================
+   Swift Rooms Design System
+   Extracted from https://swiftrooms-newbuild.vercel.app/ so the landing page
+   is visually indistinguishable from the main website. Semantic component
+   classes below mirror the reference site's own utility layer exactly.
+   ========================================================================== */
+:root {
+  /* Brand — Swift Rooms teal */
+  --brand: #007969;
+  --brand-dark: #005a50;
+  --brand-mid: #006156;
+  --brand-light: #f0fdf4;
+  --brand-tint: #e6f4f1;
+  --brand-shadow: 0 16px 40px #0079691f;
+
+  /* Neutrals / ink */
+  --sr-black: #1c1c1e;
+  --sr-dark: #3a3a3c;
+  --sr-mid: #6b7280;
+  --sr-line: #e5e7eb;
+  --sr-bg: #ffffff;
+  --sr-bg-alt: #f8f9fa;
+  --sr-bg-dark: #030213;
+}
+
+/* Base body ink + rendering — Barlow, matching the reference. Loaded after the
+   FCP system-font rule above so this wins once webfonts are ready. */
+body {
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--sr-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font-role helpers */
+.font-heading { font-family: 'Exo', sans-serif; }
+.font-accent  { font-family: 'Rajdhani', sans-serif; }
+.font-body    { font-family: 'Barlow', sans-serif; }
+
+/* Type scale — architectural headings (Exo), uppercase labels (Rajdhani) */
+.text-display  { font-family:'Exo',sans-serif; font-weight:800; font-size:clamp(3.75rem,10vw,10rem); line-height:.93; letter-spacing:-.03em; }
+.text-headline { font-family:'Exo',sans-serif; font-weight:700; font-size:clamp(2rem,5vw,4.5rem); line-height:1.05; letter-spacing:-.015em; }
+.text-title    { font-family:'Exo',sans-serif; font-weight:600; font-size:clamp(1.5rem,3vw,2.75rem); line-height:1.1; letter-spacing:-.01em; }
+.text-label    { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; }
+.text-body-lg  { font-family:'Barlow',sans-serif; font-weight:400; font-size:clamp(1rem,1.2vw,1.125rem); line-height:1.7; }
+
+/* Buttons — sharp, uppercase, Rajdhani. CRO hierarchy:
+   .btn-brand = primary (Get Free Quote), .btn-outline = tertiary (Visit Showroom),
+   .btn-whatsapp = secondary (WhatsApp Expert). */
+.btn-brand,
+.btn-outline,
+.btn-whatsapp {
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.875rem 2rem;
+  font-family:'Rajdhani',sans-serif; font-weight:600; font-size:.8rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  border:none; cursor:pointer; border-radius:2px;
+}
+.btn-brand    { background:var(--brand); color:#fff; transition:background .25s, transform .2s; }
+.btn-brand:hover { background:var(--brand-dark); }
+.btn-outline  { background:transparent; color:var(--brand); border:1.5px solid var(--brand); transition:all .25s; }
+.btn-outline:hover { background:var(--brand); color:#fff; }
+.btn-whatsapp { background:#25D366; color:#fff; transition:background .25s, transform .2s; }
+.btn-whatsapp:hover { background:#1da851; }
+.btn-brand:active, .btn-outline:active, .btn-whatsapp:active { transform:scale(.98); }
+
+/* Eyebrow / USP badge */
+.usp-badge {
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.375rem .875rem;
+  font-family:'Rajdhani',sans-serif; font-weight:600; font-size:.75rem;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--brand); background:#00796914; border:1px solid #00796933; border-radius:2px;
+}
+
+/* Brand divider — the 40×3px teal rule under section eyebrows */
+.divider-brand { width:40px; height:3px; background:var(--brand); border-radius:2px; }
+
+/* Architectural card lift with brand-tinted shadow */
+.card-hover { transition:transform .3s, box-shadow .3s; }
+.card-hover:hover { transform:translateY(-4px); box-shadow:var(--brand-shadow); }
+.card-hover:active { transform:scale(.98); }
+
+/* Surface tokens for sections/cards — sharp corners, hairline borders */
+.sr-card {
+  background:#fff; border:1px solid var(--sr-line); border-radius:4px;
+}
+.bg-brand-tint { background:var(--brand-tint); }
+.bg-section-alt { background:var(--sr-bg-alt); }

@@ -69,7 +69,7 @@ export function StickyMobileCTA() {
             {/* Primary CTA - Get Free Quote (dominant) */}
             <button
               onClick={handleQuote}
-              className="flex-[2] bg-[#008873] text-white rounded-xl py-3.5 font-['Rajdhani',sans-serif] text-base font-bold shadow-lg active:scale-[0.98] transition-transform"
+              className="btn-brand flex-[2] shadow-lg"
             >
               Get Free Quote
             </button>
@@ -79,7 +79,7 @@ export function StickyMobileCTA() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-1.5 bg-white text-[#25D366] border-2 border-[#25D366] rounded-xl py-3.5 font-['Rajdhani',sans-serif] text-sm font-semibold active:scale-[0.98] transition-transform"
+              className="btn-whatsapp flex-1"
             >
               <MessageCircle className="w-4 h-4" />
               WhatsApp

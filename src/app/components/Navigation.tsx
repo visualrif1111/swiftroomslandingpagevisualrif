@@ -307,8 +307,8 @@ export function Navigation() {
                     onClick={() => scrollToSection(item.id)}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
                       isActive 
-                        ? 'text-[#008873] bg-[#f0fdf4] font-semibold' 
-                        : 'text-[#3a3a3c] hover:text-[#008873] hover:bg-[#f0fdf4]'
+                        ? 'text-[#007969] bg-[#f0fdf4] font-semibold' 
+                        : 'text-[#3a3a3c] hover:text-[#007969] hover:bg-[#f0fdf4]'
                     }`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -332,7 +332,7 @@ export function Navigation() {
                     window.dispatchEvent(new Event('openLeadForm'));
                   }, 500); // Small delay to ensure smooth scroll then form opens
                 }}
-                className="bg-[#008873] text-white px-6 py-2.5 rounded-md font-['Rajdhani',sans-serif] font-medium hover:bg-white hover:text-[#008873] hover:ring-2 hover:ring-[#008873] active:scale-95 transition-all duration-200 shadow-md"
+                className="btn-brand"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{

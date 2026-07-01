@@ -327,13 +327,13 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                   WebkitUserSelect: 'none',
                   cursor: 'pointer'
                 }}
-                className="w-full bg-[#007969] text-white px-6 py-4 rounded-xl shadow-lg active:shadow-md active:scale-[0.98] transition-all font-['Rajdhani',sans-serif] font-semibold text-base flex items-center justify-between group"
+                className="w-full bg-[#007969] text-white px-6 py-4 rounded-[4px] shadow-[0_16px_40px_#0079691f] active:shadow-md active:scale-[0.98] transition-all font-accent font-semibold text-base flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3 pointer-events-none">
                   <Glasses className="w-6 h-6" strokeWidth={2} />
                   <div className="text-left">
                     <div className="text-base font-semibold">Visit Our Showroom</div>
-                    <div className="text-xs text-white/80 font-['Barlow',sans-serif] font-normal">Experience products firsthand</div>
+                    <div className="text-xs text-white/80 font-body font-normal">Experience products firsthand</div>
                   </div>
                 </div>
                 <ArrowRight className="w-5 h-5 transition-transform pointer-events-none" />
@@ -341,9 +341,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
 
               {/* Divider with OR */}
               <div className="flex items-center gap-3 py-1 pointer-events-none">
-                <div className="flex-1 h-px bg-gray-200" />
-                <span className="text-sm font-['Rajdhani',sans-serif] font-semibold text-gray-400">OR</span>
-                <div className="flex-1 h-px bg-gray-200" />
+                <div className="flex-1 h-px bg-[#e5e7eb]" />
+                <span className="text-sm font-accent font-semibold uppercase tracking-[.12em] text-[#6b7280]">OR</span>
+                <div className="flex-1 h-px bg-[#e5e7eb]" />
               </div>
 
               {/* Get a Quote Button - Android Optimized */}
@@ -370,13 +370,13 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                   WebkitUserSelect: 'none',
                   cursor: 'pointer'
                 }}
-                className="w-full bg-white text-[#007969] px-6 py-4 rounded-xl shadow-lg active:shadow-md active:scale-[0.98] transition-all font-['Rajdhani',sans-serif] font-semibold text-base flex items-center justify-between border-2 border-[#007969] group"
+                className="w-full bg-white text-[#007969] px-6 py-4 rounded-[4px] shadow-[0_16px_40px_#0079691f] active:shadow-md active:scale-[0.98] transition-all font-accent font-semibold text-base flex items-center justify-between border-[1.5px] border-[#007969] group"
               >
                 <div className="flex items-center gap-3 pointer-events-none">
                   <MessageCircle className="w-6 h-6" strokeWidth={2} />
                   <div className="text-left">
                     <div className="text-base font-semibold">Get a Free Quote</div>
-                    <div className="text-xs text-[#007969]/70 font-['Barlow',sans-serif] font-normal">Receive quote in minutes</div>
+                    <div className="text-xs text-[#007969]/70 font-body font-normal">Receive quote in minutes</div>
                   </div>
                 </div>
                 <ArrowRight className="w-5 h-5 transition-transform pointer-events-none" />
@@ -392,10 +392,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className="space-y-6"
           >
             <div>
-              <h3 className="font-['Exo',sans-serif] text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
+              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
                 Tell us about your project
               </h3>
-              <p className="font-['Barlow',sans-serif] text-sm lg:text-base text-[#3a3a3c]">
+              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
                 What type of project are you working on?
               </p>
             </div>
@@ -408,21 +408,21 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                     setFormData({ ...formData, projectType: type.value });
                     setTimeout(() => handleNext(), 300);
                   }}
-                  className={`p-5 lg:p-6 rounded-xl border-2 transition-all text-center hover:shadow-lg group flex flex-col items-center justify-center active:scale-95 ${
+                  className={`p-5 lg:p-6 rounded-[4px] border-2 transition-all text-center hover:shadow-[0_16px_40px_#0079691f] group flex flex-col items-center justify-center active:scale-95 ${
                     formData.projectType === type.value
-                      ? 'border-[#008873] bg-[#008873]/5'
-                      : 'border-[#e5e7eb] hover:border-[#008873] bg-white'
+                      ? 'border-[#007969] bg-[#007969]/5'
+                      : 'border-[#e5e7eb] hover:border-[#007969] bg-white'
                   }`}
                 >
                   <div className={`mb-3 ${
                     formData.projectType === type.value 
-                      ? 'text-[#008873]' 
-                      : 'text-[#008873] group-hover:text-[#007969]'
+                      ? 'text-[#007969]' 
+                      : 'text-[#007969] group-hover:text-[#007969]'
                   }`}>{type.icon}</div>
-                  <div className={`font-['Inter',sans-serif] text-base lg:text-lg font-medium ${
+                  <div className={`font-body text-base lg:text-lg font-medium ${
                     formData.projectType === type.value 
-                      ? 'text-[#008873]' 
-                      : 'text-[#1c1c1e] group-hover:text-[#008873]'
+                      ? 'text-[#007969]' 
+                      : 'text-[#1c1c1e] group-hover:text-[#007969]'
                   }`}>
                     {type.label}
                   </div>
@@ -439,10 +439,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className="space-y-6"
           >
             <div>
-              <h3 className="font-['Exo',sans-serif] text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
+              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
                 What type of property?
               </h3>
-              <p className="font-['Barlow',sans-serif] text-sm lg:text-base text-[#3a3a3c]">
+              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
                 Select the property type you need services for
               </p>
             </div>
@@ -455,21 +455,21 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                     setFormData({ ...formData, propertyType: type.value });
                     setTimeout(() => handleNext(), 300);
                   }}
-                  className={`p-4 lg:p-5 rounded-xl border-2 transition-all text-center hover:shadow-lg group flex flex-col items-center justify-center active:scale-95 ${
+                  className={`p-4 lg:p-5 rounded-[4px] border-2 transition-all text-center hover:shadow-[0_16px_40px_#0079691f] group flex flex-col items-center justify-center active:scale-95 ${
                     formData.propertyType === type.value
-                      ? 'border-[#008873] bg-[#008873]/5'
-                      : 'border-[#e5e7eb] hover:border-[#008873] bg-white'
+                      ? 'border-[#007969] bg-[#007969]/5'
+                      : 'border-[#e5e7eb] hover:border-[#007969] bg-white'
                   }`}
                 >
                   <div className={`mb-2 ${
                     formData.propertyType === type.value 
-                      ? 'text-[#008873]' 
-                      : 'text-[#008873] group-hover:text-[#007969]'
+                      ? 'text-[#007969]' 
+                      : 'text-[#007969] group-hover:text-[#007969]'
                   }`}>{type.icon}</div>
-                  <div className={`font-['Inter',sans-serif] text-sm lg:text-base font-medium ${
+                  <div className={`font-body text-sm lg:text-base font-medium ${
                     formData.propertyType === type.value 
-                      ? 'text-[#008873]' 
-                      : 'text-[#1c1c1e] group-hover:text-[#008873]'
+                      ? 'text-[#007969]' 
+                      : 'text-[#1c1c1e] group-hover:text-[#007969]'
                   }`}>
                     {type.label}
                   </div>
@@ -486,19 +486,19 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className="space-y-4 lg:space-y-6"
           >
             <div>
-              <h3 className="font-['Exo',sans-serif] text-xl lg:text-3xl font-semibold text-[#1c1c1e] mb-1 lg:mb-2">
+              <h3 className="font-heading text-xl lg:text-3xl font-semibold text-[#1c1c1e] mb-1 lg:mb-2">
                 Which products do you need?
               </h3>
-              <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c]">
+              <p className="font-body text-xs lg:text-base text-[#3a3a3c]">
                 Select all products you're interested in
               </p>
             </div>
             
             {/* Selection counter */}
             {formData.productsNeeded.length > 0 && (
-              <div className="bg-[#008873]/10 border border-[#008873]/20 rounded-lg px-3 py-2 inline-flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#008873]" />
-                <span className="font-['Inter',sans-serif] text-sm text-[#008873] font-medium">
+              <div className="bg-[#e6f4f1] border border-[#00796933] rounded-[4px] px-3 py-2 inline-flex items-center gap-2">
+                <Check className="w-4 h-4 text-[#007969]" />
+                <span className="font-body text-sm text-[#007969] font-medium">
                   {formData.productsNeeded.length} product{formData.productsNeeded.length !== 1 ? 's' : ''} selected
                 </span>
               </div>
@@ -519,28 +519,28 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                           : [...formData.productsNeeded, product.value],
                       });
                     }}
-                    className={`relative p-2.5 lg:p-5 rounded-lg lg:rounded-xl border-2 transition-all text-center group flex flex-col items-center justify-center active:scale-95 ${
+                    className={`relative p-2.5 lg:p-5 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center active:scale-95 ${
                       isSelected
-                        ? 'border-[#008873] bg-[#008873]/5'
-                        : 'border-[#e5e7eb] hover:border-[#008873]/40 bg-white'
+                        ? 'border-[#007969] bg-[#007969]/5'
+                        : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white'
                     }`}
                   >
                     {/* Checkmark indicator */}
                     {isSelected && (
-                      <div className="absolute top-1 right-1 lg:top-2 lg:right-2 w-5 h-5 lg:w-6 lg:h-6 bg-[#008873] rounded-full flex items-center justify-center">
+                      <div className="absolute top-1 right-1 lg:top-2 lg:right-2 w-5 h-5 lg:w-6 lg:h-6 bg-[#007969] rounded-full flex items-center justify-center">
                         <Check className="w-3 h-3 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
                       </div>
                     )}
                     
                     <div className={`mb-1 lg:mb-2 ${
                       isSelected 
-                        ? 'text-[#008873]' 
-                        : 'text-[#008873] group-hover:text-[#007969]'
+                        ? 'text-[#007969]' 
+                        : 'text-[#007969] group-hover:text-[#007969]'
                     }`}>{product.icon}</div>
-                    <div className={`font-['Inter',sans-serif] text-xs lg:text-base font-medium leading-tight ${
+                    <div className={`font-body text-xs lg:text-base font-medium leading-tight ${
                       isSelected 
-                        ? 'text-[#008873]' 
-                        : 'text-[#1c1c1e] group-hover:text-[#008873]'
+                        ? 'text-[#007969]' 
+                        : 'text-[#1c1c1e] group-hover:text-[#007969]'
                     }`}>
                       {product.label}
                     </div>
@@ -558,10 +558,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className="space-y-6"
           >
             <div>
-              <h3 className="font-['Exo',sans-serif] text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
+              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
                 Please enter your full name
               </h3>
-              <p className="font-['Barlow',sans-serif] text-sm lg:text-base text-[#3a3a3c]">
+              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
                 Let's start with your full name
               </p>
             </div>
@@ -572,7 +572,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
               onKeyPress={(e) => e.key === 'Enter' && isStepValid() && handleNext()}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              className="w-full px-4 py-4 text-lg text-[#1c1c1e] border-2 border-[#e5e7eb] rounded-xl focus:ring-2 focus:ring-[#008873] focus:border-[#008873] outline-none transition-all font-['Inter',sans-serif] placeholder:text-[rgba(10,10,10,0.3)]"
+              className="w-full px-4 py-4 text-lg text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
               placeholder="Enter your full name"
               autoFocus
             />
@@ -586,10 +586,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className="space-y-6"
           >
             <div>
-              <h3 className="font-['Exo',sans-serif] text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
+              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
                 What's your phone number?
               </h3>
-              <p className="font-['Barlow',sans-serif] text-sm lg:text-base text-[#3a3a3c]">
+              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
                 We'll use this to send you your quote
               </p>
             </div>
@@ -603,7 +603,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                     setSelectedCountryCode(e.target.value);
                     if (phoneError) setPhoneError('');
                   }}
-                  className="px-4 py-4 bg-white border-2 border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#008873] focus:border-[#008873] transition-all font-['Inter',sans-serif] text-base text-gray-900 cursor-pointer"
+                  className="px-4 py-4 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-base text-[#1c1c1e] cursor-pointer"
                 >
                   {countryCodes.map((country) => (
                     <option key={country.code} value={country.code}>
@@ -638,8 +638,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                       setPhoneError(validation.error);
                     }
                   }}
-                  className={`flex-1 px-4 py-4 text-lg text-[#1c1c1e] border-2 rounded-xl focus:ring-2 focus:ring-[#008873] outline-none transition-all font-['Inter',sans-serif] placeholder:text-[rgba(10,10,10,0.3)] ${
-                    phoneError ? 'border-red-500 focus:border-red-500' : 'border-[#e5e7eb] focus:border-[#008873]'
+                  className={`flex-1 px-4 py-4 text-lg text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${
+                    phoneError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'
                   }`}
                   placeholder="Enter phone number"
                   autoFocus
@@ -648,7 +648,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
               
               {/* Error Message */}
               {phoneError && (
-                <div className="flex items-start gap-2 text-red-600 text-sm font-['Barlow',sans-serif]">
+                <div className="flex items-start gap-2 text-[#e40014] text-sm font-body">
                   <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   <span>{phoneError}</span>
                 </div>
@@ -656,7 +656,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
               
               {/* Hint Text */}
               {!phoneError && (
-                <div className="text-xs text-[#6b7280] font-['Barlow',sans-serif]">
+                <div className="text-xs text-[#6b7280] font-body">
                   Enter {countryCodes.find(c => c.code === selectedCountryCode)?.minLength} digits without country code
                 </div>
               )}
@@ -671,10 +671,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className="space-y-6"
           >
             <div>
-              <h3 className="font-['Exo',sans-serif] text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
+              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
                 What's your email?
               </h3>
-              <p className="font-['Barlow',sans-serif] text-sm lg:text-base text-[#3a3a3c]">
+              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
                 Optional - for sending you detailed quotes
               </p>
             </div>
@@ -694,8 +694,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                   const validation = validateEmail(formData.email);
                   setEmailError(validation.error);
                 }}
-                className={`w-full px-4 py-4 text-lg text-[#1c1c1e] border-2 rounded-xl focus:ring-2 focus:ring-[#008873] outline-none transition-all font-['Inter',sans-serif] placeholder:text-[rgba(10,10,10,0.3)] ${
-                  emailError ? 'border-red-500 focus:border-red-500' : 'border-[#e5e7eb] focus:border-[#008873]'
+                className={`w-full px-4 py-4 text-lg text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${
+                  emailError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'
                 }`}
                 placeholder="your@email.com"
                 autoFocus
@@ -703,7 +703,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
               
               {/* Error Message */}
               {emailError && (
-                <div className="flex items-start gap-2 text-red-600 text-sm font-['Barlow',sans-serif]">
+                <div className="flex items-start gap-2 text-[#e40014] text-sm font-body">
                   <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   <span>{emailError}</span>
                 </div>
@@ -718,43 +718,43 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             key="step-6"
             className="text-center py-12 space-y-6"
           >
-            <div className="w-20 h-20 lg:w-24 lg:h-24 bg-[#008873] rounded-full flex items-center justify-center mx-auto">
+            <div className="w-20 h-20 lg:w-24 lg:h-24 bg-[#007969] rounded-full flex items-center justify-center mx-auto">
               <Check className="w-10 h-10 lg:w-12 lg:h-12 text-white" strokeWidth={3} />
             </div>
             
             <div>
-              <h3 className="font-['Exo',sans-serif] text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3">
+              <h3 className="font-heading text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3">
                 Thank You, {formData.name}!
               </h3>
-              <p className="font-['Barlow',sans-serif] text-base lg:text-lg text-[#3a3a3c] mb-2">
+              <p className="font-body text-base lg:text-lg text-[#3a3a3c] mb-2">
                 We truly appreciate you taking the time to reach out to us.
               </p>
-              <p className="font-['Barlow',sans-serif] text-base lg:text-lg text-[#3a3a3c] mb-6">
+              <p className="font-body text-base lg:text-lg text-[#3a3a3c] mb-6">
                 Your quote request has been received and our team will contact you shortly.
               </p>
             </div>
 
-            <div className="bg-[#008873]/10 border-2 border-[#008873]/20 rounded-xl p-6 max-w-md mx-auto">
-              <div className="flex items-center justify-center gap-3 text-[#008873]">
+            <div className="bg-[#e6f4f1] border border-[#00796933] rounded-[4px] p-6 max-w-md mx-auto">
+              <div className="flex items-center justify-center gap-3 text-[#007969]">
                 <Check className="w-6 h-6 flex-shrink-0" strokeWidth={2.5} />
-                <p className="font-['Inter',sans-serif] text-base lg:text-lg font-medium">
+                <p className="font-body text-base lg:text-lg font-medium">
                   We respond within 12 hours
                 </p>
               </div>
             </div>
 
             {/* WhatsApp CTA Card - Minimized Version */}
-            <div className="bg-white border-2 border-[#25D366]/30 rounded-xl p-4 lg:p-5 max-w-sm mx-auto shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white border border-[#25D366]/30 rounded-[4px] p-4 lg:p-5 max-w-sm mx-auto shadow-[0_16px_40px_#0079691f] hover:shadow-xl transition-shadow">
               {/* Compact Header with Icon and Text - Center Aligned */}
               <div className="flex flex-col items-center text-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-[#25D366] rounded-full flex items-center justify-center flex-shrink-0">
                   <MessageCircle className="w-5 h-5 text-white" fill="white" />
                 </div>
                 <div>
-                  <h4 className="font-['Exo',sans-serif] text-base lg:text-lg font-semibold text-[#1c1c1e] leading-tight">
+                  <h4 className="font-heading text-base lg:text-lg font-semibold text-[#1c1c1e] leading-tight">
                     Send Swiftrooms details & location to my phone
                   </h4>
-                  <p className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#6b7280]">
+                  <p className="font-body text-xs lg:text-sm text-[#6b7280]">
                     Save our details for your visit.
                   </p>
                 </div>
@@ -781,7 +781,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-semibold shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
+                className="btn-whatsapp w-full text-sm lg:text-base shadow-md hover:shadow-lg transition-all duration-300"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Send to My Phone</span>
@@ -828,7 +828,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                   // Keep form open and return to selection screen
                 }
               }}
-              className="text-[#008873] font-['Barlow',sans-serif] text-sm lg:text-base font-medium hover:underline"
+              className="text-[#007969] font-body text-sm lg:text-base font-medium hover:underline"
             >
               {window.innerWidth < 1024 ? 'Return to Home' : 'Submit another request'}
             </button>
@@ -851,7 +851,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
               setShowMenu(false);
               setIsFormOpen(true);
             }}
-            className={`group relative inline-flex items-center gap-3 px-8 py-4 lg:px-12 lg:py-5 rounded-2xl font-['Rajdhani',sans-serif] text-lg lg:text-2xl font-semibold shadow-2xl transition-all duration-300 overflow-hidden active:scale-95 ${ctaVariant === 'white' ? 'bg-white text-[#007969] hover:bg-[#007969] hover:text-white' : 'bg-[#007969] text-white hover:bg-white hover:text-[#007969]'}`}
+            className={`group relative inline-flex items-center gap-3 px-8 py-4 lg:px-12 lg:py-5 rounded-[4px] font-accent uppercase tracking-[.12em] text-lg lg:text-2xl font-semibold shadow-2xl transition-all duration-300 overflow-hidden active:scale-95 ${ctaVariant === 'white' ? 'bg-white text-[#007969] hover:bg-[#007969] hover:text-white' : 'bg-[#007969] text-white hover:bg-white hover:text-[#007969]'}`}
           >
             {/* Button content */}
             <span className="relative z-10">Get Free Quote</span>
@@ -859,7 +859,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
           </button>
 
           {/* Trust indicators below CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-white font-['Barlow',sans-serif]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-white font-body">
             <div className="flex items-center gap-2">
               <Check className="w-5 h-5 text-white" />
               <span>Free Consultation</span>
@@ -879,23 +879,23 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
       {/* Show Form when opened - SIMPLIFIED FOR ANDROID */}
       {isFormOpen && (
         <div
-          id="form" 
-          className="bg-white rounded-2xl shadow-2xl p-5 lg:p-8 w-full relative"
+          id="form"
+          className="bg-white rounded-xl border border-[#e5e7eb] shadow-[0_16px_40px_#0079691f] p-5 lg:p-8 w-full relative"
         >
           {/* Progress Bar */}
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="mb-6 lg:mb-8">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-['Inter',sans-serif] text-xs lg:text-sm text-[#3a3a3c] font-medium">
+                <span className="font-body text-xs lg:text-sm text-[#3a3a3c] font-medium">
                   Question {currentStep + 1} of {totalSteps}
                 </span>
-                <span className="font-['Inter',sans-serif] text-xs lg:text-sm text-[#008873] font-medium">
+                <span className="font-body text-xs lg:text-sm text-[#007969] font-medium">
                   {Math.round(((currentStep + 1) / totalSteps) * 100)}%
                 </span>
               </div>
-              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#008873] rounded-full transition-all duration-400"
+                  className="h-full bg-[#007969] rounded-full transition-all duration-400"
                   style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                 />
               </div>
@@ -914,7 +914,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="flex items-center gap-2 px-4 lg:px-6 py-2.5 lg:py-3 rounded-xl border-2 border-[#e5e7eb] text-[#3a3a3c] font-['Barlow',sans-serif] text-sm lg:text-base font-medium hover:border-[#008873] hover:text-white hover:bg-[#008873] active:bg-[#006d5c] transition-all duration-200"
+                  className="btn-outline text-sm lg:text-base"
                 >
                   <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
                   Back
@@ -925,10 +925,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
                 type="button"
                 onClick={currentStep === 5 ? handleSubmit : handleNext}
                 disabled={!isStepValid()}
-                className={`flex items-center gap-2 px-4 lg:px-6 py-2.5 lg:py-3 rounded-xl font-['Barlow',sans-serif] text-sm lg:text-base font-medium transition-all ml-auto ${
+                className={`ml-auto text-sm lg:text-base transition-all ${
                   isStepValid()
-                    ? 'bg-[#008873] text-white hover:bg-white hover:text-[#008873] hover:ring-2 hover:ring-[#008873] hover:shadow-lg active:scale-95'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    ? 'btn-brand'
+                    : 'inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
                 }`}
               >
                 {currentStep === 5 ? 'Submit' : 'Next'}

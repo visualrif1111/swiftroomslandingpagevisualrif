@@ -29,7 +29,7 @@ export function FormSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e]"
+              className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e]"
             >
               Get Your Free Quote
             </motion.h2>
@@ -38,7 +38,7 @@ export function FormSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-['Barlow',sans-serif] text-lg lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto"
+              className="font-body text-lg lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto"
             >
               Takes under a minute. No obligation. A specialist responds within 12 hours.
             </motion.p>
@@ -59,7 +59,7 @@ export function FormSection() {
               ].map((stat) => (
                 <span
                   key={stat}
-                  className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#007969] font-medium bg-[#007969]/10 rounded-full px-3 py-1.5"
+                  className="font-body text-xs lg:text-sm text-[#007969] font-medium bg-[#e6f4f1] border border-[#00796933] rounded-[4px] px-3 py-1.5"
                 >
                   {stat}
                 </span>

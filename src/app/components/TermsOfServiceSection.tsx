@@ -47,7 +47,7 @@ export function TermsOfServiceSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#007969] to-[#008873] rounded-2xl mb-6">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#007969] to-[#007969] rounded-2xl mb-6">
               <FileText className="w-10 h-10 text-white" />
             </div>
             <h2 className="font-['Exo',sans-serif] text-4xl font-bold text-[#1c1c1e] mb-4">
@@ -145,7 +145,7 @@ export function TermsOfServiceSection() {
                         href="https://www.swiftrooms.ae/terms-of-service"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 lg:px-8 lg:py-4 bg-gradient-to-r from-[#007969] to-[#008873] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
+                        className="inline-flex items-center gap-2 px-4 py-2 lg:px-8 lg:py-4 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
                       >
                         <FileText className="w-4 h-4 lg:w-5 lg:h-5" />
                         View Full Terms of Service
@@ -167,14 +167,14 @@ export function TermsOfServiceSection() {
                         <strong>Questions?</strong> Contact us at{' '}
                         <a 
                           href="mailto:info@swiftrooms.ae" 
-                          className="text-[#007969] hover:text-[#008873] font-medium transition-colors"
+                          className="text-[#007969] hover:text-[#007969] font-medium transition-colors"
                         >
                           info@swiftrooms.ae
                         </a>
                         {' '}or call{' '}
                         <a 
                           href="tel:+97143474240" 
-                          className="text-[#007969] hover:text-[#008873] font-medium transition-colors"
+                          className="text-[#007969] hover:text-[#007969] font-medium transition-colors"
                         >
                           04 347 4240
                         </a>

@@ -86,7 +86,7 @@ export function FinalCTASection() {
             {/* Primary */}
             <button
               onClick={openQuoteForm}
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#007969] px-8 py-4 rounded-xl font-['Rajdhani',sans-serif] text-lg font-bold shadow-2xl hover:bg-[#FFC857] hover:text-[#1c1c1e] active:scale-95 transition-all duration-200"
+              className="group btn-brand w-full sm:w-auto !bg-white !text-[#007969] hover:!bg-[#FFC857] hover:!text-[#1c1c1e] shadow-2xl"
             >
               Get Free Quote
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -97,7 +97,7 @@ export function FinalCTASection() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-xl font-['Rajdhani',sans-serif] text-lg font-semibold shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
+              className="btn-whatsapp w-full sm:w-auto shadow-lg"
             >
               <MessageCircle className="w-5 h-5" />
               WhatsApp Expert

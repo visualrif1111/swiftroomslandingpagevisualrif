@@ -467,7 +467,7 @@ function ReviewCard({ review }: { review: Review }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden group max-w-4xl mx-auto"
+        className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 card-hover border border-[#e5e7eb] relative overflow-hidden group max-w-4xl mx-auto"
       >
         {/* Quote Icon Background */}
         <div className="absolute top-3 right-3 lg:top-4 lg:right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-300">
@@ -487,17 +487,17 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
 
           {/* Review Text */}
-          <p className="font-['Barlow',sans-serif] text-sm lg:text-lg text-[#3a3a3c] leading-relaxed mb-4 lg:mb-6">
+          <p className="font-body text-sm lg:text-lg text-[#3a3a3c] leading-relaxed mb-4 lg:mb-6">
             "{review.text}"
           </p>
 
           {/* Author Info */}
-          <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-[#e5e7eb]">
             <div>
-              <p className="font-['Exo',sans-serif] text-sm lg:text-base font-semibold text-[#1c1c1e]">
+              <p className="font-heading text-sm lg:text-base font-semibold text-[#1c1c1e]">
                 {review.author}
               </p>
-              <p className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#6b7280] mt-0.5">
+              <p className="font-body text-xs lg:text-sm text-[#6b7280] mt-0.5">
                 {review.date}
               </p>
             </div>
@@ -510,7 +510,7 @@ function ReviewCard({ review }: { review: Review }) {
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              <span className="font-['Barlow',sans-serif] text-xs font-medium text-[#007969]">
+              <span className="font-body text-xs font-medium text-[#007969]">
                 Google
               </span>
             </div>
@@ -575,10 +575,10 @@ export function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 lg:mb-10"
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
+          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
             What Our Clients Say
           </h2>
-          <p className="font-['Barlow',sans-serif] text-sm lg:text-lg text-[#6b7280] max-w-2xl mx-auto">
+          <p className="font-body text-sm lg:text-lg text-[#6b7280] max-w-2xl mx-auto">
             Don't just take our word for it—hear from our satisfied customers across the UAE
           </p>
 
@@ -592,10 +592,10 @@ export function TestimonialsSection() {
                 />
               ))}
             </div>
-            <span className="font-['Exo',sans-serif] text-base lg:text-xl font-bold text-[#1c1c1e]">
+            <span className="font-heading text-base lg:text-xl font-bold text-[#1c1c1e]">
               5.0
             </span>
-            <span className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#6b7280]">
+            <span className="font-body text-xs lg:text-sm text-[#6b7280]">
               Based on {reviews.length}+ Google reviews
             </span>
           </div>

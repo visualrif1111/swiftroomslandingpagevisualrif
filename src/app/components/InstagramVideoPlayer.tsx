@@ -109,7 +109,7 @@ export function InstagramVideoPlayer({
 
           {/* Username */}
           <div className="flex-1">
-            <p className="font-['Inter',sans-serif] text-white text-[13px] font-normal leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
               @swiftrooms
             </p>
           </div>
@@ -119,12 +119,12 @@ export function InstagramVideoPlayer({
         <div className="hidden lg:block absolute bottom-[15px] left-[15px] right-[15px] z-10">
           <div className="space-y-[7.5px]">
             {/* Username */}
-            <p className="font-['Inter',sans-serif] text-white text-[13px] font-semibold leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            <p className="font-['Barlow',sans-serif] text-white text-[13px] font-semibold leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
               @swiftrooms
             </p>
 
             {/* Caption */}
-            <p className="font-['Inter',sans-serif] text-white text-[13px] font-normal leading-[21.33px] max-w-[314px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+            <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[21.33px] max-w-[314px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
               {caption}
             </p>
 
@@ -133,7 +133,7 @@ export function InstagramVideoPlayer({
               {hashtags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-white/10 backdrop-blur-sm px-[7.5px] py-[3.75px] rounded-full text-white/90 text-[11px] font-['Inter',sans-serif] font-normal leading-[15px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+                  className="bg-white/10 backdrop-blur-sm px-[7.5px] py-[3.75px] rounded-full text-white/90 text-[11px] font-['Barlow',sans-serif] font-normal leading-[15px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
                 >
                   {tag}
                 </span>
@@ -184,7 +184,7 @@ export function InstagramVideoPlayer({
 
         {/* Username */}
         <div className="flex-1">
-          <p className="font-['Inter',sans-serif] text-white text-[13px] font-normal leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+          <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
             @swiftrooms
           </p>
         </div>
@@ -206,12 +206,12 @@ export function InstagramVideoPlayer({
       <div className="hidden lg:block absolute bottom-[15px] left-[15px] right-[15px] z-10">
         <div className="space-y-[7.5px]">
           {/* Username */}
-          <p className="font-['Inter',sans-serif] text-white text-[13px] font-semibold leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+          <p className="font-['Barlow',sans-serif] text-white text-[13px] font-semibold leading-[18.75px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
             @swiftrooms
           </p>
 
           {/* Caption */}
-          <p className="font-['Inter',sans-serif] text-white text-[13px] font-normal leading-[21.33px] max-w-[314px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+          <p className="font-['Barlow',sans-serif] text-white text-[13px] font-normal leading-[21.33px] max-w-[314px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
             {caption}
           </p>
 
@@ -220,7 +220,7 @@ export function InstagramVideoPlayer({
             {hashtags.map((tag, index) => (
               <span
                 key={index}
-                className="bg-white/10 backdrop-blur-sm px-[7.5px] py-[3.75px] rounded-full text-white/90 text-[11px] font-['Inter',sans-serif] font-normal leading-[15px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+                className="bg-white/10 backdrop-blur-sm px-[7.5px] py-[3.75px] rounded-full text-white/90 text-[11px] font-['Barlow',sans-serif] font-normal leading-[15px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
               >
                 {tag}
               </span>

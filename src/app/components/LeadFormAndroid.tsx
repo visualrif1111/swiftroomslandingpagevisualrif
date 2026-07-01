@@ -325,7 +325,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
                     >
                       {/* Name */}
                       <div className="space-y-2">
-                        <label className="block font-['Inter',sans-serif] text-sm font-medium text-gray-700">
+                        <label className="block font-['Barlow',sans-serif] text-sm font-medium text-gray-700">
                           Full Name *
                         </label>
                         <input
@@ -351,7 +351,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
 
                       {/* Phone */}
                       <div className="space-y-2">
-                        <label className="block font-['Inter',sans-serif] text-sm font-medium text-gray-700">
+                        <label className="block font-['Barlow',sans-serif] text-sm font-medium text-gray-700">
                           Phone Number *
                         </label>
                         <div className="flex gap-2">
@@ -367,7 +367,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
                             <span className="text-xl">
                               {countryCodes.find(c => c.code === formData.countryCode)?.flag}
                             </span>
-                            <span className="font-['Inter',sans-serif] text-base font-medium text-gray-900">
+                            <span className="font-['Barlow',sans-serif] text-base font-medium text-gray-900">
                               {formData.countryCode}
                             </span>
                             <ChevronDown className="w-4 h-4 text-gray-500" />
@@ -422,10 +422,10 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
                                     } border-b border-gray-100 last:border-b-0`}
                                   >
                                     <span className="text-2xl">{country.flag}</span>
-                                    <span className="font-['Inter',sans-serif] text-base font-medium text-gray-900">
+                                    <span className="font-['Barlow',sans-serif] text-base font-medium text-gray-900">
                                       {country.code}
                                     </span>
-                                    <span className="font-['Inter',sans-serif] text-sm text-gray-600">
+                                    <span className="font-['Barlow',sans-serif] text-sm text-gray-600">
                                       {country.country}
                                     </span>
                                     {country.popular && (
@@ -443,7 +443,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
 
                       {/* Email (Optional) */}
                       <div className="space-y-2">
-                        <label className="block font-['Inter',sans-serif] text-sm font-medium text-gray-700">
+                        <label className="block font-['Barlow',sans-serif] text-sm font-medium text-gray-700">
                           Email <span className="text-gray-400">(Optional)</span>
                         </label>
                         <input
@@ -458,7 +458,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
 
                       {/* Property Type */}
                       <div className="space-y-3">
-                        <label className="block font-['Inter',sans-serif] text-sm font-medium text-gray-700">
+                        <label className="block font-['Barlow',sans-serif] text-sm font-medium text-gray-700">
                           Property Type *
                         </label>
                         <div className="grid grid-cols-3 gap-3">
@@ -506,7 +506,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
                       {/* Products */}
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <label className="block font-['Inter',sans-serif] text-sm font-medium text-gray-700">
+                          <label className="block font-['Barlow',sans-serif] text-sm font-medium text-gray-700">
                             Products Needed *
                           </label>
                           {formData.products.length > 0 && (
@@ -555,7 +555,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
 
                       {/* Project Type */}
                       <div className="space-y-3">
-                        <label className="block font-['Inter',sans-serif] text-sm font-medium text-gray-700">
+                        <label className="block font-['Barlow',sans-serif] text-sm font-medium text-gray-700">
                           Project Type *
                         </label>
                         <div className="grid grid-cols-2 gap-3">
@@ -623,7 +623,7 @@ export function LeadFormAndroid({ autoOpen = false }: LeadFormAndroidProps) {
                       </div>
 
                       <div className="bg-[#007969]/10 border-2 border-[#007969]/20 rounded-xl p-5">
-                        <p className="font-['Inter',sans-serif] text-base font-medium text-[#007969]">
+                        <p className="font-['Barlow',sans-serif] text-base font-medium text-[#007969]">
                           ✓ We respond within 12 hours
                         </p>
                       </div>

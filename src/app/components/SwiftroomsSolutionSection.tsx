@@ -24,16 +24,17 @@ export function SwiftroomsSolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
+              className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
             >
               Why Choose Swiftrooms
             </motion.h2>
+            <div className="divider-brand mx-auto mb-3 lg:mb-4" />
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-['Barlow',sans-serif] text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto relative z-40"
+              className="font-body text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto relative z-40"
             >
               UAE climate expertise and premium systems — from common problems to premium solutions
             </motion.p>
@@ -72,8 +73,8 @@ export function SwiftroomsSolutionSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-2xl p-6 lg:p-8 border-2 border-gray-100 shadow-lg h-full relative z-30">
-                <h4 className="font-['Barlow',sans-serif] text-lg lg:text-2xl font-semibold text-[#1c1c1e] mb-6 flex items-center gap-3">
+              <div className="bg-white rounded-xl p-6 lg:p-8 border border-[#e5e7eb] card-hover h-full relative z-30">
+                <h4 className="font-heading text-lg lg:text-2xl font-semibold text-[#1c1c1e] mb-6 flex items-center gap-3">
                   <span className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-base">✗</span>
                   Common Frustrations
                 </h4>
@@ -97,7 +98,7 @@ export function SwiftroomsSolutionSection() {
                       <div className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full bg-red-100 flex items-center justify-center">
                         <X className="w-4 h-4 text-red-600" />
                       </div>
-                      <p className="font-['Barlow',sans-serif] text-gray-700 text-sm lg:text-base leading-relaxed">
+                      <p className="font-body text-gray-700 text-sm lg:text-base leading-relaxed">
                         {item}
                       </p>
                     </motion.div>
@@ -114,15 +115,15 @@ export function SwiftroomsSolutionSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-gradient-to-br from-[#007969] to-[#005a50] rounded-2xl p-6 lg:p-8 text-white h-full relative overflow-hidden group z-30">
+              <div className="bg-gradient-to-br from-[#007969] to-[#005a50] rounded-xl p-6 lg:p-8 text-white h-full relative overflow-hidden group z-30">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-700" />
 
-                <h4 className="relative z-10 font-['Barlow',sans-serif] text-lg lg:text-2xl font-semibold mb-3 flex items-center gap-3">
+                <h4 className="relative z-10 font-heading text-lg lg:text-2xl font-semibold mb-3 flex items-center gap-3">
                   <span className="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center text-base">✓</span>
                   SWIFTROOMS Advantage
                 </h4>
 
-                <p className="relative z-10 font-['Barlow',sans-serif] text-white/90 mb-5 text-sm lg:text-base leading-relaxed">
+                <p className="relative z-10 font-body text-white/90 mb-5 text-sm lg:text-base leading-relaxed">
                   Engineered specifically for UAE climate conditions, our premium aluminum systems transform your living experience.
                 </p>
 
@@ -146,7 +147,7 @@ export function SwiftroomsSolutionSection() {
                       <div className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full bg-[#00a63e] flex items-center justify-center shadow-lg">
                         <Check className="w-4 h-4 text-white" />
                       </div>
-                      <p className="font-['Barlow',sans-serif] text-white text-sm lg:text-base leading-relaxed">
+                      <p className="font-body text-white text-sm lg:text-base leading-relaxed">
                         {item}
                       </p>
                     </motion.div>
@@ -157,7 +158,7 @@ export function SwiftroomsSolutionSection() {
                   <CTADecoration>
                     <button
                       onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="w-full bg-white text-[#007969] px-5 py-3 lg:py-3.5 rounded-lg font-['Rajdhani',sans-serif] text-base lg:text-lg font-bold hover:bg-[#007969] hover:text-white hover:shadow-2xl active:scale-95 transition-all duration-200 shadow-lg flex items-center justify-center gap-2 group/btn"
+                      className="w-full bg-white text-[#007969] px-5 py-3 lg:py-3.5 rounded-[2px] font-accent uppercase tracking-[0.12em] text-base lg:text-lg font-bold hover:bg-[#005a50] hover:text-white active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group/btn"
                     >
                       Explore Our Products
                       <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -193,12 +194,12 @@ export function SwiftroomsSolutionSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="flex items-start gap-2.5 bg-white border border-gray-100 rounded-xl p-3 lg:p-4 shadow-sm"
+                  className="flex items-start gap-2.5 bg-white border border-[#e5e7eb] rounded-xl p-3 lg:p-4 card-hover"
                 >
                   <div className="flex-shrink-0 w-5 h-5 lg:w-6 lg:h-6 mt-0.5 rounded-full bg-[#007969] flex items-center justify-center">
                     <Check className="w-3 h-3 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
                   </div>
-                  <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#1c1c1e] font-medium leading-snug">
+                  <p className="font-body text-xs lg:text-base text-[#1c1c1e] font-medium leading-snug">
                     {point}
                   </p>
                 </motion.div>

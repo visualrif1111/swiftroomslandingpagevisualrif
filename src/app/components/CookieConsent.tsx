@@ -91,7 +91,7 @@ export function CookieConsent() {
                           href="https://www.swiftrooms.ae/privacy-policy" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="text-[#007969] hover:text-[#008873] font-medium underline"
+                          className="text-[#007969] hover:text-[#007969] font-medium underline"
                         >
                           Privacy Policy
                         </a>.
@@ -117,7 +117,7 @@ export function CookieConsent() {
                     </button>
                     <button
                       onClick={acceptAll}
-                      className="px-4 py-2.5 lg:px-5 lg:py-3 bg-gradient-to-r from-[#007969] to-[#008873] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+                      className="px-4 py-2.5 lg:px-5 lg:py-3 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
                     >
                       Accept All
                     </button>
@@ -156,7 +156,7 @@ export function CookieConsent() {
                           <h4 className="font-['Exo',sans-serif] text-sm lg:text-base font-semibold text-[#1c1c1e]">
                             Necessary Cookies
                           </h4>
-                          <span className="px-2 py-0.5 bg-[#007969] text-white text-xs rounded-full font-['Inter',sans-serif] font-medium">
+                          <span className="px-2 py-0.5 bg-[#007969] text-white text-xs rounded-full font-['Barlow',sans-serif] font-medium">
                             Required
                           </span>
                         </div>
@@ -234,7 +234,7 @@ export function CookieConsent() {
                   </button>
                   <button
                     onClick={savePreferences}
-                    className="flex-1 px-4 py-2.5 lg:px-5 lg:py-3 bg-gradient-to-r from-[#007969] to-[#008873] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+                    className="flex-1 px-4 py-2.5 lg:px-5 lg:py-3 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
                   >
                     Save Preferences
                   </button>

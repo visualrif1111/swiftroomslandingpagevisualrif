@@ -162,24 +162,24 @@ export function TransformYourSpaceSection() {
                     <div className="mb-4 w-14 h-14 rounded-xl flex items-center justify-center transition-transform duration-300" style={{ backgroundColor: card.iconBg }}>
                       {card.id === 1 && (
                         <svg className="w-7 h-7 pointer-events-none" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#008873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          <rect x="9" y="9" width="6" height="7" stroke="#008873" strokeWidth="1.5" fill="none" />
-                          <line x1="12" y1="9" x2="12" y2="16" stroke="#008873" strokeWidth="1.5" />
-                          <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#008873" strokeWidth="1.5" />
+                          <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <rect x="9" y="9" width="6" height="7" stroke="#007969" strokeWidth="1.5" fill="none" />
+                          <line x1="12" y1="9" x2="12" y2="16" stroke="#007969" strokeWidth="1.5" />
+                          <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#007969" strokeWidth="1.5" />
                         </svg>
                       )}
                       {card.id === 2 && (
-                        <Gem className="w-7 h-7 text-[#008873] stroke-[2] pointer-events-none" />
+                        <Gem className="w-7 h-7 text-[#007969] stroke-[2] pointer-events-none" />
                       )}
                       {card.id === 3 && (
                         <svg className="w-7 h-7 pointer-events-none" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 3L4 10H20L12 3Z" stroke="#008873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                          <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#008873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          <line x1="12" y1="3" x2="12" y2="20" stroke="#008873" strokeWidth="1.5" />
-                          <line x1="8" y1="10" x2="8" y2="20" stroke="#008873" strokeWidth="1.5" />
-                          <line x1="16" y1="10" x2="16" y2="20" stroke="#008873" strokeWidth="1.5" />
-                          <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#008873" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                          <circle cx="12" cy="18" r="0.8" fill="#008873" />
+                          <path d="M12 3L4 10H20L12 3Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                          <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <line x1="12" y1="3" x2="12" y2="20" stroke="#007969" strokeWidth="1.5" />
+                          <line x1="8" y1="10" x2="8" y2="20" stroke="#007969" strokeWidth="1.5" />
+                          <line x1="16" y1="10" x2="16" y2="20" stroke="#007969" strokeWidth="1.5" />
+                          <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#007969" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                          <circle cx="12" cy="18" r="0.8" fill="#007969" />
                         </svg>
                       )}
                     </div>
@@ -203,24 +203,24 @@ export function TransformYourSpaceSection() {
                   <div className="mb-4 w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: card.iconBg }}>
                     {card.id === 1 && (
                       <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#008873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <rect x="9" y="9" width="6" height="7" stroke="#008873" strokeWidth="1.5" fill="none" />
-                        <line x1="12" y1="9" x2="12" y2="16" stroke="#008873" strokeWidth="1.5" />
-                        <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#008873" strokeWidth="1.5" />
+                        <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <rect x="9" y="9" width="6" height="7" stroke="#007969" strokeWidth="1.5" fill="none" />
+                        <line x1="12" y1="9" x2="12" y2="16" stroke="#007969" strokeWidth="1.5" />
+                        <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#007969" strokeWidth="1.5" />
                       </svg>
                     )}
                     {card.id === 2 && (
-                      <Gem className="w-9 h-9 text-[#008873] stroke-[2]" />
+                      <Gem className="w-9 h-9 text-[#007969] stroke-[2]" />
                     )}
                     {card.id === 3 && (
                       <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 3L4 10H20L12 3Z" stroke="#008873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#008873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <line x1="12" y1="3" x2="12" y2="20" stroke="#008873" strokeWidth="1.5" />
-                        <line x1="8" y1="10" x2="8" y2="20" stroke="#008873" strokeWidth="1.5" />
-                        <line x1="16" y1="10" x2="16" y2="20" stroke="#008873" strokeWidth="1.5" />
-                        <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#008873" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                        <circle cx="12" cy="18" r="0.8" fill="#008873" />
+                        <path d="M12 3L4 10H20L12 3Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <line x1="12" y1="3" x2="12" y2="20" stroke="#007969" strokeWidth="1.5" />
+                        <line x1="8" y1="10" x2="8" y2="20" stroke="#007969" strokeWidth="1.5" />
+                        <line x1="16" y1="10" x2="16" y2="20" stroke="#007969" strokeWidth="1.5" />
+                        <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#007969" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                        <circle cx="12" cy="18" r="0.8" fill="#007969" />
                       </svg>
                     )}
                   </div>

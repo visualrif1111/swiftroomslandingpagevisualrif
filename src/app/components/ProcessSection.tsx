@@ -84,10 +84,10 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
     >
       {/* Step Number Circle */}
       <motion.div
-        className="w-12 h-12 lg:w-20 lg:h-20 bg-[#008873] rounded-full flex items-center justify-center mb-2 lg:mb-6 relative z-10 shadow-lg"
+        className="w-12 h-12 lg:w-20 lg:h-20 bg-[#007969] rounded-full flex items-center justify-center mb-2 lg:mb-6 relative z-10 shadow-lg"
         animate={{
           scale: isActive ? 1.1 : 1,
-          backgroundColor: isActive ? "#007969" : "#008873",
+          backgroundColor: isActive ? "#007969" : "#007969",
           boxShadow: isActive 
             ? "0 10px 30px rgba(0, 136, 115, 0.4)" 
             : "0 4px 10px rgba(0, 0, 0, 0.1)"
@@ -95,7 +95,7 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <motion.span
-          className="font-['Inter',sans-serif] text-base lg:text-2xl text-white font-normal"
+          className="font-heading text-base lg:text-2xl text-white font-medium"
           animate={{ scale: isActive ? 1.1 : 1 }}
           transition={{ duration: 0.3 }}
         >
@@ -121,10 +121,10 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
         animate={{ y: isActive ? -5 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h3 className="font-['Exo',sans-serif] text-sm lg:text-xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 min-h-[2.5rem] lg:min-h-[3.5rem] flex items-center justify-center">
+        <h3 className="font-heading text-sm lg:text-xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 min-h-[2.5rem] lg:min-h-[3.5rem] flex items-center justify-center">
           {title}
         </h3>
-        <p className="font-['Rajdhani',sans-serif] text-[10px] lg:text-base text-[#3a3a3c] leading-snug lg:leading-relaxed">
+        <p className="font-body text-[10px] lg:text-base text-[#3a3a3c] leading-snug lg:leading-relaxed">
           {description}
         </p>
       </motion.div>
@@ -201,10 +201,11 @@ export function ProcessSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide relative z-40">
+          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide relative z-40">
             How It Works
           </h2>
-          <p className="font-['Barlow',sans-serif] text-[10px] lg:text-xl text-[#3a3a3c]">
+          <div className="divider-brand mx-auto mb-2 lg:mb-4" />
+          <p className="font-body text-[10px] lg:text-xl text-[#3a3a3c]">
             From your free quote to aftercare, we handle every step — so you know exactly what to expect
           </p>
         </motion.div>

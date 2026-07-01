@@ -230,13 +230,13 @@ export function SocialProofSection() {
         {/* Header */}
         {isMobile ? (
           <div className="relative text-center mb-4 z-40">
-            <h2 className="font-['Exo',sans-serif] text-base font-medium text-[#1c1c1e] mb-1 relative z-40">
+            <h2 className="font-heading text-base font-medium text-[#1c1c1e] mb-1 relative z-40">
               Our Portfolio
             </h2>
-            <p className="font-['Barlow',sans-serif] text-xs text-[#3a3a3c] mb-2 relative z-40">
+            <p className="font-body text-xs text-[#3a3a3c] mb-2 relative z-40">
               Watch our latest installations
             </p>
-            <div className="inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-[#008873] cursor-default relative z-40">
+            <div className="inline-flex items-center gap-1.5 font-body text-[#007969] cursor-default relative z-40">
               <Instagram className="w-3.5 h-3.5" />
               <span className="font-medium text-xs">@swiftrooms.ae</span>
               <span className="text-[10px]">• Follow for more</span>
@@ -250,13 +250,13 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
+            <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
               Our Portfolio
             </h2>
-            <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 relative z-40">
+            <p className="font-body text-xs lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 relative z-40">
               Watch our latest installations
             </p>
-            <div className="inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-[#008873] cursor-default relative z-40">
+            <div className="inline-flex items-center gap-1.5 font-body text-[#007969] cursor-default relative z-40">
               <Instagram className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
               <span className="font-medium text-xs lg:text-sm">@swiftrooms.ae</span>
               <span className="text-[10px] lg:text-xs">• Follow for more</span>
@@ -380,7 +380,7 @@ export function SocialProofSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
               >
-                <div className="inline-flex items-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 bg-gradient-to-r from-[#007969] to-[#008873] text-white rounded-full font-['Inter',sans-serif] text-xs lg:text-sm font-medium shadow-lg cursor-default">
+                <div className="inline-flex items-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-full font-body text-xs lg:text-sm font-medium shadow-lg cursor-default">
                   <Instagram className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
                   Watch All Reels
                 </div>
@@ -389,7 +389,7 @@ export function SocialProofSection() {
 
             {/* Mobile: View More Button */}
             <div className="lg:hidden text-center mt-4">
-              <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#007969] to-[#008873] text-white rounded-full font-['Inter',sans-serif] text-xs font-medium shadow-lg cursor-default">
+              <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-full font-body text-xs font-medium shadow-lg cursor-default">
                 <Instagram className="w-3.5 h-3.5" />
                 Watch All Reels
               </div>
@@ -401,10 +401,10 @@ export function SocialProofSection() {
             <div className="relative space-y-4">
               {/* Heading */}
               <div className="relative">
-                <h3 className="font-['Exo',sans-serif] text-lg font-medium text-[#1c1c1e] mb-2">
+                <h3 className="font-heading text-lg font-medium text-[#1c1c1e] mb-2">
                   Real Projects, Real Results
                 </h3>
-                <p className="font-['Barlow',sans-serif] text-xs text-[#3a3a3c] leading-relaxed">
+                <p className="font-body text-xs text-[#3a3a3c] leading-relaxed">
                   Transforming homes across Dubai's most prestigious communities.
                 </p>
               </div>
@@ -414,12 +414,12 @@ export function SocialProofSection() {
                 {stats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="relative bg-white p-3 rounded-lg shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center"
+                    className="relative bg-white p-3 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
                   >
-                    <div className="font-['Rajdhani',sans-serif] text-2xl text-[#008873] leading-tight mb-1">
+                    <div className="font-heading font-bold text-2xl text-[#007969] leading-tight mb-1">
                       {stat.value}
                     </div>
-                    <div className="font-['Inter',sans-serif] text-xs text-[#3a3a3c]">
+                    <div className="font-body text-xs text-[#3a3a3c]">
                       {stat.label}
                     </div>
                   </div>
@@ -428,7 +428,7 @@ export function SocialProofSection() {
 
               {/* Featured Communities */}
               <div className="relative">
-                <h4 className="font-['Exo',sans-serif] text-sm font-medium text-[#1c1c1e] mb-2">
+                <h4 className="font-heading text-sm font-medium text-[#1c1c1e] mb-2">
                   Featured Communities
                 </h4>
                 <div className="relative space-y-2">
@@ -439,8 +439,8 @@ export function SocialProofSection() {
                           key={community}
                           className="relative flex items-center gap-1.5"
                         >
-                          <span className="text-[#008873] font-['Inter',sans-serif] text-xs">✓</span>
-                          <span className="font-['Barlow',sans-serif] text-xs text-[#3a3a3c]">
+                          <span className="text-[#007969] font-body text-xs">✓</span>
+                          <span className="font-body text-xs text-[#3a3a3c]">
                             {community}
                           </span>
                         </div>
@@ -460,10 +460,10 @@ export function SocialProofSection() {
             >
               {/* Heading */}
               <div className="relative">
-                <h3 className="font-['Exo',sans-serif] text-lg lg:text-2xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
+                <h3 className="font-heading text-lg lg:text-2xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
                   Real Projects, Real Results
                 </h3>
-                <p className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#3a3a3c] leading-relaxed">
+                <p className="font-body text-xs lg:text-sm text-[#3a3a3c] leading-relaxed">
                   Transforming homes across Dubai's most prestigious communities.
                 </p>
               </div>
@@ -473,17 +473,17 @@ export function SocialProofSection() {
                 {stats.map((stat, index) => (
                   <motion.div
                     key={stat.label}
-                    className="relative bg-white p-3 lg:p-4 rounded-lg shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center"
+                    className="relative bg-white p-3 lg:p-4 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                     whileHover={{ y: -2, transition: { duration: 0.2 } }}
                   >
-                    <div className="font-['Rajdhani',sans-serif] text-2xl lg:text-3xl text-[#008873] leading-tight mb-1">
+                    <div className="font-heading font-bold text-2xl lg:text-3xl text-[#007969] leading-tight mb-1">
                       {stat.value}
                     </div>
-                    <div className="font-['Inter',sans-serif] text-xs lg:text-sm text-[#3a3a3c]">
+                    <div className="font-body text-xs lg:text-sm text-[#3a3a3c]">
                       {stat.label}
                     </div>
                   </motion.div>
@@ -492,7 +492,7 @@ export function SocialProofSection() {
 
               {/* Featured Communities */}
               <div className="relative">
-                <h4 className="font-['Exo',sans-serif] text-sm lg:text-lg font-medium text-[#1c1c1e] mb-2 lg:mb-3">
+                <h4 className="font-heading text-sm lg:text-lg font-medium text-[#1c1c1e] mb-2 lg:mb-3">
                   Featured Communities
                 </h4>
                 <div className="relative space-y-2">
@@ -507,8 +507,8 @@ export function SocialProofSection() {
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: 1 + rowIndex * 0.1 + colIndex * 0.05 }}
                         >
-                          <span className="text-[#008873] font-['Inter',sans-serif] text-xs">✓</span>
-                          <span className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#3a3a3c]">
+                          <span className="text-[#007969] font-body text-xs">✓</span>
+                          <span className="font-body text-xs lg:text-sm text-[#3a3a3c]">
                             {community}
                           </span>
                         </motion.div>
