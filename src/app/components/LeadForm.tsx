@@ -15,7 +15,7 @@ const countryCodes = [
   { code: '+91', country: 'India', flag: '🇮🇳', minLength: 10, maxLength: 10 },
   { code: '+92', country: 'Pakistan', flag: '🇵🇰', minLength: 10, maxLength: 10 },
   { code: '+20', country: 'Egypt', flag: '🇪🇬', minLength: 10, maxLength: 10 },
-  { code: '+44', country: 'UK', flag: '🇧', minLength: 10, maxLength: 10 },
+  { code: '+44', country: 'UK', flag: '🇬🇧', minLength: 10, maxLength: 10 },
   { code: '+1', country: 'USA/Canada', flag: '🇺🇸', minLength: 10, maxLength: 10 },
 ];
 
@@ -31,7 +31,7 @@ const validateEmail = (email: string): { isValid: boolean; error: string } => {
   if (!email) return { isValid: true, error: '' }; // Optional field
   
   // Basic format validation
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) {
     return { isValid: false, error: 'Please enter a valid email address' };
   }
@@ -85,7 +85,7 @@ const validatePhone = (phone: string, countryCode: string): { isValid: boolean; 
   return { isValid: true, error: '' };
 };
 
-export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?: boolean; ctaVariant?: 'green' | 'white' }) {
+export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpenEvent = false }: { autoOpen?: boolean; ctaVariant?: 'green' | 'white'; listenForOpenEvent?: boolean }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
   const [currentStep, setCurrentStep] = useState(-1); // Start at -1 for selection screen
@@ -97,6 +97,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
   const [journeyType, setJourneyType] = useState<'showroom' | 'quote' | null>(null);
   const [selectedCountryCode, setSelectedCountryCode] = useState('+971'); // Default to UAE
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [emailError, setEmailError] = useState('');
   
@@ -112,8 +114,11 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
     marketingConsent: false,
   });
 
-  // Listen for custom event to open form from navigation
+  // Listen for custom event to open form from navigation. Only the designated
+  // instance (the contact-form section) responds, so the global event doesn't
+  // also open the hero's off-screen form on desktop.
   useEffect(() => {
+    if (!listenForOpenEvent) return;
     const handleOpenForm = () => {
       setIsFormOpen(true);
       setShowMenu(false);
@@ -122,7 +127,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
 
     window.addEventListener('openLeadForm', handleOpenForm);
     return () => window.removeEventListener('openLeadForm', handleOpenForm);
-  }, []);
+  }, [listenForOpenEvent]);
 
   // Check if mobile and handle autoOpen behavior - ONLY ON MOUNT
   useEffect(() => {
@@ -264,10 +269,50 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    setCurrentStep(totalSteps);
-    // Don't auto-close - let user manually return via "Return to Home" button
+  const handleSubmit = async () => {
+    if (isSubmitting) return; // guard against double-submit
+    setSubmitError('');
+    setIsSubmitting(true);
+
+    const payload = {
+      name: formData.name,
+      phone: `${selectedCountryCode} ${formData.phone}`,
+      email: formData.email || '',
+      propertyType: propertyTypes.find(p => p.value === formData.propertyType)?.label || formData.propertyType,
+      productsNeeded: formData.productsNeeded.map(p => products.find(prod => prod.value === p)?.label || p),
+      projectType: projectTypes.find(p => p.value === formData.projectType)?.label || formData.projectType,
+      message: formData.message || '',
+      privacyConsent: formData.privacyConsent,
+      marketingConsent: formData.marketingConsent,
+      journeyType,
+      source: 'landing-page',
+      submittedAt: new Date().toISOString(),
+    };
+
+    // Endpoint is configured via VITE_LEAD_ENDPOINT (Formspree form URL, webhook,
+    // or your own API). Kept in env so no endpoint is hardcoded in the bundle.
+    const endpoint = import.meta.env.VITE_LEAD_ENDPOINT as string | undefined;
+
+    try {
+      if (endpoint) {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(`Lead submit failed with status ${res.status}`);
+      } else {
+        // No endpoint set yet — warn loudly so leads aren't silently lost in dev.
+        console.warn('[LeadForm] VITE_LEAD_ENDPOINT is not configured — lead was NOT delivered:', payload);
+      }
+      setCurrentStep(totalSteps);
+    } catch (err) {
+      console.error('[LeadForm] submission error:', err);
+      setSubmitError('Something went wrong sending your request. Please try again, or reach us on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
+    // On success we advance to the thank-you screen; the user returns manually.
   };
 
   const isStepValid = () => {
@@ -911,11 +956,12 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
           {/* Navigation Buttons */}
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="flex gap-3 mt-6 lg:mt-8">
-              {currentStep > 0 && (
+              {currentStep >= 0 && (
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="btn-outline text-sm lg:text-base"
+                  disabled={isSubmitting}
+                  className="btn-outline text-sm lg:text-base disabled:opacity-50"
                 >
                   <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
                   Back
@@ -925,17 +971,22 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
               <button
                 type="button"
                 onClick={currentStep === 5 ? handleSubmit : handleNext}
-                disabled={!isStepValid()}
+                disabled={!isStepValid() || isSubmitting}
                 className={`ml-auto text-sm lg:text-base transition-all ${
-                  isStepValid()
+                  isStepValid() && !isSubmitting
                     ? 'btn-brand'
                     : 'inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
                 }`}
               >
-                {currentStep === 5 ? 'Submit' : 'Next'}
-                <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />
+                {isSubmitting ? 'Sending…' : currentStep === 5 ? 'Submit' : 'Next'}
+                {!isSubmitting && <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />}
               </button>
             </div>
+          )}
+
+          {/* Submission error (retryable) */}
+          {submitError && currentStep === 5 && (
+            <p className="mt-3 text-sm font-body text-[#e40014] text-center">{submitError}</p>
           )}
         </div>
       )}

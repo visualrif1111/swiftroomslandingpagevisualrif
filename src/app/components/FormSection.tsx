@@ -1,20 +1,8 @@
 import { LeadForm } from './LeadForm';
-import { LeadFormAndroid } from './LeadFormAndroid';
-import { FloatingOrnament } from './FloatingOrnament';
 import { ImmersiveBackgroundAnimations } from './ImmersiveBackgroundAnimations';
 import { motion } from 'motion/react';
-import { useState, useEffect } from 'react';
 
 export function FormSection() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
     <section id="contact-form" className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 lg:snap-center flex items-center py-16 lg:py-0">
       <div className="container mx-auto px-4 lg:px-8 relative z-10 py-6 lg:py-8">
@@ -68,7 +56,7 @@ export function FormSection() {
           </div>
 
           {/* Lead Form - Use same desktop version for all devices */}
-          <LeadForm />
+          <LeadForm listenForOpenEvent />
         </div>
       </div>
     </section>

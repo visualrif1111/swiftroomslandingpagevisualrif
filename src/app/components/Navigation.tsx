@@ -71,70 +71,39 @@ export function Navigation() {
     { key: 'faqs', id: 'faqs', label: 'FAQs' },
   ];
 
-  // Intersection Observer for active section tracking - Deferred to idle time
+  // Intersection Observer for active section tracking - Deferred to idle time.
+  // The observer is hoisted to effect scope so it can be disconnected on
+  // cleanup (previously the cleanup returned from inside the idle callback was
+  // ignored, leaking the observer and causing stale active-section updates).
   useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
+    const setup = () => {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.id) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      }, { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+
+      navItems.forEach((item) => {
+        const el = document.getElementById(item.id);
+        if (el) observer!.observe(el);
+      });
+    };
+
     const idleCallback = 'requestIdleCallback' in window
-      ? window.requestIdleCallback(() => {
-          const options = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0
-          };
-
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const sectionId = entry.target.id;
-                if (sectionId) {
-                  setActiveSection(sectionId);
-                }
-              }
-            });
-          }, options);
-
-          // Observe all sections
-          const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
-          sections.forEach(section => {
-            if (section) observer.observe(section);
-          });
-
-          // Store cleanup function
-          return () => {
-            sections.forEach(section => {
-              if (section) observer.unobserve(section);
-            });
-          };
-        })
-      : window.setTimeout(() => {
-          const options = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0
-          };
-
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const sectionId = entry.target.id;
-                if (sectionId) {
-                  setActiveSection(sectionId);
-                }
-              }
-            });
-          }, options);
-
-          const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
-          sections.forEach(section => {
-            if (section) observer.observe(section);
-          });
-        }, 100);
+      ? window.requestIdleCallback(setup)
+      : window.setTimeout(setup, 100);
 
     return () => {
       if ('cancelIdleCallback' in window) {
-        window.cancelIdleCallback(idleCallback);
+        window.cancelIdleCallback(idleCallback as number);
       } else {
-        clearTimeout(idleCallback);
+        clearTimeout(idleCallback as number);
       }
+      observer?.disconnect();
     };
   }, []);
 

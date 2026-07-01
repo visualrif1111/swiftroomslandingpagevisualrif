@@ -7,7 +7,6 @@ import { CTADecoration } from './InteractiveDecorations';
 
 // Lazy load heavy form components to reduce initial bundle
 const LeadForm = lazy(() => import('./LeadForm').then(m => ({ default: m.LeadForm })));
-const LeadFormAndroid = lazy(() => import('./LeadFormAndroid').then(m => ({ default: m.LeadFormAndroid })));
 
 interface HeroSectionProps {
   enableVideo?: boolean;
