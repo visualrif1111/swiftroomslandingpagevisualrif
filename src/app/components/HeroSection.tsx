@@ -154,14 +154,35 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="space-y-3 lg:space-y-6"
                 >
-                  {/* Main Heading */}
-                  <h1 className="font-['Exo',sans-serif] text-base lg:text-2xl xl:text-[28px] font-semibold leading-tight lg:leading-[1.2] tracking-[0.06em] lg:tracking-[0.08em] uppercase">
-                    Premium Aluminium Windows, Sliding Doors &amp; Glass Rooms for UAE Villas
-                  </h1>
+                  {/* Eyebrow / location label — Rajdhani uppercase with brand divider */}
+                  <motion.div
+                    className="flex items-center gap-2.5 lg:gap-3"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.05 }}
+                  >
+                    <span className="h-px w-6 lg:w-8 bg-white/50" />
+                    <span className="font-['Rajdhani',sans-serif] text-[10px] lg:text-sm font-semibold uppercase tracking-[0.18em] text-white/85">
+                      Dubai · Abu Dhabi · UAE
+                    </span>
+                  </motion.div>
+
+                  {/* Main Heading — oversized Exo display for maximum impact */}
+                  <motion.h1
+                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.02] lg:leading-[0.98] tracking-[-0.015em] text-[1.9rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    Premium Windows, Doors<br className="hidden sm:block" /> &amp; Glass Rooms
+                    <span className="block font-medium text-white/70 text-base sm:text-xl lg:text-2xl tracking-normal mt-1 lg:mt-2">
+                      Engineered for UAE villas.
+                    </span>
+                  </motion.h1>
 
                   {/* Subheadline */}
                   <p className="font-['Barlow',sans-serif] text-xs lg:text-lg text-white/90 leading-snug lg:leading-relaxed max-w-xl">
-                    Designed for UAE climates. Manufactured locally. Installed by specialists with over 3,500 completed projects.
+                    Premium aluminium windows, sliding doors &amp; glass rooms — designed for UAE climates, manufactured locally, and installed by specialists with over 3,500 completed projects.
                   </p>
 
                   {/* Benefits List - All 5 benefits visible on mobile and desktop */}
