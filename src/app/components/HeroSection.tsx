@@ -1,5 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { MessageCircle } from 'lucide-react';
 import svgPaths from '../../imports/svg-xtdnlxzlx3';
 import { HeroCADElements } from './CADFloatingElements';
 import { CTADecoration } from './InteractiveDecorations';
@@ -154,11 +155,14 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                   className="space-y-3 lg:space-y-6"
                 >
                   {/* Main Heading */}
-                  <h1 className="font-['Exo',sans-serif] text-sm lg:text-2xl xl:text-3xl font-semibold leading-tight tracking-[0.12em] lg:tracking-[0.15em] uppercase">
-                    <span className="block whitespace-nowrap">Performance Windows &amp; Doors</span>{' '}
-                    <span className="block whitespace-nowrap">Engineered for Excellence</span>{' '}
-                    <span className="block whitespace-nowrap">Built for the UAE Climate</span>
+                  <h1 className="font-['Exo',sans-serif] text-base lg:text-2xl xl:text-[28px] font-semibold leading-tight lg:leading-[1.2] tracking-[0.06em] lg:tracking-[0.08em] uppercase">
+                    Premium Aluminium Windows, Sliding Doors &amp; Glass Rooms for UAE Villas
                   </h1>
+
+                  {/* Subheadline */}
+                  <p className="font-['Barlow',sans-serif] text-xs lg:text-lg text-white/90 leading-snug lg:leading-relaxed max-w-xl">
+                    Designed for UAE climates. Manufactured locally. Installed by specialists with over 3,500 completed projects.
+                  </p>
 
                   {/* Benefits List - All 5 benefits visible on mobile and desktop */}
                   <div className="space-y-1.5 lg:space-y-3 pt-0.5 lg:pt-2">
@@ -218,16 +222,38 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     </div>
                   </div>
 
-                  {/* CTA Button for Mobile */}
-                  <div className="pt-4 lg:hidden">
+                  {/* CTA Hierarchy for Mobile: Primary / Secondary / Tertiary */}
+                  <div className="pt-4 lg:hidden space-y-2.5">
+                    {/* Primary CTA - Get Free Quote (most dominant) */}
                     <CTADecoration>
                       <button
                         onClick={handleMobileCTA}
                         className="w-full bg-white text-[#008873] px-6 py-4 rounded-xl font-['Rajdhani',sans-serif] text-base font-bold hover:bg-[#008873] hover:text-white hover:ring-2 hover:ring-white active:scale-95 transition-all duration-200 shadow-2xl"
                       >
-                        Start Your Swiftrooms Journey
+                        Get Free Quote
                       </button>
                     </CTADecoration>
+
+                    {/* Secondary CTA - WhatsApp Expert */}
+                    <a
+                      href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-xl font-['Rajdhani',sans-serif] text-base font-semibold shadow-lg active:scale-95 transition-all duration-200"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      WhatsApp Expert
+                    </a>
+
+                    {/* Tertiary CTA - Visit Showroom */}
+                    <a
+                      href="https://maps.google.com/?q=ETJAR+J1+Complex+Block+A+Warehouse+11-12+Jebel+Ali+Industrial+Area+1+Dubai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm py-1 active:opacity-80 transition-opacity"
+                    >
+                      Visit Showroom
+                    </a>
                   </div>
 
                   {/* Bottom Tagline */}

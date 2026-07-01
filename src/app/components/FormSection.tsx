@@ -21,7 +21,7 @@ export function FormSection() {
         {/* Decorative Background */}
         <ImmersiveBackgroundAnimations />
         
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="max-w-4xl mx-auto space-y-8 lg:space-y-12">
           {/* Section Header */}
           <div className="text-center space-y-4">
             <motion.h2
@@ -31,7 +31,7 @@ export function FormSection() {
               transition={{ duration: 0.6 }}
               className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e]"
             >
-              Ready to Transform Your Space?
+              Get Your Free Quote
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -40,8 +40,31 @@ export function FormSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="font-['Barlow',sans-serif] text-lg lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto"
             >
-              Get a free consultation and quote from our expert team
+              Takes under a minute. No obligation. A specialist responds within 12 hours.
             </motion.p>
+
+            {/* Trust signals near the form */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-2"
+            >
+              {[
+                '4.4★ · 130+ reviews',
+                '3,500+ projects completed',
+                '14+ years in the UAE',
+                'Showroom in Dubai',
+              ].map((stat) => (
+                <span
+                  key={stat}
+                  className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#007969] font-medium bg-[#007969]/10 rounded-full px-3 py-1.5"
+                >
+                  {stat}
+                </span>
+              ))}
+            </motion.div>
           </div>
 
           {/* Lead Form - Use same desktop version for all devices */}

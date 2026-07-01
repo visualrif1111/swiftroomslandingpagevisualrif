@@ -61,13 +61,13 @@ export function Navigation() {
 
   const navItems = [
     { key: 'hero', id: 'hero', label: 'Home' },
+    { key: 'benefits', id: 'benefits', label: 'Benefits' },
     { key: 'products', id: 'products', label: 'Products' },
-    { key: 'process', id: 'process', label: 'Process' },
-    { key: 'brands', id: 'brands', label: 'Brands' },
-    { key: 'social', id: 'social', label: 'Portfolio' },
-    { key: 'contact-form', id: 'contact-form', label: 'Get Quote' },
     { key: 'gallery', id: 'gallery', label: 'Gallery' },
     { key: 'testimonials', id: 'testimonials', label: 'Testimonials' },
+    { key: 'process', id: 'process', label: 'Process' },
+    { key: 'social', id: 'social', label: 'Portfolio' },
+    { key: 'contact-form', id: 'contact-form', label: 'Get Free Quote' },
     { key: 'faqs', id: 'faqs', label: 'FAQs' },
   ];
 
@@ -343,7 +343,7 @@ export function Navigation() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get a Quote | Visit Showroom
+                Get Free Quote
               </motion.button>
             </div>
           </div>
@@ -566,7 +566,7 @@ export function Navigation() {
                         } active:scale-95 transition-transform touch-manipulation`}
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
-                        Get Quote
+                        Get Free Quote
                       </button>
                     </CTADecoration>
                     <motion.div 

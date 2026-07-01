@@ -202,10 +202,10 @@ export function ProcessSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 tracking-wide relative z-40">
-            Simple 5-Step Process
+            How It Works
           </h2>
           <p className="font-['Barlow',sans-serif] text-[10px] lg:text-xl text-[#3a3a3c]">
-            From quote to installation, we make it easy
+            From your free quote to aftercare, we handle every step — so you know exactly what to expect
           </p>
         </motion.div>
 
@@ -213,8 +213,8 @@ export function ProcessSection() {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-0 max-w-7xl mx-auto">
           <ProcessStep
             number="01"
-            title="Request Quote"
-            description="Complete our quick form or call to get started."
+            title="Get Free Quote"
+            description="Complete our quick form or WhatsApp us to get started — no obligation."
             showConnector={true}
             index={0}
             isActive={activeStep === 0}
@@ -222,8 +222,8 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="02"
-            title="Consultation Visit"
-            description="Discuss your needs with our expert team & receive an accurate quote"
+            title="Consultation & Site Assessment"
+            description="We discuss your needs and assess your site to plan the right solution."
             showConnector={true}
             index={1}
             isActive={activeStep === 1}
@@ -231,8 +231,8 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="03"
-            title="Contract & Project Measurement"
-            description="We confirm site measurements and issue your project contract."
+            title="Design & Specification"
+            description="We finalise designs, exact measurements, specifications and your contract."
             showConnector={true}
             index={2}
             isActive={activeStep === 2}
@@ -240,8 +240,8 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="04"
-            title="Installation"
-            description="Professional installation completed efficiently with minimal disruption."
+            title="Manufacturing & Installation"
+            description="Locally manufactured systems, professionally installed with minimal disruption."
             showConnector={true}
             index={3}
             isActive={activeStep === 3}
@@ -250,8 +250,8 @@ export function ProcessSection() {
           <div className="col-span-2 lg:col-span-1 flex justify-center">
             <ProcessStep
               number="05"
-              title="Quality Assurance"
-              description="Final inspection and warranty activation to ensure your complete satisfaction."
+              title="Aftercare Support"
+              description="Final inspection, warranty activation and ongoing aftercare you can rely on."
               showConnector={false}
               index={4}
               isActive={activeStep === 4}

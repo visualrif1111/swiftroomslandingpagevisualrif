@@ -8,6 +8,9 @@ import { getAnimationSettings } from './utils/performance';
 const PerformanceMonitor = lazy(() => import('./components/PerformanceMonitor').then(m => ({ default: m.PerformanceMonitor })));
 
 // Lazy load sections below the fold for better initial load performance
+const KeyBenefitsSection = lazy(() => import('./components/KeyBenefitsSection').then(m => ({ default: m.KeyBenefitsSection })));
+const FinalCTASection = lazy(() => import('./components/FinalCTASection').then(m => ({ default: m.FinalCTASection })));
+const StickyMobileCTA = lazy(() => import('./components/StickyMobileCTA').then(m => ({ default: m.StickyMobileCTA })));
 const ProductsSection = lazy(() => import('./components/ProductsSection').then(m => ({ default: m.ProductsSection })));
 const TransformYourSpaceSection = lazy(() => import('./components/TransformYourSpaceSection').then(m => ({ default: m.TransformYourSpaceSection })));
 const SwiftroomsSolutionSection = lazy(() => import('./components/SwiftroomsSolutionSection').then(m => ({ default: m.SwiftroomsSolutionSection })));
@@ -177,6 +180,13 @@ export default function App() {
           )}
 
           {/* All below-fold sections wrapped in Suspense for lazy loading */}
+          {/* CRO journey: Key Benefits -> Products -> Gallery -> Testimonials -> Why Us -> Process -> Lead Form -> Showroom CTA -> FAQ */}
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <KeyBenefitsSection />
+            </ErrorBoundary>
+          </Suspense>
+
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
               <ProductsSection />
@@ -191,19 +201,31 @@ export default function App() {
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
+              <GallerySection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <TestimonialsSection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
               <SwiftroomsSolutionSection />
             </ErrorBoundary>
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <ProcessSection />
+              <BrandsSection />
             </ErrorBoundary>
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <BrandsSection />
+              <ProcessSection />
             </ErrorBoundary>
           </Suspense>
 
@@ -221,13 +243,7 @@ export default function App() {
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <GallerySection />
-            </ErrorBoundary>
-          </Suspense>
-
-          <Suspense fallback={<SectionLoader />}>
-            <ErrorBoundary>
-              <TestimonialsSection />
+              <FinalCTASection />
             </ErrorBoundary>
           </Suspense>
 
@@ -250,6 +266,11 @@ export default function App() {
           </ErrorBoundary>
         </Suspense>
       </div>
+
+      {/* Mobile-only sticky bottom CTA bar */}
+      <Suspense fallback={null}>
+        <StickyMobileCTA />
+      </Suspense>
     </ErrorBoundary>
   );
 }

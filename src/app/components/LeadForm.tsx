@@ -854,7 +854,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green' }: { autoOpen?
             className={`group relative inline-flex items-center gap-3 px-8 py-4 lg:px-12 lg:py-5 rounded-2xl font-['Rajdhani',sans-serif] text-lg lg:text-2xl font-semibold shadow-2xl transition-all duration-300 overflow-hidden active:scale-95 ${ctaVariant === 'white' ? 'bg-white text-[#007969] hover:bg-[#007969] hover:text-white' : 'bg-[#007969] text-white hover:bg-white hover:text-[#007969]'}`}
           >
             {/* Button content */}
-            <span className="relative z-10">Start Your Swiftrooms Journey</span>
+            <span className="relative z-10">Get Free Quote</span>
             <ArrowRight className="relative z-10 w-6 h-6 lg:w-7 lg:h-7 group-hover:translate-x-1 transition-transform duration-300" />
           </button>
 

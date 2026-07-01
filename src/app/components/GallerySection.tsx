@@ -902,7 +902,7 @@ export function GallerySection() {
 
           {/* Paragraph */}
           <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#3a3a3c] mb-1.5 lg:mb-3 px-4 relative z-50">
-            Feel free to browse our work
+            See how Swiftrooms has transformed villas, gardens and commercial spaces across the UAE.
           </p>
 
           {/* Instagram Link */}
@@ -1346,6 +1346,31 @@ export function GallerySection() {
             ← Swipe to browse →
           </motion.p>
         </div>
+
+        {/* Post-gallery CTA */}
+        <motion.div
+          className="text-center mt-8 lg:mt-12 relative z-50"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="font-['Exo',sans-serif] text-sm lg:text-2xl font-medium text-[#1c1c1e] mb-3 lg:mb-4">
+            Inspired by these projects?
+          </p>
+          <button
+            onClick={() => {
+              const formSection = document.getElementById('contact-form');
+              if (formSection) {
+                formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 500);
+              }
+            }}
+            className="inline-flex items-center justify-center gap-2 bg-[#008873] text-white px-7 py-3.5 lg:px-9 lg:py-4 rounded-xl font-['Rajdhani',sans-serif] text-base lg:text-lg font-bold shadow-lg hover:bg-white hover:text-[#008873] hover:ring-2 hover:ring-[#008873] active:scale-95 transition-all duration-200"
+          >
+            Get Your Free Quote
+          </button>
+        </motion.div>
       </div>
 
       <style>{`

@@ -26,7 +26,7 @@ export function SwiftroomsSolutionSection() {
               transition={{ duration: 0.6 }}
               className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
             >
-              The Swiftrooms Solution
+              Why Choose Swiftrooms
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -35,7 +35,7 @@ export function SwiftroomsSolutionSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="font-['Barlow',sans-serif] text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto relative z-40"
             >
-              From common problems to premium solutions
+              UAE climate expertise and premium systems — from common problems to premium solutions
             </motion.p>
           </div>
 
@@ -167,6 +167,44 @@ export function SwiftroomsSolutionSection() {
               </div>
             </motion.div>
           </div>
+
+          {/* Why Choose Swiftrooms - Credibility points */}
+          <motion.div
+            className="mt-8 lg:mt-12 relative z-30"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+              {[
+                "UAE climate expertise since 2011",
+                "Premium aluminium & glazing systems",
+                "3,500+ completed projects",
+                "Local manufacturing & installation",
+                "Professional project management",
+                "Showroom consultation available",
+                "Dedicated aftercare & support",
+                "14+ years, 70+ specialists",
+              ].map((point, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="flex items-start gap-2.5 bg-white border border-gray-100 rounded-xl p-3 lg:p-4 shadow-sm"
+                >
+                  <div className="flex-shrink-0 w-5 h-5 lg:w-6 lg:h-6 mt-0.5 rounded-full bg-[#007969] flex items-center justify-center">
+                    <Check className="w-3 h-3 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
+                  </div>
+                  <p className="font-['Barlow',sans-serif] text-xs lg:text-base text-[#1c1c1e] font-medium leading-snug">
+                    {point}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
       </div>

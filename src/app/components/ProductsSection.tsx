@@ -23,35 +23,35 @@ const products: Product[] = [
   {
     id: 1,
     name: 'Aluminum Sliding Doors',
-    description: 'Sleek sliding doors with smooth operation, perfect for balconies and terraces.',
+    description: 'Open your living space with slim-frame systems designed for seamless indoor-outdoor villa living.',
     imageUrl: imgImageAluminumSlidingDoors,
     category: 'Doors'
   },
   {
     id: 2,
     name: 'Bi-Fold Doors',
-    description: 'Premium folding doors that seamlessly connect indoor and outdoor spaces.',
+    description: 'Create a seamless connection between home and garden for brighter, more open living.',
     imageUrl: imgImageBiFoldDoors,
     category: 'Doors'
   },
   {
     id: 3,
     name: 'Aluminum Windows',
-    description: 'Energy-efficient aluminum windows with superior thermal insulation and modern design.',
+    description: 'Improve insulation, comfort and natural light while reducing heat transfer in UAE homes.',
     imageUrl: imgImageAluminumWindows,
     category: 'Windows'
   },
   {
     id: 4,
     name: 'UPVC Windows and Doors',
-    description: 'Low-maintenance UPVC windows and doors with exceptional durability, thermal efficiency, and security features.',
+    description: 'Lower cooling costs and enjoy quieter, more comfortable rooms with high-performance glazing.',
     imageUrl: imgImageUpvcWindowsAndDoors,
     category: 'Windows & Doors'
   },
   {
     id: 5,
     name: 'Skylights and Garden Rooms',
-    description: 'Premium roof windows and skylights that flood interiors with natural light.',
+    description: 'Bring more daylight into your space and gain a year-round architectural extension that adds value.',
     imageUrl: imgImageSkylights,
     category: 'Outdoor Spaces'
   },
@@ -388,10 +388,10 @@ export function ProductsSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-1 lg:mb-3">
-            Our Premium Products
+            Featured Products
           </h2>
           <p className="font-['Barlow',sans-serif] text-[10px] lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-4">
-            High-quality aluminum and UPVC solutions for UAE's climate
+            Premium systems engineered for comfort, lower cooling costs and brighter living in the UAE climate
           </p>
         </motion.div>
 
