@@ -180,7 +180,7 @@ export default function App() {
           )}
 
           {/* All below-fold sections wrapped in Suspense for lazy loading */}
-          {/* CRO journey: Key Benefits -> Products -> Gallery -> Testimonials -> Why Us -> Process -> Lead Form -> Showroom CTA -> FAQ */}
+          {/* CRO journey: Key Benefits -> Products -> Transform -> Gallery -> Testimonials -> Why Us -> Brands -> Process -> Social Proof -> Lead Form -> Final CTA -> FAQ */}
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
               <KeyBenefitsSection />

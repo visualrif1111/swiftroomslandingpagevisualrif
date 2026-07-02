@@ -617,6 +617,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               onKeyPress={(e) => e.key === 'Enter' && isStepValid() && handleNext()}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
+              autoComplete="name"
               className="w-full px-4 py-4 text-lg text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
               placeholder="Enter your full name"
               autoFocus
@@ -661,6 +662,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 <input
                   type="tel"
                   inputMode="numeric"
+                  autoComplete="tel"
                   value={formData.phone}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^\d\s\-\(\)]/g, '');
@@ -726,6 +728,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             <div className="space-y-2">
               <input
                 type="email"
+                inputMode="email"
+                autoComplete="email"
                 value={formData.email}
                 onChange={(e) => {
                   setFormData({ ...formData, email: e.target.value });
@@ -952,6 +956,16 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
           <div className="relative min-h-[300px]">
             {renderStep()}
           </div>
+
+          {/* Reassurance at the point of submission */}
+          {currentStep === 5 && (
+            <p className="mt-5 flex items-center justify-center gap-1.5 text-xs lg:text-sm text-center font-body text-[#6b7280]">
+              <svg className="w-3.5 h-3.5 flex-shrink-0 text-[#007969]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Your details are safe with us — no spam. A specialist replies within 12 hours.
+            </p>
+          )}
 
           {/* Navigation Buttons */}
           {currentStep >= 0 && currentStep < totalSteps && (

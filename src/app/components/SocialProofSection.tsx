@@ -7,10 +7,10 @@ import { FloatingOrnament } from './FloatingOrnament';
 import { ImmersiveBackgroundAnimations } from './ImmersiveBackgroundAnimations';
 
 const stats = [
-  { value: '30K', label: 'Instagram Followers' },
-  { value: '500+', label: 'Projects Shared' },
-  { value: '98%', label: 'Customer Satisfaction' },
-  { value: '4.9★', label: 'Average Rating' },
+  { value: '3,400+', label: 'Happy Customers' },
+  { value: '3,500+', label: 'Projects Completed' },
+  { value: '14+', label: 'Years in the UAE' },
+  { value: '4.4★', label: 'Google Rating' },
 ];
 
 const communities = [

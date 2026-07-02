@@ -82,10 +82,10 @@ export function SwiftroomsSolutionSection() {
                 <div className="space-y-3">
                   {[
                     "Excessive heat penetration",
-                    "Sound resistance for improved acoustic performance",
-                    "Better air tightness",
+                    "Poor noise insulation from outside",
+                    "Draughts and air leakage",
                     "Skyrocketing AC bills",
-                    "Making use of unused space"
+                    "Wasted, unused outdoor space"
                   ].map((item, idx) => (
                     <motion.div
                       key={idx}

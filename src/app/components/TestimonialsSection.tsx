@@ -504,7 +504,7 @@ function ReviewCard({ review }: { review: Review }) {
                 {review.author}
               </p>
               <p className="font-body text-xs text-[#6b7280] mt-0.5">
-                Verified customer · {review.date}
+                Verified Google review
               </p>
             </div>
             <div className="flex items-center gap-1.5 bg-[#007969]/5 px-2.5 py-1 rounded-full shrink-0">
@@ -545,7 +545,7 @@ function ReviewCard({ review }: { review: Review }) {
                 {review.author}
               </p>
               <p className="font-body text-xs lg:text-sm text-[#6b7280] mt-0.5">
-                {review.date}
+                Verified Google review
               </p>
             </div>
 
@@ -635,10 +635,10 @@ export function TestimonialsSection() {
               ))}
             </div>
             <span className="font-heading text-base lg:text-xl font-bold text-[#1c1c1e]">
-              5.0
+              4.4
             </span>
             <span className="font-body text-xs lg:text-sm text-[#6b7280]">
-              Based on {reviews.length}+ Google reviews
+              Based on 130+ Google reviews
             </span>
           </div>
         </motion.div>

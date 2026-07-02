@@ -184,6 +184,18 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     Premium aluminium windows, sliding doors &amp; glass rooms — designed for UAE climates, manufactured locally, and installed by specialists with over 3,500 completed projects.
                   </p>
 
+                  {/* Above-fold trust strip — hard credibility numbers */}
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 pt-1.5 lg:pt-2.5">
+                    {['14+ Years', '3,400+ Customers', '3,500+ Projects', '4.4★ Google'].map((stat) => (
+                      <span
+                        key={stat}
+                        className="inline-flex items-center font-['Barlow',sans-serif] text-[10px] lg:text-xs font-semibold text-white/90 bg-white/10 border border-white/20 rounded-full px-2.5 py-1"
+                      >
+                        {stat}
+                      </span>
+                    ))}
+                  </div>
+
                   {/* Benefits List - All 5 benefits visible on mobile and desktop */}
                   <div className="space-y-1.5 lg:space-y-3 pt-0.5 lg:pt-2">
                     {/* Benefit 1 */}
@@ -276,10 +288,31 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     </a>
                   </div>
 
+                  {/* Desktop secondary/tertiary CTAs — the primary CTA is the form on the right */}
+                  <div className="hidden lg:flex items-center gap-4 pt-5">
+                    <a
+                      href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-whatsapp shadow-lg"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      WhatsApp Expert
+                    </a>
+                    <a
+                      href="https://maps.google.com/?q=ETJAR+J1+Complex+Block+A+Warehouse+11-12+Jebel+Ali+Industrial+Area+1+Dubai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center min-h-[44px] text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm hover:text-white transition-colors"
+                    >
+                      Visit Showroom
+                    </a>
+                  </div>
+
                   {/* Bottom Tagline */}
                   <div className="pt-2 lg:pt-8">
                     <p className="font-['Exo',sans-serif] text-[10px] lg:text-base font-medium tracking-[0.12em] lg:tracking-[0.2em] uppercase">
-                      Book Your Showroom Visit Today
+                      Free Site Visit Within 24 Hours · No Obligation
                     </p>
                   </div>
                 </motion.div>

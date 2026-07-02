@@ -19,7 +19,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: 'Do you offer a warranty?',
-    answer: 'Yes! We offer a comprehensive 10-year warranty or life time home ownership warranty on all our aluminum and UPVC windows and doors, covering manufacturing defects and structural integrity. Our products also come with a 2-year warranty on hardware and accessories. Additionally, we provide lifetime after-sales support for maintenance and repairs',
+    answer: 'Yes. Every installation is covered by a 10-year manufacturer warranty on our aluminium profiles, plus a 2-year warranty on hardware and accessories — covering manufacturing defects and structural integrity. We also provide lifetime after-sales support for maintenance and repairs.',
   },
   {
     question: "Are your products suitable for Dubai's climate?",
@@ -28,6 +28,10 @@ const faqData: FAQItem[] = [
   {
     question: 'Do you provide free measurements and quotes?',
     answer: 'Yes, we provide completely free on-site measurements and detailed quotations with no obligation. Our experienced technicians will visit your property at a time convenient for you, take precise measurements, discuss your requirements, and provide a comprehensive quote within 24-48 hours.',
+  },
+  {
+    question: 'What happens after I enquire?',
+    answer: 'Once you submit the form, a specialist contacts you within 12 hours to understand your project. We then arrange a free site visit and precise measurement, prepare a 3D design and detailed quotation, and — if you decide to proceed — schedule manufacturing and installation by our own in-house team. Every project finishes with warranty activation and ongoing after-sales support.',
   },
   {
     question: 'Which areas do you serve in UAE?',
@@ -46,11 +50,31 @@ export function FAQSection() {
     const formSection = document.getElementById('contact-form');
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        window.dispatchEvent(new Event('openLeadForm'));
+      }, 500);
     }
+  };
+
+  // FAQ structured data for Google rich results
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
   };
 
   return (
     <section id="faqs" className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-hidden lg:snap-center flex items-center">
+      {/* FAQ structured data for SEO rich results */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+
       {/* Animated Background Ornaments */}
       <FAQCADElements />
       

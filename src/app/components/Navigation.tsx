@@ -63,20 +63,19 @@ export function Navigation() {
     { key: 'testimonials', id: 'testimonials', label: 'Testimonials' },
     { key: 'process', id: 'process', label: 'Process' },
     { key: 'social', id: 'social', label: 'Portfolio' },
-    { key: 'contact-form', id: 'contact-form', label: 'Get Free Quote' },
     { key: 'faqs', id: 'faqs', label: 'FAQs' },
   ];
 
-  // Mobile full-screen menu links (order/content preserved from original)
+  // Mobile full-screen menu links — primary CTA pinned to the top
   const mobileNavItems = [
+    { id: 'contact-form', label: 'Get Free Quote', isCTA: true },
     { id: 'hero', label: 'Home' },
     { id: 'products', label: 'Products' },
+    { id: 'gallery', label: 'Gallery' },
+    { id: 'testimonials', label: 'Testimonials' },
     { id: 'process', label: 'Process' },
     { id: 'brands', label: 'Brands' },
     { id: 'social', label: 'Portfolio' },
-    { id: 'contact-form', label: 'Get Free Quote', isCTA: true },
-    { id: 'gallery', label: 'Gallery' },
-    { id: 'testimonials', label: 'Testimonials' },
     { id: 'faqs', label: 'FAQs' },
   ];
 

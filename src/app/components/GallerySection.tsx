@@ -75,8 +75,8 @@ const galleryImages = [
   {
     id: 8,
     url: imgGroup143726098,
-    alt: 'PHILLIAS FOGGS - Custom aluminum installations',
-    location: 'PHILLIAS FOGGS',
+    alt: "Phileas Fogg's - Custom aluminum installations",
+    location: "Phileas Fogg's",
     description: 'Custom aluminum installations',
   },
   {
@@ -96,8 +96,8 @@ const galleryImages = [
   {
     id: 11,
     url: imgComponent50,
-    alt: 'UMM SEQUIMM - Contemporary aluminum installations',
-    location: 'UMM SEQUIMM',
+    alt: 'Umm Suqeim - Contemporary aluminum installations',
+    location: 'Umm Suqeim',
     description: 'Contemporary aluminum installations',
   },
   {
@@ -309,6 +309,8 @@ const GalleryImage = forwardRef<HTMLDivElement, GalleryImageProps>(({
             <ImageWithFallback
               src={image.url}
               alt={image.alt}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover pointer-events-none"
             />
           </div>
@@ -1286,6 +1288,8 @@ export function GallerySection() {
                       <ImageWithFallback
                         src={image.url}
                         alt={image.alt}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
