@@ -148,15 +148,16 @@ export function TransformYourSpaceSection() {
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
                 WebkitOverflowScrolling: 'touch',
-                touchAction: 'none',
+                // pan-y: vertical page scroll passes through; horizontal handled by useMultiAxisScroll
+                touchAction: 'pan-y',
                 scrollBehavior: 'auto',
                 willChange: 'scroll-position',
-                overscrollBehavior: 'auto',
+                overscrollBehavior: 'contain',
               }}
             >
               {infiniteCards.map((card, idx) => (
                 <div key={`card-${idx}`} className="w-full flex-shrink-0 px-2"
-                  style={{ touchAction: 'none' }}
+                  style={{ touchAction: 'pan-y' }}
                 >
                   <div className="rounded-xl p-5 h-full border-2 transition-all duration-300 flex flex-col items-center text-center pointer-events-none" style={{ backgroundColor: card.bg, borderColor: card.border }}>
                     <div className="mb-4 w-14 h-14 rounded-xl flex items-center justify-center transition-transform duration-300" style={{ backgroundColor: card.iconBg }}>

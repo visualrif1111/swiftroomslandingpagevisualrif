@@ -1269,10 +1269,11 @@ export function GallerySection() {
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               WebkitOverflowScrolling: 'touch',
-              touchAction: 'none',
+              // pan-y: vertical page scroll passes through; horizontal handled by useMultiAxisScroll
+              touchAction: 'pan-y',
               scrollBehavior: 'auto',
               willChange: 'scroll-position',
-              overscrollBehavior: 'auto',
+              overscrollBehavior: 'contain',
               pointerEvents: 'auto',
             }}
           >
@@ -1280,7 +1281,7 @@ export function GallerySection() {
               <div
                 key={`gallery-${index}`}
                 className="flex-shrink-0 w-full px-2"
-                style={{ touchAction: 'none' }}
+                style={{ touchAction: 'pan-y' }}
               >
                 <div className="pointer-events-none">
                   <div className="relative overflow-hidden rounded-xl border border-[#e5e7eb] card-hover">

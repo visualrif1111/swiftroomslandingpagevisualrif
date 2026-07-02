@@ -276,10 +276,11 @@ export function SocialProofSection() {
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
                   WebkitOverflowScrolling: 'touch',
-                  touchAction: 'none',
+                  // pan-y: vertical page scroll passes through; horizontal handled by useMultiAxisScroll
+                  touchAction: 'pan-y',
                   scrollBehavior: 'auto',
                   willChange: 'scroll-position',
-                  overscrollBehavior: 'auto',
+                  overscrollBehavior: 'contain',
                   pointerEvents: 'auto',
                 }}
                 onTouchStart={handleTouchStart}

@@ -267,10 +267,11 @@ export function BrandsSection() {
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               WebkitOverflowScrolling: 'touch',
-              touchAction: 'none',
+              // pan-y: vertical page scroll passes through; horizontal handled by useMultiAxisScroll
+              touchAction: 'pan-y',
               scrollBehavior: 'auto',
               willChange: 'scroll-position',
-              overscrollBehavior: 'auto',
+              overscrollBehavior: 'contain',
               pointerEvents: 'auto',
             }}
           >
@@ -278,7 +279,7 @@ export function BrandsSection() {
               <div
                 key={`brand-${index}`}
                 className="flex-shrink-0 w-full px-2"
-                style={{ touchAction: 'none' }}
+                style={{ touchAction: 'pan-y' }}
               >
                 <div className="pointer-events-none">
                   <BrandLogo name={brand.name}>
