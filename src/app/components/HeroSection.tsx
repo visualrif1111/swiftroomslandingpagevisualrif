@@ -173,10 +173,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
                   >
-                    Premium Windows, Doors<br className="hidden sm:block" /> &amp; Glass Rooms
-                    <span className="block font-medium text-white/70 text-base sm:text-xl lg:text-2xl tracking-normal mt-1 lg:mt-2">
-                      Engineered for UAE villas.
-                    </span>
+                    Premium Aluminium Windows, Sliding Doors &amp; Glass Rooms for UAE Villas
                   </motion.h1>
 
                   {/* Subheadline */}
