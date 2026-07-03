@@ -216,11 +216,11 @@ export function ProcessSection() {
         </motion.div>
 
         {/* Process Steps */}
-        <div className="flex flex-col space-y-8 lg:grid lg:grid-cols-5 lg:gap-0 lg:space-y-0 max-w-7xl mx-auto">
+        <div className="flex flex-col space-y-8 lg:grid lg:grid-cols-6 lg:gap-0 lg:space-y-0 max-w-7xl mx-auto">
           <ProcessStep
             number="01"
-            title="Get Free Quote"
-            description="Complete our quick form or WhatsApp us to get started — no obligation."
+            title="Free Consultation"
+            description="We discuss your needs, budget and vision — no obligation, no pressure."
             showConnector={true}
             index={0}
             isActive={activeStep === 0}
@@ -228,8 +228,8 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="02"
-            title="Consultation & Site Assessment"
-            description="We discuss your needs and assess your site to plan the right solution."
+            title="Site Survey"
+            description="We visit and precisely measure your site to plan the right solution."
             showConnector={true}
             index={1}
             isActive={activeStep === 1}
@@ -237,8 +237,8 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="03"
-            title="Design & Specification"
-            description="We finalise designs, exact measurements, specifications and your contract."
+            title="Design & Quotation"
+            description="You receive detailed designs, specifications and a clear, fixed quote."
             showConnector={true}
             index={2}
             isActive={activeStep === 2}
@@ -246,24 +246,31 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="04"
-            title="Manufacturing & Installation"
-            description="Locally manufactured systems, professionally installed with minimal disruption."
+            title="Manufacturing"
+            description="Your systems are precision-made locally in our UAE facility."
             showConnector={true}
             index={3}
             isActive={activeStep === 3}
             onHover={setActiveStep}
           />
-          <div className="lg:col-span-1 lg:flex lg:justify-center">
-            <ProcessStep
-              number="05"
-              title="Aftercare Support"
-              description="Final inspection, warranty activation and ongoing aftercare you can rely on."
-              showConnector={false}
-              index={4}
-              isActive={activeStep === 4}
-              onHover={setActiveStep}
-            />
-          </div>
+          <ProcessStep
+            number="05"
+            title="Installation"
+            description="Our specialist team fits everything cleanly and on schedule."
+            showConnector={true}
+            index={4}
+            isActive={activeStep === 4}
+            onHover={setActiveStep}
+          />
+          <ProcessStep
+            number="06"
+            title="Final Handover"
+            description="Final inspection, warranty activation and ongoing aftercare you can rely on."
+            showConnector={false}
+            index={5}
+            isActive={activeStep === 5}
+            onHover={setActiveStep}
+          />
         </div>
       </div>
     </section>

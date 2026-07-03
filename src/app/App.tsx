@@ -180,22 +180,17 @@ export default function App() {
           )}
 
           {/* All below-fold sections wrapped in Suspense for lazy loading */}
-          {/* CRO journey: Key Benefits -> Products -> Transform -> Gallery -> Testimonials -> Why Us -> Brands -> Process -> Social Proof -> Lead Form -> Final CTA -> FAQ */}
+          {/*
+            CRO conversion journey (persuade before the enquiry):
+            Hero -> Key Benefits (outcomes) -> Gallery (proof of work, moved high)
+            -> Testimonials (social proof) -> Why Choose Swiftrooms (credibility)
+            -> Products -> Transform (what we build) -> Brands (premium systems)
+            -> Process (how it works) -> Social Proof (stats reassurance)
+            -> Lead Form (the ask) -> Final CTA -> FAQ
+          */}
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
               <KeyBenefitsSection />
-            </ErrorBoundary>
-          </Suspense>
-
-          <Suspense fallback={<SectionLoader />}>
-            <ErrorBoundary>
-              <ProductsSection />
-            </ErrorBoundary>
-          </Suspense>
-
-          <Suspense fallback={<SectionLoader />}>
-            <ErrorBoundary>
-              <TransformYourSpaceSection />
             </ErrorBoundary>
           </Suspense>
 
@@ -214,6 +209,18 @@ export default function App() {
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
               <SwiftroomsSolutionSection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <ProductsSection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <TransformYourSpaceSection />
             </ErrorBoundary>
           </Suspense>
 

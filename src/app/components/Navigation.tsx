@@ -54,28 +54,29 @@ export function Navigation() {
     };
   }, []);
 
-  // Desktop horizontal nav links
+  // Desktop horizontal nav links — order mirrors the CRO page flow
   const navItems = [
     { key: 'hero', id: 'hero', label: 'Home' },
     { key: 'benefits', id: 'benefits', label: 'Benefits' },
-    { key: 'products', id: 'products', label: 'Products' },
     { key: 'gallery', id: 'gallery', label: 'Gallery' },
     { key: 'testimonials', id: 'testimonials', label: 'Testimonials' },
+    { key: 'swiftrooms-solution', id: 'swiftrooms-solution', label: 'Why Us' },
+    { key: 'products', id: 'products', label: 'Products' },
     { key: 'process', id: 'process', label: 'Process' },
-    { key: 'social', id: 'social', label: 'Portfolio' },
     { key: 'faqs', id: 'faqs', label: 'FAQs' },
   ];
 
-  // Mobile full-screen menu links — primary CTA pinned to the top
+  // Mobile full-screen menu links — primary CTA pinned to the top,
+  // remaining links follow the CRO page flow
   const mobileNavItems = [
     { id: 'contact-form', label: 'Get Free Quote', isCTA: true },
     { id: 'hero', label: 'Home' },
-    { id: 'products', label: 'Products' },
+    { id: 'benefits', label: 'Benefits' },
     { id: 'gallery', label: 'Gallery' },
     { id: 'testimonials', label: 'Testimonials' },
+    { id: 'swiftrooms-solution', label: 'Why Us' },
+    { id: 'products', label: 'Products' },
     { id: 'process', label: 'Process' },
-    { id: 'brands', label: 'Brands' },
-    { id: 'social', label: 'Portfolio' },
     { id: 'faqs', label: 'FAQs' },
   ];
 
