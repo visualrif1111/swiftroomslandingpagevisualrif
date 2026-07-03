@@ -264,7 +264,7 @@ export function ProcessSection() {
           />
           <ProcessStep
             number="06"
-            title="Final Handover"
+            title="Handover & Aftercare"
             description="Final inspection, warranty activation and ongoing aftercare you can rely on."
             showConnector={false}
             index={5}

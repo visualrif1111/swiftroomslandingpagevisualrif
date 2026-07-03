@@ -10,7 +10,11 @@ const stats = [
   { value: '3,400+', label: 'Happy Customers' },
   { value: '3,500+', label: 'Projects Completed' },
   { value: '14+', label: 'Years in the UAE' },
+  { value: '70+', label: 'Team Members' },
+  { value: '130+', label: 'Google Reviews' },
   { value: '4.4★', label: 'Google Rating' },
+  { value: '2011', label: 'Established' },
+  { value: 'Dubai', label: 'UAE Showroom' },
 ];
 
 const communities = [

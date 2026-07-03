@@ -234,6 +234,20 @@ section[id] {
   contain-intrinsic-size: auto 100vh;
 }
 
+/* Accessible keyboard focus — gold ring stays visible on both white and teal
+   backgrounds. Only shows for keyboard users (:focus-visible), never on click. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #ffc857;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 /* Mobile: the full-viewport section height is a desktop scroll-snap treatment.
    On mobile (snap already disabled) it forces content-light sections to fill the
    screen, leaving large dead-space gaps. Let non-hero sections size to their

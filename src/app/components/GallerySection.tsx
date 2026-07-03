@@ -907,6 +907,19 @@ export function GallerySection() {
             See how Swiftrooms has transformed villas, gardens and commercial spaces across the UAE.
           </p>
 
+          {/* Products used across these projects */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 lg:gap-2 mb-3 lg:mb-4 px-4 relative z-50">
+            <span className="font-body text-[11px] lg:text-xs text-[#6b7280] mr-0.5">Featuring:</span>
+            {['Sliding Doors', 'Bifold Doors', 'Aluminium Windows', 'uPVC Systems', 'Skylights', 'Glass Rooms'].map((product) => (
+              <span
+                key={product}
+                className="font-body text-[11px] lg:text-xs font-medium text-[#007969] bg-[#e6f4f1] border border-[#00796922] rounded-full px-2.5 py-1"
+              >
+                {product}
+              </span>
+            ))}
+          </div>
+
           {/* Instagram Link */}
           <motion.a
             href="https://www.instagram.com/swiftrooms.ae/"

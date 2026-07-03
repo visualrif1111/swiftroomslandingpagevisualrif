@@ -181,12 +181,14 @@ export default function App() {
 
           {/* All below-fold sections wrapped in Suspense for lazy loading */}
           {/*
-            CRO conversion journey (persuade before the enquiry):
-            Hero -> Key Benefits (outcomes) -> Gallery (proof of work, moved high)
-            -> Testimonials (social proof) -> Why Choose Swiftrooms (credibility)
-            -> Products -> Transform (what we build) -> Brands (premium systems)
-            -> Process (how it works) -> Social Proof (stats reassurance)
-            -> Lead Form (the ask) -> Final CTA -> FAQ
+            CRO conversion journey — persuade before the enquiry. The closing
+            funnel (Why Choose -> Process -> Lead Form) is kept contiguous so
+            nothing interrupts the run-up to the form:
+            Hero -> Key Benefits (outcomes) -> Gallery (proof of work)
+            -> Testimonials (social proof) -> Products -> Transform -> Brands
+            (what we build / premium systems) -> Social Proof (stat reassurance)
+            -> Why Choose Swiftrooms (credibility) -> Process (how it works)
+            -> Lead Form (the ask) -> Final CTA / Showroom -> FAQ
           */}
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
@@ -203,12 +205,6 @@ export default function App() {
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
               <TestimonialsSection />
-            </ErrorBoundary>
-          </Suspense>
-
-          <Suspense fallback={<SectionLoader />}>
-            <ErrorBoundary>
-              <SwiftroomsSolutionSection />
             </ErrorBoundary>
           </Suspense>
 
@@ -232,13 +228,19 @@ export default function App() {
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <ProcessSection />
+              <SocialProofSection />
             </ErrorBoundary>
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <SocialProofSection />
+              <SwiftroomsSolutionSection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <ProcessSection />
             </ErrorBoundary>
           </Suspense>
 
