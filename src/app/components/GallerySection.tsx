@@ -21,29 +21,9 @@ import imgComponent51 from "figma:asset/c568cc5308d6af54e01491f1a0397cfe754bf68d
 import imgComponent52 from "figma:asset/7bc7f4a248e23f904fc8529f0c110383f1db67c0.png";
 import imgComponent53 from "figma:asset/4db06d323b51658b3160642751a1dff35e2e6663.png";
 
-// Gallery images showcasing SWIFTROOMS projects - Starting with second image from left as center
+// Curated visual showcase — a selection of completed Swiftrooms projects across
+// recognisable UAE communities (kept to ~10 top picks for a focused, premium feel).
 const galleryImages = [
-  {
-    id: 1,
-    url: imgComponent40,
-    alt: 'SWIFTROOMS premium aluminum structure project',
-    location: 'SWIFTROOMS',
-    description: 'Premium aluminum structure project',
-  },
-  {
-    id: 2,
-    url: imgScreenshot,
-    alt: 'Modern luxury home exterior with SWIFTROOMS aluminum installations',
-    location: 'LUXURY HOME',
-    description: 'Modern exterior with aluminum installations',
-  },
-  {
-    id: 3,
-    url: imgComponent41,
-    alt: 'Contemporary villa with premium aluminum windows and doors',
-    location: 'CONTEMPORARY VILLA',
-    description: 'Premium aluminum windows and doors',
-  },
   {
     id: 4,
     url: imgComponent42,
@@ -106,13 +86,6 @@ const galleryImages = [
     alt: 'DAMAC HILLS - Luxury aluminum doors and windows',
     location: 'DAMAC HILLS',
     description: 'Luxury aluminum doors and windows',
-  },
-  {
-    id: 13,
-    url: imgComponent52,
-    alt: 'DAMAC HILLS - Modern aluminum structure project',
-    location: 'DAMAC HILLS',
-    description: 'Modern aluminum structure project',
   },
   {
     id: 14,
