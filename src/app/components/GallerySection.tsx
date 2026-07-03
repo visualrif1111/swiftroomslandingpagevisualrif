@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, forwardRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useMultiAxisScroll } from '../utils/useMultiAxisScroll';
-import { Instagram, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Instagram, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import svgPaths from '../../imports/svg-tso0h1bvi5';
 
@@ -897,14 +897,14 @@ export function GallerySection() {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            Our Gallery
+            Real Projects Across the UAE
           </motion.h2>
 
           <div className="divider-brand mx-auto mb-3 lg:mb-3 relative z-50" />
 
           {/* Paragraph */}
-          <p className="font-body text-sm lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 px-4 relative z-50">
-            See how Swiftrooms has transformed villas, gardens and commercial spaces across the UAE.
+          <p className="font-body text-sm lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 px-4 relative z-50 max-w-2xl mx-auto">
+            Explore a selection of completed Swiftrooms installations across luxury villas, residential spaces and commercial projects.
           </p>
 
           {/* Products used across these projects */}
@@ -1373,18 +1373,33 @@ export function GallerySection() {
           <p className="font-heading text-lg sm:text-xl lg:text-2xl font-medium text-[#1c1c1e] mb-3 lg:mb-4">
             Inspired by these projects?
           </p>
-          <button
-            onClick={() => {
-              const formSection = document.getElementById('contact-form');
-              if (formSection) {
-                formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 500);
-              }
-            }}
-            className="btn-brand text-base lg:text-lg"
-          >
-            Get Your Free Quote
-          </button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            {/* Primary CTA — keep the user on the landing page conversion journey */}
+            <button
+              onClick={() => {
+                const formSection = document.getElementById('contact-form');
+                if (formSection) {
+                  formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 500);
+                }
+              }}
+              className="btn-brand text-base lg:text-lg w-full sm:w-auto"
+            >
+              Get Free Quote
+            </button>
+
+            {/* Secondary CTA — the only route off the landing page, for users who
+                want the full portfolio hub */}
+            <a
+              href="https://swiftrooms-newbuild.vercel.app/portfolio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 w-full sm:w-auto min-h-[44px] px-6 py-3 rounded-[2px] font-accent uppercase tracking-[.12em] text-sm lg:text-base font-semibold text-[#007969] border-[1.5px] border-[#007969] hover:bg-[#007969] hover:text-white transition-colors duration-200"
+            >
+              View Full Portfolio
+              <ArrowUpRight className="w-4 h-4 lg:w-5 lg:h-5" />
+            </a>
+          </div>
         </motion.div>
       </div>
 
