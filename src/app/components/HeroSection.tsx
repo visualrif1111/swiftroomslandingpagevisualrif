@@ -160,7 +160,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
       )}
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 lg:px-6 w-full py-6 lg:py-0">
+      <div className="relative z-10 container mx-auto px-5 lg:px-6 w-full py-6 lg:py-0">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           {/* Left Side - Content (Mobile switches between content and form) */}
           <div className="text-white space-y-3 lg:space-y-6">
