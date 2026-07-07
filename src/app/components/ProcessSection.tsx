@@ -3,6 +3,33 @@ import { motion } from 'motion/react';
 import svgPaths from '../../imports/svg-w7uq9akn3g';
 import { FloatingOrnament } from './FloatingOrnament';
 import { ImmersiveBackgroundAnimations } from './ImmersiveBackgroundAnimations';
+import { SwipeCarousel } from './SwipeCarousel';
+
+const PROCESS_STEPS = [
+  { number: '01', title: 'Free Consultation', description: 'We discuss your needs, budget and vision — no obligation, no pressure.' },
+  { number: '02', title: 'Site Survey', description: 'We visit and precisely measure your site to plan the right solution.' },
+  { number: '03', title: 'Design & Quotation', description: 'You receive detailed designs, specifications and a clear, fixed quote.' },
+  { number: '04', title: 'Manufacturing', description: 'Your systems are precision-made locally in our UAE facility.' },
+  { number: '05', title: 'Installation', description: 'Our specialist team fits everything cleanly and on schedule.' },
+  { number: '06', title: 'Handover & Aftercare', description: 'Final inspection, warranty activation and ongoing aftercare you can rely on.' },
+];
+
+// Vertical step card for the mobile swipe carousel.
+function ProcessStepCard({ number, title, description }: { number: string; title: string; description: string }) {
+  return (
+    <div className="h-full bg-white sr-card-premium p-6 flex flex-col">
+      <div className="w-14 h-14 bg-[#007969] rounded-full flex items-center justify-center shadow-lg mb-5">
+        <span className="font-heading text-xl text-white font-semibold">{number}</span>
+      </div>
+      <h3 className="font-heading text-[1.125rem] font-semibold text-[#1c1c1e] mb-1.5 leading-snug">
+        {title}
+      </h3>
+      <p className="font-body text-[0.9375rem] text-[#3a3a3c] leading-relaxed">
+        {description}
+      </p>
+    </div>
+  );
+}
 
 function ProcessIcon() {
   return (
@@ -215,61 +242,29 @@ export function ProcessSection() {
           </p>
         </motion.div>
 
-        {/* Process Steps */}
-        <div className="flex flex-col space-y-8 lg:grid lg:grid-cols-6 lg:gap-0 lg:space-y-0 max-w-7xl mx-auto">
-          <ProcessStep
-            number="01"
-            title="Free Consultation"
-            description="We discuss your needs, budget and vision — no obligation, no pressure."
-            showConnector={true}
-            index={0}
-            isActive={activeStep === 0}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="02"
-            title="Site Survey"
-            description="We visit and precisely measure your site to plan the right solution."
-            showConnector={true}
-            index={1}
-            isActive={activeStep === 1}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="03"
-            title="Design & Quotation"
-            description="You receive detailed designs, specifications and a clear, fixed quote."
-            showConnector={true}
-            index={2}
-            isActive={activeStep === 2}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="04"
-            title="Manufacturing"
-            description="Your systems are precision-made locally in our UAE facility."
-            showConnector={true}
-            index={3}
-            isActive={activeStep === 3}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="05"
-            title="Installation"
-            description="Our specialist team fits everything cleanly and on schedule."
-            showConnector={true}
-            index={4}
-            isActive={activeStep === 4}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="06"
-            title="Handover & Aftercare"
-            description="Final inspection, warranty activation and ongoing aftercare you can rely on."
-            showConnector={false}
-            index={5}
-            isActive={activeStep === 5}
-            onHover={setActiveStep}
+        {/* Process Steps — desktop horizontal row */}
+        <div className="hidden lg:grid lg:grid-cols-6 lg:gap-0 max-w-7xl mx-auto">
+          {PROCESS_STEPS.map((step, i) => (
+            <ProcessStep
+              key={step.number}
+              number={step.number}
+              title={step.title}
+              description={step.description}
+              showConnector={i < PROCESS_STEPS.length - 1}
+              index={i}
+              isActive={activeStep === i}
+              onHover={setActiveStep}
+            />
+          ))}
+        </div>
+
+        {/* Process Steps — mobile swipeable carousel */}
+        <div className="lg:hidden">
+          <SwipeCarousel
+            ariaLabel="How it works steps"
+            items={PROCESS_STEPS.map((step) => (
+              <ProcessStepCard key={step.number} {...step} />
+            ))}
           />
         </div>
       </div>
