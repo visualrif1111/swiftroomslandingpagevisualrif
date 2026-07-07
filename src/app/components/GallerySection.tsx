@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Instagram, MessageCircle, MapPin } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -140,16 +140,20 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ project, variant }: ProjectCardProps) {
+  const isCarousel = variant === 'carousel';
   return (
     <motion.article
-      layout
+      data-card
+      // Framer's `layout` retransforms cards on reflow, which fights native
+      // horizontal scroll — so only the desktop grid animates layout.
+      layout={!isCarousel}
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.96 }}
+      exit={isCarousel ? undefined : { opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className={`group relative overflow-hidden rounded-2xl bg-gray-100 shadow-sm ring-1 ring-black/5 ${
-        variant === 'carousel'
-          ? 'snap-center shrink-0 w-[80vw] max-w-[340px] aspect-[3/4]'
+        isCarousel
+          ? 'snap-center shrink-0 w-[78vw] max-w-[320px] aspect-[3/4]'
           : 'aspect-[4/5]'
       }`}
     >
@@ -189,6 +193,83 @@ function ProjectCard({ project, variant }: ProjectCardProps) {
         </p>
       </div>
     </motion.article>
+  );
+}
+
+// Native scroll-snap carousel for mobile. Uses real overflow scrolling (no
+// scroll hijacking, no transform-based track) so vertical page scrolling stays
+// smooth and swiping never freezes.
+function MobileCarousel({ items }: { items: Project[] }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const rafRef = useRef<number | null>(null);
+
+  // Reset to the first card whenever the filtered set changes.
+  useEffect(() => {
+    setActive(0);
+    scrollerRef.current?.scrollTo({ left: 0, behavior: 'auto' });
+  }, [items]);
+
+  const handleScroll = useCallback(() => {
+    if (rafRef.current !== null) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const el = scrollerRef.current;
+      if (!el) return;
+      const viewportCenter = el.getBoundingClientRect().left + el.clientWidth / 2;
+      const cards = el.querySelectorAll<HTMLElement>('[data-card]');
+      let closest = 0;
+      let min = Infinity;
+      cards.forEach((card, i) => {
+        const rect = card.getBoundingClientRect();
+        const dist = Math.abs(rect.left + rect.width / 2 - viewportCenter);
+        if (dist < min) {
+          min = dist;
+          closest = i;
+        }
+      });
+      setActive(closest);
+    });
+  }, []);
+
+  const scrollToIndex = (i: number) => {
+    const card = scrollerRef.current?.querySelectorAll<HTMLElement>('[data-card]')[i];
+    card?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
+
+  return (
+    <div className="lg:hidden">
+      <div
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-1 pb-4 [-ms-overflow-style:none] [scrollbar-width:none]"
+        style={{ WebkitOverflowScrolling: 'touch', scrollPaddingInline: '1rem' }}
+      >
+        {items.map((project) => (
+          <ProjectCard key={project.id} project={project} variant="carousel" />
+        ))}
+      </div>
+
+      {/* Pagination dots — tap to jump */}
+      <div className="mt-1 flex items-center justify-center gap-1.5">
+        {items.map((project, i) => (
+          <button
+            key={project.id}
+            onClick={() => scrollToIndex(i)}
+            aria-label={`Go to project ${i + 1}`}
+            className="flex h-9 items-center justify-center px-0.5"
+          >
+            <span
+              className={`block rounded-full transition-all duration-300 ${
+                active === i ? 'h-1.5 w-6 bg-[#007969]' : 'h-1.5 w-1.5 bg-gray-300'
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+
+      <p className="text-center font-body text-xs text-gray-400">← Swipe to browse →</p>
+    </div>
   );
 }
 
@@ -290,19 +371,7 @@ export function GallerySection() {
         </motion.div>
 
         {/* Mobile: swipeable carousel (native scroll — no scroll-locking) */}
-        <div className="lg:hidden">
-          <div
-            className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none]"
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            <AnimatePresence mode="popLayout">
-              {filtered.map((project) => (
-                <ProjectCard key={project.id} project={project} variant="carousel" />
-              ))}
-            </AnimatePresence>
-          </div>
-          <p className="text-center font-body text-xs text-gray-400">← Swipe to browse →</p>
-        </div>
+        <MobileCarousel items={filtered} />
 
         {/* Conversion CTAs — keep users inside the landing page journey */}
         <motion.div
