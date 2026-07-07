@@ -769,16 +769,16 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="mb-6 lg:mb-8">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-body text-xs lg:text-sm text-[#3a3a3c] font-medium">
+                <span className="font-accent text-[13px] lg:text-sm text-[#1c1c1e] font-semibold uppercase tracking-[.1em]">
                   Step {currentStep + 1} of {totalSteps}
                 </span>
-                <span className="font-body text-xs lg:text-sm text-[#007969] font-medium">
+                <span className="font-body text-xs lg:text-sm text-[#007969] font-semibold">
                   {Math.round(((currentStep + 1) / totalSteps) * 100)}%
                 </span>
               </div>
               <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#007969] rounded-full transition-all duration-400"
+                  className="h-full bg-gradient-to-r from-[#007969] to-[#00a88f] rounded-full transition-[width] duration-500 ease-out"
                   style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                 />
               </div>
@@ -800,7 +800,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             </p>
           )}
 
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons — compact Back + full-width primary (wizard feel) */}
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="flex gap-3 mt-6 lg:mt-8">
               {currentStep >= 0 && (
@@ -808,24 +808,25 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   type="button"
                   onClick={handleBack}
                   disabled={isSubmitting}
-                  className="btn-outline text-sm lg:text-base disabled:opacity-50"
+                  aria-label="Back"
+                  className="btn-outline flex-shrink-0 !px-4 lg:!px-8 text-sm lg:text-base disabled:opacity-50"
                 >
                   <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
-                  Back
+                  <span className="hidden sm:inline">Back</span>
                 </button>
               )}
-              
+
               <button
                 type="button"
                 onClick={currentStep === totalSteps - 1 ? handleSubmit : handleNext}
                 disabled={!isStepValid() || isSubmitting}
-                className={`ml-auto text-sm lg:text-base transition-all ${
+                className={`flex-1 !py-4 lg:!py-3.5 text-sm lg:text-base transition-all ${
                   isStepValid() && !isSubmitting
                     ? 'btn-brand'
-                    : 'inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
+                    : 'inline-flex items-center justify-center gap-2 px-8 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
                 }`}
               >
-                {isSubmitting ? 'Sending…' : currentStep === totalSteps - 1 ? 'Submit Enquiry' : 'Next'}
+                {isSubmitting ? 'Sending…' : currentStep === totalSteps - 1 ? 'Submit Enquiry' : 'Continue'}
                 {!isSubmitting && <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />}
               </button>
             </div>

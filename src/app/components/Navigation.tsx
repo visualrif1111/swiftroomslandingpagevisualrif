@@ -188,6 +188,13 @@ export function Navigation() {
           console.log(`[Navigation] ✅ Scrolled to ${id} using scrollIntoView`);
         }
       }
+
+      // For the quote CTA, also open the lead form (parity with the sticky CTA,
+      // hero and other entry points) so tapping "Get Free Quote" in the menu
+      // expands the form instead of just scrolling near it.
+      if (id === 'contact-form') {
+        setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 400);
+      }
     }, 150); // 150ms delay to let menu close animation start
   };
 

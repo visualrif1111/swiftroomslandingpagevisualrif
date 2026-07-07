@@ -531,7 +531,7 @@ function ReviewCard({ review }: { review: Review }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded-2xl p-5 lg:p-8 card-hover border border-[#e5e7eb] relative overflow-hidden group max-w-4xl mx-auto"
+        className="bg-white sr-card-premium lg:rounded-2xl lg:border lg:border-[#e5e7eb] lg:shadow-none p-6 lg:p-8 card-hover relative overflow-hidden group max-w-4xl mx-auto"
       >
         {/* Quote Icon Background */}
         <div className="absolute top-3 right-3 lg:top-4 lg:right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-300">
@@ -570,7 +570,7 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
 
           {/* Review Text */}
-          <p className="font-body text-[15px] text-[#3a3a3c] leading-relaxed">
+          <p className="font-body text-[17px] text-[#2a2a2c] leading-[1.65]">
             "{review.text}"
           </p>
         </div>
@@ -631,14 +631,15 @@ export function TestimonialsSection() {
   const [error, setError] = useState(false);
 
   const sliderSettings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 600,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 6000,
     pauseOnHover: true,
+    swipeToSlide: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     beforeChange: (_: number, next: number) => setCurrentSlide(next),

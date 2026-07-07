@@ -194,12 +194,12 @@ export function SwiftroomsSolutionSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="flex items-start gap-3 bg-white border border-[#e5e7eb] rounded-xl p-4 card-hover"
+                  className="flex items-start gap-3 bg-white sr-card-premium lg:rounded-xl lg:border lg:border-[#e5e7eb] lg:shadow-none p-4 card-hover"
                 >
-                  <div className="flex-shrink-0 w-5 h-5 lg:w-6 lg:h-6 mt-0.5 rounded-full bg-[#007969] flex items-center justify-center">
-                    <Check className="w-3 h-3 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
+                  <div className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full bg-[#007969] flex items-center justify-center">
+                    <Check className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
                   </div>
-                  <p className="font-body text-sm lg:text-base text-[#1c1c1e] font-medium leading-relaxed">
+                  <p className="font-body text-[0.9375rem] lg:text-base text-[#1c1c1e] font-medium leading-relaxed">
                     {point}
                   </p>
                 </motion.div>

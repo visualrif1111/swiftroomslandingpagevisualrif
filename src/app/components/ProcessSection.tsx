@@ -126,10 +126,10 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
         animate={{ y: isActive ? -5 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h3 className="font-heading text-base lg:text-xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 lg:min-h-[3.5rem] flex items-center justify-start lg:justify-center">
+        <h3 className="font-heading text-[1.0625rem] lg:text-xl font-semibold lg:font-medium text-[#1c1c1e] mb-1 lg:mb-3 lg:min-h-[3.5rem] flex items-center justify-start lg:justify-center">
           {title}
         </h3>
-        <p className="font-body text-sm lg:text-base text-[#3a3a3c] leading-relaxed">
+        <p className="font-body text-[0.9375rem] lg:text-base text-[#3a3a3c] leading-relaxed">
           {description}
         </p>
       </motion.div>
