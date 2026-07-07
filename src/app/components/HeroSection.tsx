@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle } from 'lucide-react';
 import svgPaths from '../../imports/svg-xtdnlxzlx3';
@@ -16,6 +16,31 @@ interface HeroSectionProps {
 
 export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: HeroSectionProps) {
   const [showMobileForm, setShowMobileForm] = useState(false);
+  // Defer mounting the (heavy) YouTube iframe until the hero is actually in
+  // view, so it never sits on the initial critical rendering path.
+  const sectionRef = useRef<HTMLElement>(null);
+  const [videoInView, setVideoInView] = useState(false);
+
+  useEffect(() => {
+    if (!enableVideo) return;
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      // No observer support — just load it.
+      setVideoInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVideoInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [enableVideo]);
 
   // Ensure page loads at the top on mobile and when switching viewports
   useEffect(() => {
@@ -68,6 +93,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
   return (
     <section
       id="hero"
+      ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center lg:snap-center"
       style={{
         contain: 'layout style',
@@ -85,50 +111,48 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
           and behind the desktop video/overlay. Prevents white-on-nothing text. */}
       <div className="absolute inset-0 bg-[#007969]" />
 
-      {/* Desktop Video Background */}
-      {enableVideo && videoUrl && (
+      {/* Desktop Video Background — mounted only once the hero is in view */}
+      {enableVideo && videoInView && videoUrl && (
         <div className="absolute inset-0 overflow-hidden hidden lg:block" style={{ contain: 'strict' }}>
           <iframe
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none scale-110"
             style={{
-              minWidth: '100vw',
-              minHeight: '100vh',
-              width: '120vw',
-              height: '120vh',
+              // 16:9 box scaled to always cover the hero in any viewport ratio.
+              width: 'max(100vw, calc(100vh * 16 / 9))',
+              height: 'max(100vh, calc(100vw * 9 / 16))',
               contain: 'strict',
-              aspectRatio: '16 / 9',
             }}
             src={`${videoUrl}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd1080&playlist=${videoUrl.split('/').pop()?.split('?')[0] || ''}&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
             title="Background Video"
             allow="autoplay; fullscreen; encrypted-media; accelerometer; gyroscope; picture-in-picture"
             allowFullScreen
             frameBorder="0"
-            loading="eager"
+            loading="lazy"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
         </div>
       )}
 
-      {/* Mobile Video Background */}
-      {enableVideo && mobileVideoUrl && (
+      {/* Mobile Video Background — mounted only once the hero is in view */}
+      {enableVideo && videoInView && mobileVideoUrl && (
         <div className="absolute inset-0 overflow-hidden lg:hidden" style={{ contain: 'strict' }}>
           <iframe
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none scale-110"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             style={{
-              minWidth: '100vw',
-              minHeight: '100vh',
-              width: '120vw',
-              height: '120vh',
+              // A 16:9 video is far wider than a portrait phone, so size the
+              // iframe box by height (width = 100vh * 16/9) and let overflow
+              // crop the sides — the video covers the full hero, no letterbox.
+              width: 'max(100vw, calc(100vh * 16 / 9))',
+              height: 'max(100vh, calc(100vw * 9 / 16))',
               contain: 'strict',
-              aspectRatio: '16 / 9',
             }}
             src={`${mobileVideoUrl}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd720&playlist=${mobileVideoUrl.split('/').pop()?.split('?')[0] || ''}&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
             title="Mobile Background Video"
             allow="autoplay; fullscreen; encrypted-media; accelerometer; gyroscope; picture-in-picture"
             allowFullScreen
             frameBorder="0"
-            loading="eager"
+            loading="lazy"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
