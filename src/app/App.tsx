@@ -165,7 +165,7 @@ export default function App() {
         {/* Hero Section with optional video background */}
         <ErrorBoundary>
           <HeroSection
-            enableVideo={animationSettings.enableAnimations}
+            enableVideo={true}
             videoUrl="https://www.youtube.com/embed/xpDcSdw--hg"
             mobileVideoUrl="https://www.youtube.com/embed/xpDcSdw--hg"
           />
