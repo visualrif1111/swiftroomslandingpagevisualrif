@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, forwardRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useMultiAxisScroll } from '../utils/useMultiAxisScroll';
-import { Instagram, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { Instagram, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import svgPaths from '../../imports/svg-tso0h1bvi5';
 
@@ -1361,16 +1361,16 @@ export function GallerySection() {
               Get Free Quote
             </button>
 
-            {/* Secondary CTA — the only route off the landing page, for users who
-                want the full portfolio hub */}
+            {/* Secondary CTA — WhatsApp an expert, keeping the user in the
+                conversion journey (no route off the landing page) */}
             <a
-              href="https://swiftrooms-newbuild.vercel.app/portfolio"
+              href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 w-full sm:w-auto min-h-[44px] px-6 py-3 rounded-[2px] font-accent uppercase tracking-[.12em] text-sm lg:text-base font-semibold text-[#007969] border-[1.5px] border-[#007969] hover:bg-[#007969] hover:text-white transition-colors duration-200"
+              className="btn-whatsapp w-full sm:w-auto"
             >
-              View Full Portfolio
-              <ArrowUpRight className="w-4 h-4 lg:w-5 lg:h-5" />
+              <MessageCircle className="w-5 h-5" />
+              WhatsApp Expert
             </a>
           </div>
         </motion.div>
