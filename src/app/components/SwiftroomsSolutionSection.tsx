@@ -24,7 +24,7 @@ export function SwiftroomsSolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-heading text-2xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
+              className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
             >
               Why Choose Swiftrooms
             </motion.h2>

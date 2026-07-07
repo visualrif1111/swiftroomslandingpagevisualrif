@@ -151,7 +151,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     y: -20,
                   }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="space-y-3 lg:space-y-6"
+                  className="space-y-4 lg:space-y-6"
                 >
                   {/* Eyebrow / location label — Rajdhani uppercase with brand divider */}
                   <motion.div
@@ -168,7 +168,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
 
                   {/* Main Heading — oversized Exo display for maximum impact */}
                   <motion.h1
-                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.02] lg:leading-[0.98] tracking-[-0.015em] text-[1.9rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
+                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[0.98] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
@@ -176,8 +176,11 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     Premium Aluminium Windows, Sliding Doors &amp; Glass Rooms for UAE Villas
                   </motion.h1>
 
-                  {/* Subheadline */}
-                  <p className="font-['Barlow',sans-serif] text-xs lg:text-lg text-white/90 leading-snug lg:leading-relaxed max-w-xl">
+                  {/* Subheadline — concise on mobile, fuller on desktop */}
+                  <p className="lg:hidden font-['Barlow',sans-serif] text-[0.95rem] text-white/90 leading-relaxed max-w-md">
+                    Designed for UAE climates. Installed by specialists with over 3,500 completed projects.
+                  </p>
+                  <p className="hidden lg:block font-['Barlow',sans-serif] text-lg text-white/90 leading-relaxed max-w-xl">
                     Premium aluminium windows, sliding doors &amp; glass rooms — designed for UAE climates, manufactured locally, and installed by specialists with over 3,500 completed projects.
                   </p>
 
@@ -186,15 +189,16 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     {['14+ Years', '3,400+ Customers', '3,500+ Projects', '4.4★ Google'].map((stat) => (
                       <span
                         key={stat}
-                        className="inline-flex items-center font-['Barlow',sans-serif] text-[10px] lg:text-xs font-semibold text-white/90 bg-white/10 border border-white/20 rounded-full px-2.5 py-1"
+                        className="inline-flex items-center font-['Barlow',sans-serif] text-[11px] lg:text-xs font-semibold text-white/90 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 lg:px-2.5 lg:py-1"
                       >
                         {stat}
                       </span>
                     ))}
                   </div>
 
-                  {/* Benefits List - All 5 benefits visible on mobile and desktop */}
-                  <div className="space-y-1.5 lg:space-y-3 pt-0.5 lg:pt-2">
+                  {/* Benefits List — desktop only; on mobile it clutters the hero
+                      and the Key Benefits section covers the same ground. */}
+                  <div className="hidden lg:block space-y-1.5 lg:space-y-3 pt-0.5 lg:pt-2">
                     {/* Benefit 1 */}
                     <div className="flex items-start space-x-1.5 lg:space-x-2.5">
                       <div className="flex-shrink-0 w-3.5 h-3.5 lg:w-5 lg:h-5 mt-0.5">
@@ -252,7 +256,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                   </div>
 
                   {/* CTA Hierarchy for Mobile: Primary / Secondary / Tertiary */}
-                  <div className="pt-4 lg:hidden space-y-2.5">
+                  <div className="pt-3 lg:hidden space-y-3">
                     {/* Primary CTA - Get Free Quote (most dominant) */}
                     <CTADecoration>
                       <button
@@ -307,8 +311,8 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                   </div>
 
                   {/* Bottom Tagline */}
-                  <div className="pt-2 lg:pt-8">
-                    <p className="font-['Exo',sans-serif] text-[10px] lg:text-base font-medium tracking-[0.12em] lg:tracking-[0.2em] uppercase">
+                  <div className="pt-1 lg:pt-8">
+                    <p className="font-['Exo',sans-serif] text-[11px] lg:text-base font-medium tracking-[0.14em] lg:tracking-[0.2em] uppercase text-white/85">
                       Free Site Visit Within 24 Hours · No Obligation
                     </p>
                   </div>

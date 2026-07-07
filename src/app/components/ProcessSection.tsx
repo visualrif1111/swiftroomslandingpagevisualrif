@@ -206,7 +206,7 @@ export function ProcessSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="font-heading text-2xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-wide relative z-40">
+          <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 tracking-wide relative z-40">
             How It Works
           </h2>
           <div className="divider-brand mx-auto mb-3 lg:mb-4" />

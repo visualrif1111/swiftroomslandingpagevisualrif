@@ -677,7 +677,7 @@ export function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 lg:mb-10"
         >
-          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
+          <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
             What Our Clients Say
           </h2>
           <p className="font-body text-sm lg:text-lg text-[#6b7280] max-w-2xl mx-auto">

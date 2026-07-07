@@ -254,7 +254,7 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
+            <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
               Our Portfolio
             </h2>
             <p className="font-body text-xs lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 relative z-40">

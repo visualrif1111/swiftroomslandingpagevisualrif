@@ -88,7 +88,7 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-4">
+            <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-4">
               Frequently Asked Questions
             </h2>
             <div className="divider-brand mx-auto mb-3 lg:mb-4" />
