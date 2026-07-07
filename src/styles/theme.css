@@ -189,11 +189,14 @@
     display: none;  /* Chrome, Safari and Opera */
   }
 
-  /* Android scroll optimization - free-form fluid scrolling */
+  /* Android scroll optimization - free-form fluid scrolling.
+     Allow BOTH axes so native horizontal carousels (scroll-snap) can be
+     swiped. Vertical page scroll is unaffected; JS-driven carousels keep
+     their own inline `touch-action: pan-y` so they are not double-handled. */
   @media screen and (max-width: 1023px) {
     * {
       -webkit-tap-highlight-color: transparent;
-      touch-action: pan-y;
+      touch-action: pan-x pan-y;
     }
 
     /* Disable snap scrolling on mobile */
