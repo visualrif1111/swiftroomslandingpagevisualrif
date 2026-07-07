@@ -166,8 +166,8 @@ export default function App() {
         <ErrorBoundary>
           <HeroSection
             enableVideo={animationSettings.enableAnimations}
-            videoUrl="https://www.youtube.com/embed/aP4L7jnKxYA"
-            mobileVideoUrl="https://www.youtube.com/embed/wwrYl-50v2E"
+            videoUrl="https://www.youtube.com/embed/xpDcSdw--hg"
+            mobileVideoUrl="https://www.youtube.com/embed/xpDcSdw--hg"
           />
         </ErrorBoundary>
 
