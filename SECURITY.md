@@ -34,10 +34,13 @@ no preview mode**. The lead form submits client-side to an external endpoint
 | Edge request filtering | `middleware.ts` | Blocks exploit-probe paths & scanner UAs; fail-open |
 | Secure reviews proxy | `api/reviews.ts` | Keeps the Google Places API key server-side |
 | Form anti-spam | `src/app/components/LeadForm.tsx` | Honeypot, submit-timing check, duplicate-submit guard, file validation |
+| Reviews key hardening | `src/app/services/googleReviewsService.ts` | Removed all client-side `VITE_GOOGLE_PLACES_API_KEY` reads so the key can never be inlined into the public bundle; live reviews go only through the server-side `/api/reviews` proxy |
+| Dependency hygiene | `package.json` | Removed unused `react-router` (cleared a HIGH advisory); patched build toolchain; `npm audit` → **0 vulnerabilities** (prod + dev) |
 | Secret hygiene | `.gitignore` | Ignores `.env` / `.env.*` (keeps `.env.example`) |
 | SEO/crawler control | `public/robots.txt`, `public/sitemap.xml`, `index.html` | robots, sitemap, canonical + Open Graph/Twitter meta |
 
-No visual/UX change was made. No secret is committed.
+No visual/UX change was made — the production bundle hash is unchanged by the
+dependency cleanup. No secret is committed.
 
 ---
 
@@ -180,6 +183,15 @@ edge-cached for 1h. To enable:
 Until configured, the endpoint returns `501` and the client keeps its static
 reviews, so nothing breaks. Only `GET` is allowed; errors never leak internals.
 
+**Client-side key path fully removed (2026-07 audit).** `googleReviewsService.ts`
+previously kept a `CONFIG.apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY`
+read plus a commented-out direct-to-Google fetch. Even though it was dead code,
+Vite inlines any referenced `VITE_*` value into the public bundle at build time,
+so setting that env var would have leaked the key. All such reads and the
+direct-fetch path were deleted; the service now calls **only** `/api/reviews`.
+Verified: `grep -rE "VITE_GOOGLE|AIza|maps.googleapis.com" dist/assets/*.js`
+returns nothing.
+
 ---
 
 ## 7. Form security (`LeadForm.tsx`)
@@ -211,7 +223,7 @@ This is the recommended next step if spam becomes a problem.
 | Broken access control | N/A — no auth/roles; no protected resources. |
 | Security misconfiguration | Fixed — headers/CSP added, secrets gitignored, error bodies sanitised in `api/reviews.ts`. |
 | Sensitive data exposure | Fixed — Google key moved server-side; no secrets in bundle; `.env*` ignored. |
-| Vulnerable components | Monitor — run `npm audit`; keep deps patched (see checklist). |
+| Vulnerable components | Fixed — removed unused `react-router` (HIGH advisory) + patched build toolchain; `npm audit` = **0 vulnerabilities**. Keep monitoring (see checklist). |
 | SSRF | Low — the only server fetch (`api/reviews.ts`) targets a fixed Google URL; no user-controlled URL. |
 | XSS | Mitigated — strict `script-src 'self'`, no `dangerouslySetInnerHTML` on user input (only static JSON-LD). |
 | CSRF | N/A — see §7. |
@@ -246,7 +258,8 @@ This is the recommended next step if spam becomes a problem.
 - [ ] Enable Vercel WAF managed ruleset + rate-limit rules (§5).
 - [ ] Enable BotID; document Attack Challenge Mode runbook.
 - [ ] Tighten CSP `connect-src` to the real endpoint host once known.
-- [ ] `npm audit` — triage & patch; schedule recurring dependency review.
+- [x] `npm audit` — **0 vulnerabilities** (prod + dev) as of 2026-07 audit;
+      schedule recurring review (Dependabot) to keep it there.
 - [ ] Confirm no `.env`/`.env.local` is tracked (`git ls-files | grep -i env`
       should show only `.env.example`).
 
