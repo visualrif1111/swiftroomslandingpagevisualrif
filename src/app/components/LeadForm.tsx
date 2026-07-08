@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, ChevronLeft, Check, ArrowRight, Building, Home, Store, DoorOpen, Columns, RectangleVertical, Grid3x3, Sun, HardHat, Wrench, MessageCircle, MapPin, Phone, Mail, Instagram, Globe, Glasses, LayoutGrid, ChevronDown, AlertCircle, Upload, X } from 'lucide-react';
 import svgPaths from '../../imports/svg-c8s3lgkv08';
@@ -85,6 +85,20 @@ const validatePhone = (phone: string, countryCode: string): { isValid: boolean; 
   return { isValid: true, error: '' };
 };
 
+// --- Client-side file-attachment guardrails (Phase 9/10) -----------------
+// Files are never uploaded to a third party by this form (only their names are
+// sent with the lead), but we still validate on selection to protect the user
+// and keep the payload sane.
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB per file
+const MAX_FILES = 8;
+const ALLOWED_FILE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'application/pdf',
+];
+
 export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpenEvent = false }: { autoOpen?: boolean; ctaVariant?: 'green' | 'white'; listenForOpenEvent?: boolean }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
@@ -116,6 +130,53 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
     marketingConsent: false,
   });
   const [files, setFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState('');
+
+  // --- Anti-spam / bot protection (Phase 6/9) ---------------------------
+  // Honeypot: a hidden field that real users never see or fill. Bots that
+  // auto-fill every input will populate it, letting us silently drop them.
+  const [honeypot, setHoneypot] = useState('');
+  // Timestamp of when the form was opened. Genuine users take several seconds
+  // to complete it; near-instant submits are almost always automated.
+  const [formOpenedAt, setFormOpenedAt] = useState<number>(() => Date.now());
+  // Signature of the last successfully-sent enquiry, to prevent duplicate
+  // submissions (e.g. double-tap / retry) hitting the endpoint twice.
+  const submittedSignatureRef = useRef<string | null>(null);
+
+  // Reset the anti-bot timer each time the form is (re)opened.
+  useEffect(() => {
+    if (isFormOpen) setFormOpenedAt(Date.now());
+  }, [isFormOpen]);
+
+  // Validate attachments on selection: allowed types, per-file size, max count.
+  const handleFileSelect = (fileList: FileList | null) => {
+    setFileError('');
+    if (!fileList) {
+      setFiles([]);
+      return;
+    }
+    const picked = Array.from(fileList);
+    const rejected: string[] = [];
+    const accepted = picked.filter((f) => {
+      if (!ALLOWED_FILE_TYPES.includes(f.type)) {
+        rejected.push(`${f.name} (unsupported type)`);
+        return false;
+      }
+      if (f.size > MAX_FILE_SIZE) {
+        rejected.push(`${f.name} (over 10 MB)`);
+        return false;
+      }
+      return true;
+    });
+    const limited = accepted.slice(0, MAX_FILES);
+    if (accepted.length > MAX_FILES) {
+      rejected.push(`only the first ${MAX_FILES} files were kept`);
+    }
+    if (rejected.length > 0) {
+      setFileError(`Some files were skipped: ${rejected.join(', ')}.`);
+    }
+    setFiles(limited);
+  };
 
   // Listen for custom event to open form from navigation. Only the designated
   // instance (the contact-form section) responds, so the global event doesn't
@@ -287,6 +348,20 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   const handleSubmit = async () => {
     if (isSubmitting) return; // guard against double-submit
     setSubmitError('');
+
+    // Honeypot tripped → almost certainly a bot. Show the normal success
+    // screen so we don't reveal the trap, but never send the payload.
+    if (honeypot.trim() !== '') {
+      setCurrentStep(totalSteps);
+      return;
+    }
+
+    // Timing check → forms completed in under ~2.5s are automated.
+    if (Date.now() - formOpenedAt < 2500) {
+      setSubmitError('Please take a moment to review your details before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     const payload = {
@@ -307,6 +382,15 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       submittedAt: new Date().toISOString(),
     };
 
+    // Duplicate-submission guard: if this exact enquiry was already sent
+    // successfully, skip the network call and go straight to the thank-you screen.
+    const signature = `${payload.name}|${payload.phone}|${payload.email}|${payload.productsNeeded.join(',')}`;
+    if (submittedSignatureRef.current === signature) {
+      setIsSubmitting(false);
+      setCurrentStep(totalSteps);
+      return;
+    }
+
     // Endpoint is configured via VITE_LEAD_ENDPOINT (Formspree form URL, webhook,
     // or your own API). Kept in env so no endpoint is hardcoded in the bundle.
     const endpoint = import.meta.env.VITE_LEAD_ENDPOINT as string | undefined;
@@ -323,6 +407,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
         // No endpoint set yet — warn loudly so leads aren't silently lost in dev.
         console.warn('[LeadForm] VITE_LEAD_ENDPOINT is not configured — lead was NOT delivered:', payload);
       }
+      // Remember this enquiry so an accidental resubmit doesn't double-send.
+      submittedSignatureRef.current = signature;
       setCurrentStep(totalSteps);
     } catch (err) {
       console.error('[LeadForm] submission error:', err);
@@ -577,10 +663,13 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 <span className="font-body text-sm text-[#6b7280] truncate">
                   {files.length > 0 ? `${files.length} file${files.length !== 1 ? 's' : ''} selected` : 'Browse to attach (PDF, JPG, PNG)'}
                 </span>
-                <input type="file" multiple accept="image/*,application/pdf"
-                  onChange={(e) => setFiles(e.target.files ? Array.from(e.target.files) : [])}
+                <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,application/pdf"
+                  onChange={(e) => handleFileSelect(e.target.files)}
                   className="hidden" />
               </label>
+              {fileError && (
+                <p className="font-body text-xs text-red-600 pt-1" role="alert">{fileError}</p>
+              )}
               {files.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {files.map((f, i) => (
@@ -930,9 +1019,12 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               <span className="font-body text-sm text-[#6b7280] truncate">
                 {files.length > 0 ? `${files.length} file${files.length !== 1 ? 's' : ''} selected` : 'Attach plans or photos (PDF, JPG, PNG)'}
               </span>
-              <input type="file" multiple accept="image/*,application/pdf"
-                onChange={(e) => setFiles(e.target.files ? Array.from(e.target.files) : [])} className="hidden" />
+              <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,application/pdf"
+                onChange={(e) => handleFileSelect(e.target.files)} className="hidden" />
             </label>
+            {fileError && (
+              <p className="font-body text-xs text-red-600" role="alert">{fileError}</p>
+            )}
             {files.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
                 {files.map((f, i) => (
@@ -996,6 +1088,18 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
           id="form"
           className="bg-white rounded-xl border border-[#e5e7eb] shadow-[0_16px_40px_#0079691f] p-5 lg:p-8 w-full relative"
         >
+          {/* Honeypot — hidden from real users & assistive tech; bots fill it. */}
+          <input
+            type="text"
+            name="company_website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+          />
+
           {/* Progress Bar */}
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="mb-6 lg:mb-8">
