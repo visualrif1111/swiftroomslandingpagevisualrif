@@ -368,10 +368,12 @@ export function ProductsSection() {
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               WebkitOverflowScrolling: 'touch',
-              touchAction: 'none',
+              // pan-y lets the page scroll vertically through the carousel;
+              // horizontal swipes are driven by useMultiAxisScroll (never 'none', which freezes the page)
+              touchAction: 'pan-y',
               scrollBehavior: 'auto',
               willChange: 'scroll-position',
-              overscrollBehavior: 'auto',
+              overscrollBehavior: 'contain',
               pointerEvents: 'auto',
             }}
           >
@@ -379,7 +381,7 @@ export function ProductsSection() {
               <div
                 key={`product-${index}`}
                 className="flex-shrink-0 w-full px-2"
-                style={{ touchAction: 'none' }}
+                style={{ touchAction: 'pan-y' }}
               >
                 <div className="pointer-events-none">
                   <ProductCard product={product} />

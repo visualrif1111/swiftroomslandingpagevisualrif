@@ -189,11 +189,14 @@
     display: none;  /* Chrome, Safari and Opera */
   }
 
-  /* Android scroll optimization - free-form fluid scrolling */
+  /* Android scroll optimization - free-form fluid scrolling.
+     Allow BOTH axes so native horizontal carousels (scroll-snap) can be
+     swiped. Vertical page scroll is unaffected; JS-driven carousels keep
+     their own inline `touch-action: pan-y` so they are not double-handled. */
   @media screen and (max-width: 1023px) {
     * {
       -webkit-tap-highlight-color: transparent;
-      touch-action: pan-y;
+      touch-action: pan-x pan-y;
     }
 
     /* Disable snap scrolling on mobile */
@@ -232,6 +235,20 @@ section {
 /* Reserve space for sections to prevent shifts */
 section[id] {
   contain-intrinsic-size: auto 100vh;
+}
+
+/* Accessible keyboard focus — gold ring stays visible on both white and teal
+   backgrounds. Only shows for keyboard users (:focus-visible), never on click. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #ffc857;
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 /* Mobile: the full-viewport section height is a desktop scroll-snap treatment.
@@ -439,3 +456,61 @@ body {
   background:var(--brand); opacity:.25; transition:opacity .3s, width .3s;
 }
 .slick-dots li.slick-active button:before { opacity:1; width:22px; }
+
+/* ==========================================================================
+   Apple-inspired mobile experience layer
+   Confident type, spacious rhythm, premium rounded surfaces — applied on
+   mobile (<1024px) so the page never reads as a compressed desktop site.
+   Desktop styling is untouched.
+   ========================================================================== */
+
+/* Never allow horizontal page scroll on mobile (technical requirement).
+   `clip` guards overflow without creating a scroll container, so nested
+   horizontal carousels (react-slick, native scroll-snap) keep working. */
+html, body { overflow-x: clip; }
+
+/* All rounded-card / heading / rhythm helpers below are scoped to mobile
+   (<=1023px) so the existing desktop styling (its own lg:text-* / border /
+   radius utilities) is left completely untouched. */
+@media (max-width: 1023px) {
+  /* Confident, headline-first section titles. */
+  .sr-heading {
+    font-family: 'Exo', sans-serif;
+    font-size: clamp(1.75rem, 7.5vw, 2.125rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  /* Short, calm supporting copy under a headline. */
+  .sr-subheading {
+    font-size: clamp(0.95rem, 3.8vw, 1.0625rem);
+    line-height: 1.6;
+    color: var(--sr-dark);
+  }
+
+  /* Premium rounded content card — soft shadow, hairline ring, generous radius. */
+  .sr-card-premium {
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04), 0 12px 32px -12px rgba(16,24,40,.12);
+    border: 1px solid rgba(16,24,40,.06);
+  }
+
+  /* Spacious Apple-style vertical rhythm for mobile sections. */
+  .sr-section { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+/* Eyebrow label above a headline — quiet, uppercase, brand-tinted. */
+.sr-eyebrow {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+/* Smooth, native-feeling in-page scrolling. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}

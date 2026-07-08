@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Quote, MapPin, Hammer } from 'lucide-react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -470,7 +470,60 @@ function GoogleGlyph({ className }: { className?: string }) {
   );
 }
 
+// Derive a project type + location tag from the reviewer's own words, so each
+// card shows richer context without inventing details they didn't mention.
+const UAE_LOCATIONS = [
+  'Palm Jumeirah', 'Dubai Hills', 'Arabian Ranches', 'Damac Hills', 'The Meadows',
+  'The Springs', 'Al Barari', 'Umm Suqeim', 'Jumeirah', 'Abu Dhabi', 'Sharjah',
+  'Al Ain', 'Ajman', 'Ras Al Khaimah', 'Dubai',
+];
+const PRODUCT_KEYWORDS: [RegExp, string][] = [
+  [/bi-?fold/i, 'Bifold Doors'],
+  [/sunroom|garden room|glass room/i, 'Glass Room'],
+  [/skylight/i, 'Skylights'],
+  [/sliding|patio door/i, 'Sliding Doors'],
+  [/balcon/i, 'Balcony Glazing'],
+  [/pvc|upvc/i, 'uPVC Systems'],
+  [/window/i, 'Windows'],
+  [/door/i, 'Doors'],
+];
+function getReviewMeta(text: string): { projectType: string; location: string } {
+  const projectType = PRODUCT_KEYWORDS.find(([re]) => re.test(text))?.[1] ?? 'Windows & Doors';
+  const location = UAE_LOCATIONS.find((l) => new RegExp(`\\b${l}\\b`, 'i').test(text)) ?? 'UAE';
+  return { projectType, location };
+}
+function getInitials(name: string): string {
+  return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? '').join('');
+}
+
+function ReviewMetaTags({ projectType, location }: { projectType: string; location: string }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="inline-flex items-center gap-1 bg-[#007969]/8 text-[#007969] rounded-full px-2.5 py-1 font-body text-xs font-medium">
+        <Hammer className="w-3 h-3" />
+        {projectType}
+      </span>
+      <span className="inline-flex items-center gap-1 bg-[#f3f4f6] text-[#3a3a3c] rounded-full px-2.5 py-1 font-body text-xs font-medium">
+        <MapPin className="w-3 h-3 text-[#007969]" />
+        {location}
+      </span>
+    </div>
+  );
+}
+
+function ReviewAvatar({ name }: { name: string }) {
+  return (
+    <div
+      className="w-11 h-11 flex-shrink-0 rounded-full bg-gradient-to-br from-[#007969] to-[#005a50] text-white flex items-center justify-center font-heading text-base font-semibold shadow-sm"
+      aria-hidden="true"
+    >
+      {getInitials(name)}
+    </div>
+  );
+}
+
 function ReviewCard({ review }: { review: Review }) {
+  const meta = getReviewMeta(review.text);
   return (
     <div className="px-3 sm:px-4 lg:px-8">
       <motion.div
@@ -478,7 +531,7 @@ function ReviewCard({ review }: { review: Review }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded-2xl p-5 lg:p-8 card-hover border border-[#e5e7eb] relative overflow-hidden group max-w-4xl mx-auto"
+        className="bg-white sr-card-premium lg:rounded-2xl lg:border lg:border-[#e5e7eb] lg:shadow-none p-6 lg:p-8 card-hover relative overflow-hidden group max-w-4xl mx-auto"
       >
         {/* Quote Icon Background */}
         <div className="absolute top-3 right-3 lg:top-4 lg:right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-300">
@@ -487,27 +540,23 @@ function ReviewCard({ review }: { review: Review }) {
 
         {/* Mobile Content — identity up top, comfortable quote */}
         <div className="relative z-10 lg:hidden">
-          {/* Stars — emphasized */}
-          <div className="flex items-center gap-1 mb-2.5">
-            {[...Array(review.rating)].map((_, i) => (
-              <Star
-                key={i}
-                className="w-5 h-5 fill-[#FFA500] text-[#FFA500]"
-              />
-            ))}
-          </div>
-
           {/* Author + verified source */}
-          <div className="flex items-center justify-between gap-3 mb-4">
-            <div className="min-w-0">
-              <p className="font-heading text-base font-semibold text-[#1c1c1e] truncate">
-                {review.author}
-              </p>
-              <p className="font-body text-xs text-[#6b7280] mt-0.5">
-                Verified customer · {review.date}
-              </p>
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <ReviewAvatar name={review.author} />
+              <div className="min-w-0">
+                <p className="font-heading text-base font-semibold text-[#1c1c1e] truncate">
+                  {review.author}
+                </p>
+                {/* Stars — emphasized */}
+                <div className="flex items-center gap-0.5 mt-0.5">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#FFA500] text-[#FFA500]" />
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5 bg-[#007969]/5 px-2.5 py-1 rounded-full shrink-0">
+            <div className="flex items-center gap-1.5 bg-[#007969]/5 px-2.5 py-1 rounded-full shrink-0 self-start">
               <GoogleGlyph className="w-3.5 h-3.5" />
               <span className="font-body text-xs font-medium text-[#007969]">
                 Google
@@ -515,22 +564,30 @@ function ReviewCard({ review }: { review: Review }) {
             </div>
           </div>
 
+          {/* Project type + location tags */}
+          <div className="mb-3">
+            <ReviewMetaTags projectType={meta.projectType} location={meta.location} />
+          </div>
+
           {/* Review Text */}
-          <p className="font-body text-[15px] text-[#3a3a3c] leading-relaxed">
+          <p className="font-body text-[17px] text-[#2a2a2c] leading-[1.65]">
             "{review.text}"
           </p>
         </div>
 
-        {/* Desktop Content (unchanged) */}
+        {/* Desktop Content */}
         <div className="relative z-10 hidden lg:block">
-          {/* Stars */}
-          <div className="flex items-center gap-1 mb-3 lg:mb-4">
-            {[...Array(review.rating)].map((_, i) => (
-              <Star
-                key={i}
-                className="w-4 h-4 lg:w-5 lg:h-5 fill-[#FFA500] text-[#FFA500]"
-              />
-            ))}
+          {/* Stars + project/location tags */}
+          <div className="flex items-center justify-between gap-4 mb-3 lg:mb-4">
+            <div className="flex items-center gap-1">
+              {[...Array(review.rating)].map((_, i) => (
+                <Star
+                  key={i}
+                  className="w-4 h-4 lg:w-5 lg:h-5 fill-[#FFA500] text-[#FFA500]"
+                />
+              ))}
+            </div>
+            <ReviewMetaTags projectType={meta.projectType} location={meta.location} />
           </div>
 
           {/* Review Text */}
@@ -540,13 +597,16 @@ function ReviewCard({ review }: { review: Review }) {
 
           {/* Author Info */}
           <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-[#e5e7eb]">
-            <div>
-              <p className="font-heading text-sm lg:text-base font-semibold text-[#1c1c1e]">
-                {review.author}
-              </p>
-              <p className="font-body text-xs lg:text-sm text-[#6b7280] mt-0.5">
-                {review.date}
-              </p>
+            <div className="flex items-center gap-3">
+              <ReviewAvatar name={review.author} />
+              <div>
+                <p className="font-heading text-sm lg:text-base font-semibold text-[#1c1c1e]">
+                  {review.author}
+                </p>
+                <p className="font-body text-xs lg:text-sm text-[#6b7280] mt-0.5">
+                  Verified Google review
+                </p>
+              </div>
             </div>
 
             {/* Google Badge */}
@@ -577,8 +637,9 @@ export function TestimonialsSection() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 6000,
     pauseOnHover: true,
+    swipeToSlide: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     beforeChange: (_: number, next: number) => setCurrentSlide(next),
@@ -617,7 +678,7 @@ export function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 lg:mb-10"
         >
-          <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
+          <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
             What Our Clients Say
           </h2>
           <p className="font-body text-sm lg:text-lg text-[#6b7280] max-w-2xl mx-auto">
@@ -635,10 +696,10 @@ export function TestimonialsSection() {
               ))}
             </div>
             <span className="font-heading text-base lg:text-xl font-bold text-[#1c1c1e]">
-              5.0
+              4.4
             </span>
             <span className="font-body text-xs lg:text-sm text-[#6b7280]">
-              Based on {reviews.length}+ Google reviews
+              Based on 130+ Google reviews
             </span>
           </div>
         </motion.div>

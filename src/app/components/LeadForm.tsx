@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, ChevronLeft, Check, ArrowRight, Building, Home, Store, DoorOpen, Columns, RectangleVertical, Grid3x3, Sun, HardHat, Wrench, MessageCircle, MapPin, Phone, Mail, Instagram, Globe, Glasses, LayoutGrid, ChevronDown, AlertCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, ArrowRight, Building, Home, Store, DoorOpen, Columns, RectangleVertical, Grid3x3, Sun, HardHat, Wrench, MessageCircle, MapPin, Phone, Mail, Instagram, Globe, Glasses, LayoutGrid, ChevronDown, AlertCircle, Upload, X } from 'lucide-react';
 import svgPaths from '../../imports/svg-c8s3lgkv08';
 import svgPathsSelection from '../../imports/svg-ws080e5oua';
 
@@ -85,16 +85,30 @@ const validatePhone = (phone: string, countryCode: string): { isValid: boolean; 
   return { isValid: true, error: '' };
 };
 
+// --- Client-side file-attachment guardrails (Phase 9/10) -----------------
+// Files are never uploaded to a third party by this form (only their names are
+// sent with the lead), but we still validate on selection to protect the user
+// and keep the payload sane.
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB per file
+const MAX_FILES = 8;
+const ALLOWED_FILE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'application/pdf',
+];
+
 export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpenEvent = false }: { autoOpen?: boolean; ctaVariant?: 'green' | 'white'; listenForOpenEvent?: boolean }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
-  const [currentStep, setCurrentStep] = useState(-1); // Start at -1 for selection screen
+  const [currentStep, setCurrentStep] = useState(0); // Two-step wizard: 0 = contact, 1 = project details
   const [isFocused, setIsFocused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isAndroid, setIsAndroid] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [journeyType, setJourneyType] = useState<'showroom' | 'quote' | null>(null);
+  const [journeyType, setJourneyType] = useState<'showroom' | 'quote' | null>('quote');
   const [selectedCountryCode, setSelectedCountryCode] = useState('+971'); // Default to UAE
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -109,10 +123,60 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
     propertyType: '',
     productsNeeded: [] as string[],
     projectType: '',
+    siteLocation: '',
+    timeline: '',
     message: '',
     privacyConsent: false,
     marketingConsent: false,
   });
+  const [files, setFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState('');
+
+  // --- Anti-spam / bot protection (Phase 6/9) ---------------------------
+  // Honeypot: a hidden field that real users never see or fill. Bots that
+  // auto-fill every input will populate it, letting us silently drop them.
+  const [honeypot, setHoneypot] = useState('');
+  // Timestamp of when the form was opened. Genuine users take several seconds
+  // to complete it; near-instant submits are almost always automated.
+  const [formOpenedAt, setFormOpenedAt] = useState<number>(() => Date.now());
+  // Signature of the last successfully-sent enquiry, to prevent duplicate
+  // submissions (e.g. double-tap / retry) hitting the endpoint twice.
+  const submittedSignatureRef = useRef<string | null>(null);
+
+  // Reset the anti-bot timer each time the form is (re)opened.
+  useEffect(() => {
+    if (isFormOpen) setFormOpenedAt(Date.now());
+  }, [isFormOpen]);
+
+  // Validate attachments on selection: allowed types, per-file size, max count.
+  const handleFileSelect = (fileList: FileList | null) => {
+    setFileError('');
+    if (!fileList) {
+      setFiles([]);
+      return;
+    }
+    const picked = Array.from(fileList);
+    const rejected: string[] = [];
+    const accepted = picked.filter((f) => {
+      if (!ALLOWED_FILE_TYPES.includes(f.type)) {
+        rejected.push(`${f.name} (unsupported type)`);
+        return false;
+      }
+      if (f.size > MAX_FILE_SIZE) {
+        rejected.push(`${f.name} (over 10 MB)`);
+        return false;
+      }
+      return true;
+    });
+    const limited = accepted.slice(0, MAX_FILES);
+    if (accepted.length > MAX_FILES) {
+      rejected.push(`only the first ${MAX_FILES} files were kept`);
+    }
+    if (rejected.length > 0) {
+      setFileError(`Some files were skipped: ${rejected.join(', ')}.`);
+    }
+    setFiles(limited);
+  };
 
   // Listen for custom event to open form from navigation. Only the designated
   // instance (the contact-form section) responds, so the global event doesn't
@@ -122,7 +186,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
     const handleOpenForm = () => {
       setIsFormOpen(true);
       setShowMenu(false);
-      setCurrentStep(-1);
+      setCurrentStep(0);
     };
 
     window.addEventListener('openLeadForm', handleOpenForm);
@@ -138,7 +202,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
     if (autoOpen && mobile) {
       setIsFormOpen(true);
       setShowMenu(false);
-      setCurrentStep(-1);
+      setCurrentStep(0);
     } else {
       // Show menu button on both mobile and desktop when autoOpen is false
       setShowMenu(true);
@@ -251,7 +315,19 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
     { value: 'renovation', label: 'Renovation Project', icon: <Wrench className="w-6 h-6 lg:w-7 lg:h-7" /> },
   ];
 
-  const totalSteps = 6;
+  const timelines = [
+    { value: 'asap', label: 'As soon as possible' },
+    { value: '1-3-months', label: 'Within 1–3 months' },
+    { value: '3-6-months', label: 'Within 3–6 months' },
+    { value: 'exploring', label: 'Just exploring options' },
+  ];
+
+  // Desktop: two grouped steps (contact + product, then project details).
+  // Mobile: a Typeform-style flow — one question per screen.
+  const MOBILE_STEP_KEYS = [
+    'name', 'phone', 'email', 'products', 'property', 'build', 'timeline', 'location', 'message',
+  ] as const;
+  const totalSteps = isMobile ? MOBILE_STEP_KEYS.length : 2;
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -260,10 +336,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   };
 
   const handleBack = () => {
-    if (currentStep > -1) {
+    if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
-    } else if (currentStep === -1) {
-      // From selection screen, close the form
+    } else {
+      // From the first step, close the form
       setIsFormOpen(false);
       setShowMenu(true);
     }
@@ -272,6 +348,20 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   const handleSubmit = async () => {
     if (isSubmitting) return; // guard against double-submit
     setSubmitError('');
+
+    // Honeypot tripped → almost certainly a bot. Show the normal success
+    // screen so we don't reveal the trap, but never send the payload.
+    if (honeypot.trim() !== '') {
+      setCurrentStep(totalSteps);
+      return;
+    }
+
+    // Timing check → forms completed in under ~2.5s are automated.
+    if (Date.now() - formOpenedAt < 2500) {
+      setSubmitError('Please take a moment to review your details before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     const payload = {
@@ -281,6 +371,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       propertyType: propertyTypes.find(p => p.value === formData.propertyType)?.label || formData.propertyType,
       productsNeeded: formData.productsNeeded.map(p => products.find(prod => prod.value === p)?.label || p),
       projectType: projectTypes.find(p => p.value === formData.projectType)?.label || formData.projectType,
+      siteLocation: formData.siteLocation || '',
+      timeline: timelines.find(t => t.value === formData.timeline)?.label || formData.timeline,
+      fileNames: files.map(f => f.name),
       message: formData.message || '',
       privacyConsent: formData.privacyConsent,
       marketingConsent: formData.marketingConsent,
@@ -288,6 +381,15 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       source: 'landing-page',
       submittedAt: new Date().toISOString(),
     };
+
+    // Duplicate-submission guard: if this exact enquiry was already sent
+    // successfully, skip the network call and go straight to the thank-you screen.
+    const signature = `${payload.name}|${payload.phone}|${payload.email}|${payload.productsNeeded.join(',')}`;
+    if (submittedSignatureRef.current === signature) {
+      setIsSubmitting(false);
+      setCurrentStep(totalSteps);
+      return;
+    }
 
     // Endpoint is configured via VITE_LEAD_ENDPOINT (Formspree form URL, webhook,
     // or your own API). Kept in env so no endpoint is hardcoded in the bundle.
@@ -305,6 +407,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
         // No endpoint set yet — warn loudly so leads aren't silently lost in dev.
         console.warn('[LeadForm] VITE_LEAD_ENDPOINT is not configured — lead was NOT delivered:', payload);
       }
+      // Remember this enquiry so an accidental resubmit doesn't double-send.
+      submittedSignatureRef.current = signature;
       setCurrentStep(totalSteps);
     } catch (err) {
       console.error('[LeadForm] submission error:', err);
@@ -316,21 +420,35 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   };
 
   const isStepValid = () => {
+    if (isMobile) {
+      const key = MOBILE_STEP_KEYS[currentStep];
+      switch (key) {
+        case 'name':
+          return formData.name.trim().length > 0;
+        case 'phone':
+          return validatePhone(formData.phone, selectedCountryCode).isValid && !phoneError;
+        case 'email':
+          return !emailError; // optional, but must be valid if provided
+        case 'products':
+          return formData.productsNeeded.length > 0;
+        default:
+          return true; // property / build / timeline / location / message are optional
+      }
+    }
     switch (currentStep) {
-      case 0:
-        return formData.projectType !== '';
-      case 1:
-        return formData.propertyType !== '';
-      case 2:
-        return formData.productsNeeded.length > 0;
-      case 3:
-        return formData.name.trim().length > 0;
-      case 4:
-        // Don't set error state here, only check validity
+      case 0: {
+        // Step 1 — need name, a valid phone and at least one product interest.
         const phoneValidation = validatePhone(formData.phone, selectedCountryCode);
-        return phoneValidation.isValid && !phoneError;
-      case 5:
-        // Email is optional, so always valid (errors shown but don't block)
+        return (
+          formData.name.trim().length > 0 &&
+          phoneValidation.isValid &&
+          !phoneError &&
+          !emailError &&
+          formData.productsNeeded.length > 0
+        );
+      }
+      case 1:
+        // Step 2 — project details are optional; the enquiry can be submitted.
         return true;
       default:
         return false;
@@ -338,415 +456,94 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   };
 
   const renderStep = () => {
+    if (currentStep >= totalSteps) return renderSuccess();
+    if (isMobile) return renderMobileStep();
     switch (currentStep) {
-      case -1:
-        return (
-          <div
-            key="step-selection"
-            className="relative w-full max-w-md mx-auto py-4"
-          >
-            {/* Android-Friendly Container - Two Stacked Buttons */}
-            <div className="space-y-3 px-4">
-              {/* Visit Showroom Button - Android Optimized */}
-              <div
-                onClick={() => {
-                  console.log('Visit Showroom clicked - setting state');
-                  setJourneyType('showroom');
-                  setCurrentStep(0);
-                }}
-                onTouchStart={(e) => {
-                  // Prevent any scroll interference
-                  e.currentTarget.style.opacity = '0.9';
-                }}
-                onTouchEnd={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                  // Direct state update on touch end
-                  console.log('Visit Showroom touch end');
-                  setJourneyType('showroom');
-                  setCurrentStep(0);
-                }}
-                style={{ 
-                  WebkitTapHighlightColor: 'rgba(0, 121, 105, 0.1)',
-                  touchAction: 'manipulation',
-                  userSelect: 'none',
-                  WebkitUserSelect: 'none',
-                  cursor: 'pointer'
-                }}
-                className="w-full bg-[#007969] text-white px-6 py-4 rounded-[4px] shadow-[0_16px_40px_#0079691f] active:shadow-md active:scale-[0.98] transition-all font-accent font-semibold text-base flex items-center justify-between group"
-              >
-                <div className="flex items-center gap-3 pointer-events-none">
-                  <Glasses className="w-6 h-6" strokeWidth={2} />
-                  <div className="text-left">
-                    <div className="text-base font-semibold">Visit Our Showroom</div>
-                    <div className="text-xs text-white/80 font-body font-normal">Experience products firsthand</div>
-                  </div>
-                </div>
-                <ArrowRight className="w-5 h-5 transition-transform pointer-events-none" />
-              </div>
-
-              {/* Divider with OR */}
-              <div className="flex items-center gap-3 py-1 pointer-events-none">
-                <div className="flex-1 h-px bg-[#e5e7eb]" />
-                <span className="text-sm font-accent font-semibold uppercase tracking-[.12em] text-[#6b7280]">OR</span>
-                <div className="flex-1 h-px bg-[#e5e7eb]" />
-              </div>
-
-              {/* Get a Quote Button - Android Optimized */}
-              <div
-                onClick={() => {
-                  console.log('Get a Quote clicked - setting state');
-                  setJourneyType('quote');
-                  setCurrentStep(0);
-                }}
-                onTouchStart={(e) => {
-                  e.currentTarget.style.opacity = '0.9';
-                }}
-                onTouchEnd={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                  // Direct state update on touch end
-                  console.log('Get a Quote touch end');
-                  setJourneyType('quote');
-                  setCurrentStep(0);
-                }}
-                style={{ 
-                  WebkitTapHighlightColor: 'rgba(0, 121, 105, 0.1)',
-                  touchAction: 'manipulation',
-                  userSelect: 'none',
-                  WebkitUserSelect: 'none',
-                  cursor: 'pointer'
-                }}
-                className="w-full bg-white text-[#007969] px-6 py-4 rounded-[4px] shadow-[0_16px_40px_#0079691f] active:shadow-md active:scale-[0.98] transition-all font-accent font-semibold text-base flex items-center justify-between border-[1.5px] border-[#007969] group"
-              >
-                <div className="flex items-center gap-3 pointer-events-none">
-                  <MessageCircle className="w-6 h-6" strokeWidth={2} />
-                  <div className="text-left">
-                    <div className="text-base font-semibold">Get a Free Quote</div>
-                    <div className="text-xs text-[#007969]/70 font-body font-normal">Receive quote in minutes</div>
-                  </div>
-                </div>
-                <ArrowRight className="w-5 h-5 transition-transform pointer-events-none" />
-              </div>
-            </div>
-          </div>
-        );
-
       case 0:
         return (
-          <div
-            key="step-0"
-            className="space-y-6"
-          >
+          <div key="step-0" className="space-y-5">
             <div>
-              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
-                Tell us about your project
+              <h3 className="font-heading text-xl lg:text-3xl font-semibold text-[#1c1c1e] mb-1.5">
+                Let's get you a free quote
               </h3>
               <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
-                What type of project are you working on?
+                Your details and what you're interested in — a specialist replies within 12 hours.
               </p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
-              {projectTypes.map((type) => (
-                <button
-                  key={type.value}
-                  type="button"
-                  onClick={() => {
-                    setFormData({ ...formData, projectType: type.value });
-                    setTimeout(() => handleNext(), 300);
-                  }}
-                  className={`p-5 lg:p-6 rounded-[4px] border-2 transition-all text-center hover:shadow-[0_16px_40px_#0079691f] group flex flex-col items-center justify-center active:scale-95 ${
-                    formData.projectType === type.value
-                      ? 'border-[#007969] bg-[#007969]/5'
-                      : 'border-[#e5e7eb] hover:border-[#007969] bg-white'
-                  }`}
-                >
-                  <div className={`mb-3 ${
-                    formData.projectType === type.value 
-                      ? 'text-[#007969]' 
-                      : 'text-[#007969] group-hover:text-[#007969]'
-                  }`}>{type.icon}</div>
-                  <div className={`font-body text-base lg:text-lg font-medium ${
-                    formData.projectType === type.value 
-                      ? 'text-[#007969]' 
-                      : 'text-[#1c1c1e] group-hover:text-[#007969]'
-                  }`}>
-                    {type.label}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        );
 
-      case 1:
-        return (
-          <div
-            key="step-1"
-            className="space-y-6"
-          >
-            <div>
-              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
-                What type of property?
-              </h3>
-              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
-                Select the property type you need services for
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-3 lg:gap-4">
-              {propertyTypes.map((type) => (
-                <button
-                  key={type.value}
-                  type="button"
-                  onClick={() => {
-                    setFormData({ ...formData, propertyType: type.value });
-                    setTimeout(() => handleNext(), 300);
-                  }}
-                  className={`p-4 lg:p-5 rounded-[4px] border-2 transition-all text-center hover:shadow-[0_16px_40px_#0079691f] group flex flex-col items-center justify-center active:scale-95 ${
-                    formData.propertyType === type.value
-                      ? 'border-[#007969] bg-[#007969]/5'
-                      : 'border-[#e5e7eb] hover:border-[#007969] bg-white'
-                  }`}
-                >
-                  <div className={`mb-2 ${
-                    formData.propertyType === type.value 
-                      ? 'text-[#007969]' 
-                      : 'text-[#007969] group-hover:text-[#007969]'
-                  }`}>{type.icon}</div>
-                  <div className={`font-body text-sm lg:text-base font-medium ${
-                    formData.propertyType === type.value 
-                      ? 'text-[#007969]' 
-                      : 'text-[#1c1c1e] group-hover:text-[#007969]'
-                  }`}>
-                    {type.label}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 2:
-        return (
-          <div
-            key="step-2"
-            className="space-y-4 lg:space-y-6"
-          >
-            <div>
-              <h3 className="font-heading text-xl lg:text-3xl font-semibold text-[#1c1c1e] mb-1 lg:mb-2">
-                Which products do you need?
-              </h3>
-              <p className="font-body text-xs lg:text-base text-[#3a3a3c]">
-                Select all products you're interested in
-              </p>
-            </div>
-            
-            {/* Selection counter */}
-            {formData.productsNeeded.length > 0 && (
-              <div className="bg-[#e6f4f1] border border-[#00796933] rounded-[4px] px-3 py-2 inline-flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#007969]" />
-                <span className="font-body text-sm text-[#007969] font-medium">
-                  {formData.productsNeeded.length} product{formData.productsNeeded.length !== 1 ? 's' : ''} selected
-                </span>
-              </div>
-            )}
-            
-            <div className="grid grid-cols-2 gap-2 lg:gap-4 max-h-[45vh] lg:max-h-none overflow-y-auto">
-              {products.map((product) => {
-                const isSelected = formData.productsNeeded.includes(product.value);
-                return (
-                  <button
-                    key={product.value}
-                    type="button"
-                    onClick={() => {
-                      setFormData({
-                        ...formData,
-                        productsNeeded: isSelected
-                          ? formData.productsNeeded.filter((p) => p !== product.value)
-                          : [...formData.productsNeeded, product.value],
-                      });
-                    }}
-                    className={`relative p-2.5 lg:p-5 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center active:scale-95 ${
-                      isSelected
-                        ? 'border-[#007969] bg-[#007969]/5'
-                        : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white'
-                    }`}
-                  >
-                    {/* Checkmark indicator */}
-                    {isSelected && (
-                      <div className="absolute top-1 right-1 lg:top-2 lg:right-2 w-5 h-5 lg:w-6 lg:h-6 bg-[#007969] rounded-full flex items-center justify-center">
-                        <Check className="w-3 h-3 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
-                      </div>
-                    )}
-                    
-                    <div className={`mb-1 lg:mb-2 ${
-                      isSelected 
-                        ? 'text-[#007969]' 
-                        : 'text-[#007969] group-hover:text-[#007969]'
-                    }`}>{product.icon}</div>
-                    <div className={`font-body text-xs lg:text-base font-medium leading-tight ${
-                      isSelected 
-                        ? 'text-[#007969]' 
-                        : 'text-[#1c1c1e] group-hover:text-[#007969]'
-                    }`}>
-                      {product.label}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div
-            key="step-3"
-            className="space-y-6"
-          >
-            <div>
-              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
-                Please enter your full name
-              </h3>
-              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
-                Let's start with your full name
-              </p>
-            </div>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              onKeyPress={(e) => e.key === 'Enter' && isStepValid() && handleNext()}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              className="w-full px-4 py-4 text-lg text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
-              placeholder="Enter your full name"
-              autoFocus
-            />
-          </div>
-        );
-
-      case 4:
-        return (
-          <div
-            key="step-4"
-            className="space-y-6"
-          >
-            <div>
-              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
-                What's your phone number?
-              </h3>
-              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
-                We'll use this to send you your quote
-              </p>
-            </div>
-            {/* Phone Input with Country Code Selector */}
-            <div className="space-y-3">
-              <div className="flex flex-col sm:flex-row gap-3">
-                {/* Country Code Select */}
-                <select
-                  value={selectedCountryCode}
-                  onChange={(e) => {
-                    setSelectedCountryCode(e.target.value);
-                    if (phoneError) setPhoneError('');
-                  }}
-                  className="px-4 py-4 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-base text-[#1c1c1e] cursor-pointer"
-                >
-                  {countryCodes.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.flag} {country.code} - {country.country}
-                    </option>
-                  ))}
-                </select>
-
-                {/* Phone Number Input */}
+            {/* Name + Phone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
+              <div className="space-y-1.5">
+                <label className="font-body text-sm font-medium text-[#1c1c1e]">Full name</label>
                 <input
-                  type="tel"
-                  inputMode="numeric"
-                  value={formData.phone}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^\d\s\-\(\)]/g, '');
-                    setFormData({ ...formData, phone: value });
-                    if (phoneError) setPhoneError('');
-                  }}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      const validation = validatePhone(formData.phone, selectedCountryCode);
-                      if (validation.isValid) {
-                        handleNext();
-                      }
-                    }
-                  }}
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   onFocus={() => setIsFocused(true)}
-                  onBlur={() => {
-                    setIsFocused(false);
-                    if (formData.phone) {
-                      const validation = validatePhone(formData.phone, selectedCountryCode);
-                      setPhoneError(validation.error);
-                    }
-                  }}
-                  className={`flex-1 px-4 py-4 text-lg text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${
-                    phoneError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'
-                  }`}
-                  placeholder="Enter phone number"
+                  onBlur={() => setIsFocused(false)}
+                  autoComplete="name"
+                  className="w-full px-4 py-3.5 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
+                  placeholder="Enter your full name"
                   autoFocus
                 />
               </div>
-              
-              {/* Error Message */}
-              {phoneError && (
-                <div className="flex items-start gap-2 text-[#e40014] text-sm font-body">
-                  <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                  <span>{phoneError}</span>
+              <div className="space-y-1.5">
+                <label className="font-body text-sm font-medium text-[#1c1c1e]">Phone number</label>
+                <div className="flex gap-2">
+                  <select
+                    value={selectedCountryCode}
+                    onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
+                    className="px-2 py-3.5 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-sm text-[#1c1c1e] cursor-pointer max-w-[92px]"
+                    aria-label="Country code"
+                  >
+                    {countryCodes.map((c) => (
+                      <option key={c.code} value={c.code}>{c.flag} {c.code}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^\d\s\-\(\)]/g, '');
+                      setFormData({ ...formData, phone: value });
+                      if (phoneError) setPhoneError('');
+                    }}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => {
+                      setIsFocused(false);
+                      if (formData.phone) setPhoneError(validatePhone(formData.phone, selectedCountryCode).error);
+                    }}
+                    className={`flex-1 min-w-0 px-4 py-3.5 text-base text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${phoneError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'}`}
+                    placeholder="Phone number"
+                  />
                 </div>
-              )}
-              
-              {/* Hint Text */}
-              {!phoneError && (
-                <div className="text-xs text-[#6b7280] font-body">
-                  Enter {countryCodes.find(c => c.code === selectedCountryCode)?.minLength} digits without country code
-                </div>
-              )}
+              </div>
             </div>
-          </div>
-        );
+            {phoneError && (
+              <div className="flex items-start gap-2 text-[#e40014] text-sm font-body -mt-2">
+                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span>{phoneError}</span>
+              </div>
+            )}
 
-      case 5:
-        return (
-          <div
-            key="step-5"
-            className="space-y-6"
-          >
-            <div>
-              <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-[#1c1c1e] mb-2">
-                What's your email?
-              </h3>
-              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
-                Optional - for sending you detailed quotes
-              </p>
-            </div>
-            <div className="space-y-2">
+            {/* Email */}
+            <div className="space-y-1.5">
+              <label className="font-body text-sm font-medium text-[#1c1c1e]">
+                Email <span className="text-[#6b7280] font-normal">(optional)</span>
+              </label>
               <input
                 type="email"
+                inputMode="email"
+                autoComplete="email"
                 value={formData.email}
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
-                  setEmailError(''); // Clear error on input
-                }}
-                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setEmailError(''); }}
                 onFocus={() => setIsFocused(true)}
-                onBlur={() => {
-                  setIsFocused(false);
-                  // Validate on blur
-                  const validation = validateEmail(formData.email);
-                  setEmailError(validation.error);
-                }}
-                className={`w-full px-4 py-4 text-lg text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${
-                  emailError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'
-                }`}
+                onBlur={() => { setIsFocused(false); setEmailError(validateEmail(formData.email).error); }}
+                className={`w-full px-4 py-3.5 text-base text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${emailError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'}`}
                 placeholder="your@email.com"
-                autoFocus
               />
-              
-              {/* Error Message */}
               {emailError && (
                 <div className="flex items-start gap-2 text-[#e40014] text-sm font-body">
                   <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -754,19 +551,169 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 </div>
               )}
             </div>
+
+            {/* Product interest */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="font-body text-sm font-medium text-[#1c1c1e]">What are you interested in?</label>
+                {formData.productsNeeded.length > 0 && (
+                  <span className="font-body text-xs text-[#007969] font-medium">{formData.productsNeeded.length} selected</span>
+                )}
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3">
+                {products.map((product) => {
+                  const isSelected = formData.productsNeeded.includes(product.value);
+                  return (
+                    <button
+                      key={product.value}
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        productsNeeded: isSelected
+                          ? formData.productsNeeded.filter((p) => p !== product.value)
+                          : [...formData.productsNeeded, product.value],
+                      })}
+                      className={`relative p-2.5 lg:p-3.5 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${isSelected ? 'border-[#007969] bg-[#007969]/5' : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white'}`}
+                    >
+                      {isSelected && (
+                        <div className="absolute top-1 right-1 w-5 h-5 bg-[#007969] rounded-full flex items-center justify-center">
+                          <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                        </div>
+                      )}
+                      <div className="text-[#007969]">{product.icon}</div>
+                      <div className={`font-body text-xs lg:text-sm font-medium leading-tight ${isSelected ? 'text-[#007969]' : 'text-[#1c1c1e]'}`}>{product.label}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         );
 
-      case 6:
+      case 1:
         return (
+          <div key="step-1" className="space-y-5">
+            <div>
+              <h3 className="font-heading text-xl lg:text-3xl font-semibold text-[#1c1c1e] mb-1.5">
+                Tell us about your project
+              </h3>
+              <p className="font-body text-sm lg:text-base text-[#3a3a3c]">
+                Optional — a few details help us prepare a more accurate quote.
+              </p>
+            </div>
+
+            {/* Property type */}
+            <div className="space-y-2">
+              <label className="font-body text-sm font-medium text-[#1c1c1e]">Property type</label>
+              <div className="grid grid-cols-3 gap-2 lg:gap-3">
+                {propertyTypes.map((type) => (
+                  <button key={type.value} type="button"
+                    onClick={() => setFormData({ ...formData, propertyType: formData.propertyType === type.value ? '' : type.value })}
+                    className={`p-3 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${formData.propertyType === type.value ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white text-[#1c1c1e]'}`}>
+                    <div className="text-[#007969]">{type.icon}</div>
+                    <div className="font-body text-xs lg:text-sm font-medium leading-tight">{type.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Build stage */}
+            <div className="space-y-2">
+              <label className="font-body text-sm font-medium text-[#1c1c1e]">Build stage</label>
+              <div className="grid grid-cols-2 gap-2 lg:gap-3">
+                {projectTypes.map((type) => (
+                  <button key={type.value} type="button"
+                    onClick={() => setFormData({ ...formData, projectType: formData.projectType === type.value ? '' : type.value })}
+                    className={`p-3 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${formData.projectType === type.value ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white text-[#1c1c1e]'}`}>
+                    <div className="text-[#007969]">{type.icon}</div>
+                    <div className="font-body text-xs lg:text-sm font-medium leading-tight">{type.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Site location + timeline */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
+              <div className="space-y-1.5">
+                <label className="font-body text-sm font-medium text-[#1c1c1e]">Site location</label>
+                <input type="text" value={formData.siteLocation}
+                  onChange={(e) => setFormData({ ...formData, siteLocation: e.target.value })}
+                  onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
+                  className="w-full px-4 py-3.5 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
+                  placeholder="e.g. Dubai Hills, Dubai" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="font-body text-sm font-medium text-[#1c1c1e]">Ideal timeline</label>
+                <select value={formData.timeline}
+                  onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                  className={`w-full px-4 py-3.5 text-base border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body cursor-pointer bg-white ${formData.timeline ? 'text-[#1c1c1e]' : 'text-[#6b7280]'}`}>
+                  <option value="" disabled>Select a timeline</option>
+                  {timelines.map((t) => (<option key={t.value} value={t.value}>{t.label}</option>))}
+                </select>
+              </div>
+            </div>
+
+            {/* Upload files */}
+            <div className="space-y-1.5">
+              <label className="font-body text-sm font-medium text-[#1c1c1e]">
+                Upload plans or photos <span className="text-[#6b7280] font-normal">(optional)</span>
+              </label>
+              <label className="flex items-center gap-3 w-full px-4 py-3.5 border-2 border-dashed border-[#e5e7eb] rounded-md cursor-pointer hover:border-[#007969]/50 transition-colors">
+                <Upload className="w-5 h-5 text-[#007969] flex-shrink-0" />
+                <span className="font-body text-sm text-[#6b7280] truncate">
+                  {files.length > 0 ? `${files.length} file${files.length !== 1 ? 's' : ''} selected` : 'Browse to attach (PDF, JPG, PNG)'}
+                </span>
+                <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,application/pdf"
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                  className="hidden" />
+              </label>
+              {fileError && (
+                <p className="font-body text-xs text-red-600 pt-1" role="alert">{fileError}</p>
+              )}
+              {files.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {files.map((f, i) => (
+                    <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
+                      <span className="truncate max-w-[140px]">{f.name}</span>
+                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="text-[#007969]/70 hover:text-[#007969]" aria-label="Remove file">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Message */}
+            <div className="space-y-1.5">
+              <label className="font-body text-sm font-medium text-[#1c1c1e]">
+                Anything else? <span className="text-[#6b7280] font-normal">(optional)</span>
+              </label>
+              <textarea value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
+                rows={3}
+                className="w-full px-4 py-3 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] resize-none"
+                placeholder="Tell us anything that will help us prepare your quote…" />
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const renderSuccess = () => {
+    return (
           <div
-            key="step-6"
+            key="step-success"
             className="text-center py-12 space-y-6"
           >
             <div className="w-20 h-20 lg:w-24 lg:h-24 bg-[#007969] rounded-full flex items-center justify-center mx-auto">
               <Check className="w-10 h-10 lg:w-12 lg:h-12 text-white" strokeWidth={3} />
             </div>
-            
+
             <div>
               <h3 className="font-heading text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3">
                 Thank You, {formData.name}!
@@ -815,7 +762,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   `Email: ${formData.email || 'Not provided'}\n` +
                   `Property Type: ${propertyTypes.find(p => p.value === formData.propertyType)?.label || 'Not specified'}\n` +
                   `Products Needed: ${formData.productsNeeded.map(p => products.find(prod => prod.value === p)?.label).join(', ') || 'Not specified'}\n` +
-                  `Project Type: ${projectTypes.find(p => p.value === formData.projectType)?.label || 'Not specified'}\n\n` +
+                  `Build Stage: ${projectTypes.find(p => p.value === formData.projectType)?.label || 'Not specified'}\n` +
+                  `Site Location: ${formData.siteLocation || 'Not specified'}\n` +
+                  `Timeline: ${timelines.find(t => t.value === formData.timeline)?.label || 'Not specified'}\n\n` +
                   `---\n\n` +
                   `Showroom Location: ETJAR – J1 Complex, Block A, Warehouse 11 & 12, Jebel Ali Industrial Area 1, Dubai.\n\n` +
                   `For directions, please use Google Maps:\n` +
@@ -838,7 +787,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               onClick={() => {
                 // Check if mobile
                 const isMobile = window.innerWidth < 1024;
-                
+
                 // Reset form data
                 setFormData({
                   name: '',
@@ -847,18 +796,21 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   propertyType: '',
                   productsNeeded: [] as string[],
                   projectType: '',
+                  siteLocation: '',
+                  timeline: '',
                   message: '',
                   privacyConsent: false,
                   marketingConsent: false,
                 });
-                setCurrentStep(-1);
-                setJourneyType(null);
-                
+                setFiles([]);
+                setCurrentStep(0);
+                setJourneyType('quote');
+
                 if (isMobile) {
                   // On mobile: Close form WITHOUT showing the menu button
                   setIsFormOpen(false);
                   setShowMenu(false); // Don't show "Start Your Swiftrooms Journey" button
-                  
+
                   // Scroll to hero section
                   setTimeout(() => {
                     const heroSection = document.getElementById('hero');
@@ -870,13 +822,221 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   }, 300);
                 } else {
                   // On desktop: Reset form for another submission
-                  // Keep form open and return to selection screen
+                  // Keep form open and return to the first step
                 }
               }}
               className="text-[#007969] font-body text-sm lg:text-base font-medium hover:underline"
             >
               {window.innerWidth < 1024 ? 'Return to Home' : 'Submit another request'}
             </button>
+          </div>
+        );
+  };
+
+  // Typeform-style single-question screen for mobile. `wrap` is a plain JSX
+  // helper (not a component) so inputs keep focus across re-renders.
+  const inputClass =
+    'w-full px-4 py-4 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-xl focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#9ca3af]';
+
+  const renderMobileStep = () => {
+    const key = MOBILE_STEP_KEYS[currentStep];
+
+    const wrap = (title: string, hint: string, children: ReactNode) => (
+      <div key={key} className="space-y-5">
+        <div>
+          <span className="font-accent text-xs font-semibold uppercase tracking-[.14em] text-[#007969]">
+            Question {currentStep + 1}
+          </span>
+          <h3 className="font-heading text-[1.6rem] font-semibold text-[#1c1c1e] leading-[1.15] mt-1.5">
+            {title}
+          </h3>
+          {hint && <p className="font-body text-[0.95rem] text-[#6b7280] mt-2">{hint}</p>}
+        </div>
+        {children}
+      </div>
+    );
+
+    const optionBtn = 'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left active:scale-[0.99] font-body';
+
+    switch (key) {
+      case 'name':
+        return wrap("What's your name?", "So we know who we're speaking with.",
+          <input
+            type="text" autoFocus autoComplete="name" value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className={inputClass} placeholder="Your full name"
+          />
+        );
+
+      case 'phone':
+        return wrap('Your best contact number', "We'll arrange your free site visit by call or WhatsApp.",
+          <div className="space-y-2">
+            <div className="flex gap-2">
+              <select
+                value={selectedCountryCode}
+                onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
+                className="px-2 py-4 bg-white border border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] font-body text-sm text-[#1c1c1e] max-w-[96px]"
+                aria-label="Country code"
+              >
+                {countryCodes.map((c) => (<option key={c.code} value={c.code}>{c.flag} {c.code}</option>))}
+              </select>
+              <input
+                type="tel" inputMode="numeric" autoComplete="tel" autoFocus value={formData.phone}
+                onChange={(e) => { setFormData({ ...formData, phone: e.target.value.replace(/[^\d\s\-\(\)]/g, '') }); if (phoneError) setPhoneError(''); }}
+                onBlur={() => { if (formData.phone) setPhoneError(validatePhone(formData.phone, selectedCountryCode).error); }}
+                className={`flex-1 min-w-0 px-4 py-4 text-base text-[#1c1c1e] border rounded-xl focus:ring-2 focus:ring-[#007969]/30 outline-none font-body placeholder:text-[#9ca3af] ${phoneError ? 'border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'}`}
+                placeholder="Phone number"
+              />
+            </div>
+            {phoneError && (
+              <div className="flex items-start gap-2 text-[#e40014] text-sm font-body">
+                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" /><span>{phoneError}</span>
+              </div>
+            )}
+          </div>
+        );
+
+      case 'email':
+        return wrap('Your email address', 'Optional — so we can send your written quote.',
+          <div className="space-y-2">
+            <input
+              type="email" inputMode="email" autoComplete="email" autoFocus value={formData.email}
+              onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setEmailError(''); }}
+              onBlur={() => setEmailError(validateEmail(formData.email).error)}
+              className={`${inputClass} ${emailError ? '!border-[#e40014]' : ''}`}
+              placeholder="your@email.com"
+            />
+            {emailError && (
+              <div className="flex items-start gap-2 text-[#e40014] text-sm font-body">
+                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" /><span>{emailError}</span>
+              </div>
+            )}
+          </div>
+        );
+
+      case 'products':
+        return wrap('What are you interested in?', 'Select all that apply.',
+          <div className="grid grid-cols-2 gap-2.5">
+            {products.map((product) => {
+              const isSelected = formData.productsNeeded.includes(product.value);
+              return (
+                <button
+                  key={product.value} type="button"
+                  onClick={() => setFormData({
+                    ...formData,
+                    productsNeeded: isSelected
+                      ? formData.productsNeeded.filter((p) => p !== product.value)
+                      : [...formData.productsNeeded, product.value],
+                  })}
+                  className={`relative p-4 rounded-xl border-2 transition-all text-center flex flex-col items-center justify-center gap-2 active:scale-95 min-h-[92px] ${isSelected ? 'border-[#007969] bg-[#007969]/5' : 'border-[#e5e7eb] bg-white'}`}
+                >
+                  {isSelected && (
+                    <div className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#007969] rounded-full flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                    </div>
+                  )}
+                  <div className="text-[#007969]">{product.icon}</div>
+                  <div className={`font-body text-[13px] font-medium leading-tight ${isSelected ? 'text-[#007969]' : 'text-[#1c1c1e]'}`}>{product.label}</div>
+                </button>
+              );
+            })}
+          </div>
+        );
+
+      case 'property':
+        return wrap('What type of property?', 'Optional — helps us tailor your quote.',
+          <div className="space-y-2.5">
+            {propertyTypes.map((type) => {
+              const isSel = formData.propertyType === type.value;
+              return (
+                <button key={type.value} type="button"
+                  onClick={() => setFormData({ ...formData, propertyType: isSel ? '' : type.value })}
+                  className={`${optionBtn} ${isSel ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] bg-white text-[#1c1c1e]'}`}>
+                  <span className="text-[#007969]">{type.icon}</span>
+                  <span className="font-medium text-[15px]">{type.label}</span>
+                  {isSel && <Check className="w-5 h-5 ml-auto text-[#007969]" strokeWidth={3} />}
+                </button>
+              );
+            })}
+          </div>
+        );
+
+      case 'build':
+        return wrap('New build or renovation?', 'Optional.',
+          <div className="space-y-2.5">
+            {projectTypes.map((type) => {
+              const isSel = formData.projectType === type.value;
+              return (
+                <button key={type.value} type="button"
+                  onClick={() => setFormData({ ...formData, projectType: isSel ? '' : type.value })}
+                  className={`${optionBtn} ${isSel ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] bg-white text-[#1c1c1e]'}`}>
+                  <span className="text-[#007969]">{type.icon}</span>
+                  <span className="font-medium text-[15px]">{type.label}</span>
+                  {isSel && <Check className="w-5 h-5 ml-auto text-[#007969]" strokeWidth={3} />}
+                </button>
+              );
+            })}
+          </div>
+        );
+
+      case 'timeline':
+        return wrap('When would you like it done?', 'Optional.',
+          <div className="space-y-2.5">
+            {timelines.map((t) => {
+              const isSel = formData.timeline === t.value;
+              return (
+                <button key={t.value} type="button"
+                  onClick={() => setFormData({ ...formData, timeline: isSel ? '' : t.value })}
+                  className={`${optionBtn} justify-between ${isSel ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] bg-white text-[#1c1c1e]'}`}>
+                  <span className="font-medium text-[15px]">{t.label}</span>
+                  {isSel && <Check className="w-5 h-5 text-[#007969]" strokeWidth={3} />}
+                </button>
+              );
+            })}
+          </div>
+        );
+
+      case 'location':
+        return wrap("Where's the project located?", 'Optional — e.g. your community or area.',
+          <input
+            type="text" autoFocus value={formData.siteLocation}
+            onChange={(e) => setFormData({ ...formData, siteLocation: e.target.value })}
+            className={inputClass} placeholder="e.g. Dubai Hills, Dubai"
+          />
+        );
+
+      case 'message':
+        return wrap('Anything else we should know?', 'Optional — add details, or attach plans and photos.',
+          <div className="space-y-3">
+            <textarea
+              value={formData.message} rows={4}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              className={`${inputClass} resize-none`}
+              placeholder="Tell us anything that helps us prepare your quote…"
+            />
+            <label className="flex items-center gap-3 w-full px-4 py-3.5 border-2 border-dashed border-[#e5e7eb] rounded-xl cursor-pointer active:border-[#007969]/50">
+              <Upload className="w-5 h-5 text-[#007969] flex-shrink-0" />
+              <span className="font-body text-sm text-[#6b7280] truncate">
+                {files.length > 0 ? `${files.length} file${files.length !== 1 ? 's' : ''} selected` : 'Attach plans or photos (PDF, JPG, PNG)'}
+              </span>
+              <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,application/pdf"
+                onChange={(e) => handleFileSelect(e.target.files)} className="hidden" />
+            </label>
+            {fileError && (
+              <p className="font-body text-xs text-red-600" role="alert">{fileError}</p>
+            )}
+            {files.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {files.map((f, i) => (
+                  <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
+                    <span className="truncate max-w-[140px]">{f.name}</span>
+                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="text-[#007969]/70" aria-label="Remove file">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         );
 
@@ -928,20 +1088,32 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
           id="form"
           className="bg-white rounded-xl border border-[#e5e7eb] shadow-[0_16px_40px_#0079691f] p-5 lg:p-8 w-full relative"
         >
+          {/* Honeypot — hidden from real users & assistive tech; bots fill it. */}
+          <input
+            type="text"
+            name="company_website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+          />
+
           {/* Progress Bar */}
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="mb-6 lg:mb-8">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-body text-xs lg:text-sm text-[#3a3a3c] font-medium">
-                  Question {currentStep + 1} of {totalSteps}
+                <span className="font-accent text-[13px] lg:text-sm text-[#1c1c1e] font-semibold uppercase tracking-[.1em]">
+                  Step {currentStep + 1} of {totalSteps}
                 </span>
-                <span className="font-body text-xs lg:text-sm text-[#007969] font-medium">
+                <span className="font-body text-xs lg:text-sm text-[#007969] font-semibold">
                   {Math.round(((currentStep + 1) / totalSteps) * 100)}%
                 </span>
               </div>
               <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#007969] rounded-full transition-all duration-400"
+                  className="h-full bg-gradient-to-r from-[#007969] to-[#00a88f] rounded-full transition-[width] duration-500 ease-out"
                   style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                 />
               </div>
@@ -953,7 +1125,17 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             {renderStep()}
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Reassurance at the point of submission */}
+          {currentStep === totalSteps - 1 && (
+            <p className="mt-5 flex items-center justify-center gap-1.5 text-xs lg:text-sm text-center font-body text-[#6b7280]">
+              <svg className="w-3.5 h-3.5 flex-shrink-0 text-[#007969]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Your details are safe with us — no spam. A specialist replies within 12 hours.
+            </p>
+          )}
+
+          {/* Navigation Buttons — compact Back + full-width primary (wizard feel) */}
           {currentStep >= 0 && currentStep < totalSteps && (
             <div className="flex gap-3 mt-6 lg:mt-8">
               {currentStep >= 0 && (
@@ -961,31 +1143,32 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   type="button"
                   onClick={handleBack}
                   disabled={isSubmitting}
-                  className="btn-outline text-sm lg:text-base disabled:opacity-50"
+                  aria-label="Back"
+                  className="btn-outline flex-shrink-0 !px-4 lg:!px-8 text-sm lg:text-base disabled:opacity-50"
                 >
                   <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
-                  Back
+                  <span className="hidden sm:inline">Back</span>
                 </button>
               )}
-              
+
               <button
                 type="button"
-                onClick={currentStep === 5 ? handleSubmit : handleNext}
+                onClick={currentStep === totalSteps - 1 ? handleSubmit : handleNext}
                 disabled={!isStepValid() || isSubmitting}
-                className={`ml-auto text-sm lg:text-base transition-all ${
+                className={`flex-1 !py-4 lg:!py-3.5 text-sm lg:text-base transition-all ${
                   isStepValid() && !isSubmitting
                     ? 'btn-brand'
-                    : 'inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
+                    : 'inline-flex items-center justify-center gap-2 px-8 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
                 }`}
               >
-                {isSubmitting ? 'Sending…' : currentStep === 5 ? 'Submit' : 'Next'}
+                {isSubmitting ? 'Sending…' : currentStep === totalSteps - 1 ? 'Submit Enquiry' : 'Continue'}
                 {!isSubmitting && <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />}
               </button>
             </div>
           )}
 
           {/* Submission error (retryable) */}
-          {submitError && currentStep === 5 && (
+          {submitError && currentStep === totalSteps - 1 && (
             <p className="mt-3 text-sm font-body text-[#e40014] text-center">{submitError}</p>
           )}
         </div>

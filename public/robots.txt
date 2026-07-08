@@ -1,0 +1,23 @@
+# Swiftrooms — robots.txt
+# Allow all legitimate crawlers; block nothing that affects SEO.
+
+User-agent: *
+Allow: /
+
+# Do not index the serverless API surface.
+Disallow: /api/
+
+# Aggressive SEO scraper bots (bandwidth abuse, no SEO value).
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+Sitemap: https://www.swiftrooms.ae/sitemap.xml

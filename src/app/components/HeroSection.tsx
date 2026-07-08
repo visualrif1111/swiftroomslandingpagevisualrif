@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle } from 'lucide-react';
 import svgPaths from '../../imports/svg-xtdnlxzlx3';
@@ -16,6 +16,31 @@ interface HeroSectionProps {
 
 export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: HeroSectionProps) {
   const [showMobileForm, setShowMobileForm] = useState(false);
+  // Defer mounting the (heavy) YouTube iframe until the hero is actually in
+  // view, so it never sits on the initial critical rendering path.
+  const sectionRef = useRef<HTMLElement>(null);
+  const [videoInView, setVideoInView] = useState(false);
+
+  useEffect(() => {
+    if (!enableVideo) return;
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      // No observer support — just load it.
+      setVideoInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVideoInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [enableVideo]);
 
   // Ensure page loads at the top on mobile and when switching viewports
   useEffect(() => {
@@ -68,6 +93,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
   return (
     <section
       id="hero"
+      ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center lg:snap-center"
       style={{
         contain: 'layout style',
@@ -85,50 +111,48 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
           and behind the desktop video/overlay. Prevents white-on-nothing text. */}
       <div className="absolute inset-0 bg-[#007969]" />
 
-      {/* Desktop Video Background */}
-      {enableVideo && videoUrl && (
+      {/* Desktop Video Background — mounted only once the hero is in view */}
+      {enableVideo && videoInView && videoUrl && (
         <div className="absolute inset-0 overflow-hidden hidden lg:block" style={{ contain: 'strict' }}>
           <iframe
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none scale-110"
             style={{
-              minWidth: '100vw',
-              minHeight: '100vh',
-              width: '120vw',
-              height: '120vh',
+              // 16:9 box scaled to always cover the hero in any viewport ratio.
+              width: 'max(100vw, calc(100vh * 16 / 9))',
+              height: 'max(100vh, calc(100vw * 9 / 16))',
               contain: 'strict',
-              aspectRatio: '16 / 9',
             }}
             src={`${videoUrl}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd1080&playlist=${videoUrl.split('/').pop()?.split('?')[0] || ''}&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
             title="Background Video"
             allow="autoplay; fullscreen; encrypted-media; accelerometer; gyroscope; picture-in-picture"
             allowFullScreen
             frameBorder="0"
-            loading="eager"
+            loading="lazy"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
         </div>
       )}
 
-      {/* Mobile Video Background */}
-      {enableVideo && mobileVideoUrl && (
+      {/* Mobile Video Background — mounted only once the hero is in view */}
+      {enableVideo && videoInView && mobileVideoUrl && (
         <div className="absolute inset-0 overflow-hidden lg:hidden" style={{ contain: 'strict' }}>
           <iframe
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none scale-110"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             style={{
-              minWidth: '100vw',
-              minHeight: '100vh',
-              width: '120vw',
-              height: '120vh',
+              // A 16:9 video is far wider than a portrait phone, so size the
+              // iframe box by height (width = 100vh * 16/9) and let overflow
+              // crop the sides — the video covers the full hero, no letterbox.
+              width: 'max(100vw, calc(100vh * 16 / 9))',
+              height: 'max(100vh, calc(100vw * 9 / 16))',
               contain: 'strict',
-              aspectRatio: '16 / 9',
             }}
             src={`${mobileVideoUrl}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd720&playlist=${mobileVideoUrl.split('/').pop()?.split('?')[0] || ''}&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
             title="Mobile Background Video"
             allow="autoplay; fullscreen; encrypted-media; accelerometer; gyroscope; picture-in-picture"
             allowFullScreen
             frameBorder="0"
-            loading="eager"
+            loading="lazy"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
@@ -136,7 +160,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
       )}
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 lg:px-6 w-full py-6 lg:py-0">
+      <div className="relative z-10 container mx-auto px-5 lg:px-6 w-full py-6 lg:py-0">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           {/* Left Side - Content (Mobile switches between content and form) */}
           <div className="text-white space-y-3 lg:space-y-6">
@@ -151,7 +175,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     y: -20,
                   }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="space-y-3 lg:space-y-6"
+                  className="space-y-4 lg:space-y-6"
                 >
                   {/* Eyebrow / location label — Rajdhani uppercase with brand divider */}
                   <motion.div
@@ -168,24 +192,37 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
 
                   {/* Main Heading — oversized Exo display for maximum impact */}
                   <motion.h1
-                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.02] lg:leading-[0.98] tracking-[-0.015em] text-[1.9rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
+                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[0.98] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
                   >
-                    Premium Windows, Doors<br className="hidden sm:block" /> &amp; Glass Rooms
-                    <span className="block font-medium text-white/70 text-base sm:text-xl lg:text-2xl tracking-normal mt-1 lg:mt-2">
-                      Engineered for UAE villas.
-                    </span>
+                    Premium Aluminium Windows, Sliding Doors &amp; Glass Rooms for UAE Villas
                   </motion.h1>
 
-                  {/* Subheadline */}
-                  <p className="font-['Barlow',sans-serif] text-xs lg:text-lg text-white/90 leading-snug lg:leading-relaxed max-w-xl">
+                  {/* Subheadline — concise on mobile, fuller on desktop */}
+                  <p className="lg:hidden font-['Barlow',sans-serif] text-[0.95rem] text-white/90 leading-relaxed max-w-md">
+                    Designed for UAE climates. Installed by specialists with over 3,500 completed projects.
+                  </p>
+                  <p className="hidden lg:block font-['Barlow',sans-serif] text-lg text-white/90 leading-relaxed max-w-xl">
                     Premium aluminium windows, sliding doors &amp; glass rooms — designed for UAE climates, manufactured locally, and installed by specialists with over 3,500 completed projects.
                   </p>
 
-                  {/* Benefits List - All 5 benefits visible on mobile and desktop */}
-                  <div className="space-y-1.5 lg:space-y-3 pt-0.5 lg:pt-2">
+                  {/* Above-fold trust strip — hard credibility numbers */}
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 pt-1.5 lg:pt-2.5">
+                    {['14+ Years', '3,400+ Customers', '3,500+ Projects', '4.4★ Google'].map((stat) => (
+                      <span
+                        key={stat}
+                        className="inline-flex items-center font-['Barlow',sans-serif] text-[11px] lg:text-xs font-semibold text-white/90 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 lg:px-2.5 lg:py-1"
+                      >
+                        {stat}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Benefits List — desktop only; on mobile it clutters the hero
+                      and the Key Benefits section covers the same ground. */}
+                  <div className="hidden lg:block space-y-1.5 lg:space-y-3 pt-0.5 lg:pt-2">
                     {/* Benefit 1 */}
                     <div className="flex items-start space-x-1.5 lg:space-x-2.5">
                       <div className="flex-shrink-0 w-3.5 h-3.5 lg:w-5 lg:h-5 mt-0.5">
@@ -243,7 +280,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                   </div>
 
                   {/* CTA Hierarchy for Mobile: Primary / Secondary / Tertiary */}
-                  <div className="pt-4 lg:hidden space-y-2.5">
+                  <div className="pt-3 lg:hidden space-y-3">
                     {/* Primary CTA - Get Free Quote (most dominant) */}
                     <CTADecoration>
                       <button
@@ -276,10 +313,31 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     </a>
                   </div>
 
+                  {/* Desktop secondary/tertiary CTAs — the primary CTA is the form on the right */}
+                  <div className="hidden lg:flex items-center gap-4 pt-5">
+                    <a
+                      href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-whatsapp shadow-lg"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      WhatsApp Expert
+                    </a>
+                    <a
+                      href="https://maps.google.com/?q=ETJAR+J1+Complex+Block+A+Warehouse+11-12+Jebel+Ali+Industrial+Area+1+Dubai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center min-h-[44px] text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm hover:text-white transition-colors"
+                    >
+                      Visit Showroom
+                    </a>
+                  </div>
+
                   {/* Bottom Tagline */}
-                  <div className="pt-2 lg:pt-8">
-                    <p className="font-['Exo',sans-serif] text-[10px] lg:text-base font-medium tracking-[0.12em] lg:tracking-[0.2em] uppercase">
-                      Book Your Showroom Visit Today
+                  <div className="pt-1 lg:pt-8">
+                    <p className="font-['Exo',sans-serif] text-[11px] lg:text-base font-medium tracking-[0.14em] lg:tracking-[0.2em] uppercase text-white/85">
+                      Free Site Visit Within 24 Hours · No Obligation
                     </p>
                   </div>
                 </motion.div>

@@ -3,6 +3,33 @@ import { motion } from 'motion/react';
 import svgPaths from '../../imports/svg-w7uq9akn3g';
 import { FloatingOrnament } from './FloatingOrnament';
 import { ImmersiveBackgroundAnimations } from './ImmersiveBackgroundAnimations';
+import { SwipeCarousel } from './SwipeCarousel';
+
+const PROCESS_STEPS = [
+  { number: '01', title: 'Free Consultation', description: 'We discuss your needs, budget and vision — no obligation, no pressure.' },
+  { number: '02', title: 'Site Survey', description: 'We visit and precisely measure your site to plan the right solution.' },
+  { number: '03', title: 'Design & Quotation', description: 'You receive detailed designs, specifications and a clear, fixed quote.' },
+  { number: '04', title: 'Manufacturing', description: 'Your systems are precision-made locally in our UAE facility.' },
+  { number: '05', title: 'Installation', description: 'Our specialist team fits everything cleanly and on schedule.' },
+  { number: '06', title: 'Handover & Aftercare', description: 'Final inspection, warranty activation and ongoing aftercare you can rely on.' },
+];
+
+// Vertical step card for the mobile swipe carousel.
+function ProcessStepCard({ number, title, description }: { number: string; title: string; description: string }) {
+  return (
+    <div className="h-full bg-white sr-card-premium p-6 flex flex-col">
+      <div className="w-14 h-14 bg-[#007969] rounded-full flex items-center justify-center shadow-lg mb-5">
+        <span className="font-heading text-xl text-white font-semibold">{number}</span>
+      </div>
+      <h3 className="font-heading text-[1.125rem] font-semibold text-[#1c1c1e] mb-1.5 leading-snug">
+        {title}
+      </h3>
+      <p className="font-body text-[0.9375rem] text-[#3a3a3c] leading-relaxed">
+        {description}
+      </p>
+    </div>
+  );
+}
 
 function ProcessIcon() {
   return (
@@ -126,10 +153,10 @@ function ProcessStep({ number, title, description, showConnector = true, index, 
         animate={{ y: isActive ? -5 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h3 className="font-heading text-base lg:text-xl font-medium text-[#1c1c1e] mb-1 lg:mb-3 lg:min-h-[3.5rem] flex items-center justify-start lg:justify-center">
+        <h3 className="font-heading text-[1.0625rem] lg:text-xl font-semibold lg:font-medium text-[#1c1c1e] mb-1 lg:mb-3 lg:min-h-[3.5rem] flex items-center justify-start lg:justify-center">
           {title}
         </h3>
-        <p className="font-body text-sm lg:text-base text-[#3a3a3c] leading-relaxed">
+        <p className="font-body text-[0.9375rem] lg:text-base text-[#3a3a3c] leading-relaxed">
           {description}
         </p>
       </motion.div>
@@ -206,7 +233,7 @@ export function ProcessSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="font-heading text-2xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 tracking-wide relative z-40">
+          <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 tracking-wide relative z-40">
             How It Works
           </h2>
           <div className="divider-brand mx-auto mb-3 lg:mb-4" />
@@ -215,55 +242,30 @@ export function ProcessSection() {
           </p>
         </motion.div>
 
-        {/* Process Steps */}
-        <div className="flex flex-col space-y-8 lg:grid lg:grid-cols-5 lg:gap-0 lg:space-y-0 max-w-7xl mx-auto">
-          <ProcessStep
-            number="01"
-            title="Get Free Quote"
-            description="Complete our quick form or WhatsApp us to get started — no obligation."
-            showConnector={true}
-            index={0}
-            isActive={activeStep === 0}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="02"
-            title="Consultation & Site Assessment"
-            description="We discuss your needs and assess your site to plan the right solution."
-            showConnector={true}
-            index={1}
-            isActive={activeStep === 1}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="03"
-            title="Design & Specification"
-            description="We finalise designs, exact measurements, specifications and your contract."
-            showConnector={true}
-            index={2}
-            isActive={activeStep === 2}
-            onHover={setActiveStep}
-          />
-          <ProcessStep
-            number="04"
-            title="Manufacturing & Installation"
-            description="Locally manufactured systems, professionally installed with minimal disruption."
-            showConnector={true}
-            index={3}
-            isActive={activeStep === 3}
-            onHover={setActiveStep}
-          />
-          <div className="lg:col-span-1 lg:flex lg:justify-center">
+        {/* Process Steps — desktop horizontal row */}
+        <div className="hidden lg:grid lg:grid-cols-6 lg:gap-0 max-w-7xl mx-auto">
+          {PROCESS_STEPS.map((step, i) => (
             <ProcessStep
-              number="05"
-              title="Aftercare Support"
-              description="Final inspection, warranty activation and ongoing aftercare you can rely on."
-              showConnector={false}
-              index={4}
-              isActive={activeStep === 4}
+              key={step.number}
+              number={step.number}
+              title={step.title}
+              description={step.description}
+              showConnector={i < PROCESS_STEPS.length - 1}
+              index={i}
+              isActive={activeStep === i}
               onHover={setActiveStep}
             />
-          </div>
+          ))}
+        </div>
+
+        {/* Process Steps — mobile swipeable carousel */}
+        <div className="lg:hidden">
+          <SwipeCarousel
+            ariaLabel="How it works steps"
+            items={PROCESS_STEPS.map((step) => (
+              <ProcessStepCard key={step.number} {...step} />
+            ))}
+          />
         </div>
       </div>
     </section>

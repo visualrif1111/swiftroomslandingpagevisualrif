@@ -165,9 +165,9 @@ export default function App() {
         {/* Hero Section with optional video background */}
         <ErrorBoundary>
           <HeroSection
-            enableVideo={animationSettings.enableAnimations}
-            videoUrl="https://www.youtube.com/embed/aP4L7jnKxYA"
-            mobileVideoUrl="https://www.youtube.com/embed/wwrYl-50v2E"
+            enableVideo={true}
+            videoUrl="https://www.youtube.com/embed/xpDcSdw--hg"
+            mobileVideoUrl="https://www.youtube.com/embed/xpDcSdw--hg"
           />
         </ErrorBoundary>
 
@@ -180,22 +180,19 @@ export default function App() {
           )}
 
           {/* All below-fold sections wrapped in Suspense for lazy loading */}
-          {/* CRO journey: Key Benefits -> Products -> Gallery -> Testimonials -> Why Us -> Process -> Lead Form -> Showroom CTA -> FAQ */}
+          {/*
+            CRO conversion journey — persuade before the enquiry. The closing
+            funnel (Why Choose -> Process -> Lead Form) is kept contiguous so
+            nothing interrupts the run-up to the form:
+            Hero -> Key Benefits (outcomes) -> Gallery (proof of work)
+            -> Testimonials (social proof) -> Products -> Transform -> Brands
+            (what we build / premium systems) -> Social Proof (stat reassurance)
+            -> Why Choose Swiftrooms (credibility) -> Process (how it works)
+            -> Lead Form (the ask) -> Final CTA / Showroom -> FAQ
+          */}
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
               <KeyBenefitsSection />
-            </ErrorBoundary>
-          </Suspense>
-
-          <Suspense fallback={<SectionLoader />}>
-            <ErrorBoundary>
-              <ProductsSection />
-            </ErrorBoundary>
-          </Suspense>
-
-          <Suspense fallback={<SectionLoader />}>
-            <ErrorBoundary>
-              <TransformYourSpaceSection />
             </ErrorBoundary>
           </Suspense>
 
@@ -213,7 +210,13 @@ export default function App() {
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <SwiftroomsSolutionSection />
+              <ProductsSection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <TransformYourSpaceSection />
             </ErrorBoundary>
           </Suspense>
 
@@ -225,13 +228,19 @@ export default function App() {
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <ProcessSection />
+              <SocialProofSection />
             </ErrorBoundary>
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
             <ErrorBoundary>
-              <SocialProofSection />
+              <SwiftroomsSolutionSection />
+            </ErrorBoundary>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ErrorBoundary>
+              <ProcessSection />
             </ErrorBoundary>
           </Suspense>
 

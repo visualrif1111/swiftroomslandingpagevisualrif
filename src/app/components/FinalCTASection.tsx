@@ -12,10 +12,10 @@ const waMagnet = (intent: string) =>
   `https://wa.me/971505269149?text=${encodeURIComponent(`Hi Swiftrooms, I'd like to request: ${intent}.`)}`;
 
 const leadMagnets = [
-  { icon: CalendarCheck, label: 'Free Design Consultation', href: waMagnet('a free design consultation') },
-  { icon: Ruler, label: 'Free Site Assessment', href: waMagnet('a free site assessment') },
   { icon: FileText, label: 'Free Project Cost Guide', href: waMagnet('the free project cost guide') },
   { icon: BookOpen, label: "Window Buyer's Guide", href: waMagnet("the aluminium window buyer's guide") },
+  { icon: Ruler, label: 'Product Spec Sheets', href: waMagnet('the aluminium product spec sheets') },
+  { icon: CalendarCheck, label: 'Brochure & Price Ranges', href: waMagnet('the brochure and price ranges') },
 ];
 
 function openQuoteForm() {
@@ -50,7 +50,7 @@ export function FinalCTASection() {
               ))}
             </div>
             <span className="font-['Barlow',sans-serif] text-xs lg:text-sm text-white/90">
-              4.4+ rating · 130+ reviews · 3,500+ projects
+              4.4★ on 130+ Google reviews · 3,500+ projects
             </span>
           </motion.div>
 
@@ -128,7 +128,7 @@ export function FinalCTASection() {
             transition={{ duration: 0.6, delay: 0.35 }}
           >
             <p className="font-['Barlow',sans-serif] text-xs lg:text-sm text-white/80 mb-4">
-              Not ready to enquire? Grab a free resource instead:
+              Not ready to enquire? Ask us on WhatsApp for a free resource:
             </p>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 lg:gap-3">
               {leadMagnets.map((magnet) => {

@@ -54,29 +54,29 @@ export function Navigation() {
     };
   }, []);
 
-  // Desktop horizontal nav links
+  // Desktop horizontal nav links — order mirrors the CRO page flow
   const navItems = [
     { key: 'hero', id: 'hero', label: 'Home' },
     { key: 'benefits', id: 'benefits', label: 'Benefits' },
-    { key: 'products', id: 'products', label: 'Products' },
     { key: 'gallery', id: 'gallery', label: 'Gallery' },
     { key: 'testimonials', id: 'testimonials', label: 'Testimonials' },
+    { key: 'swiftrooms-solution', id: 'swiftrooms-solution', label: 'Why Us' },
+    { key: 'products', id: 'products', label: 'Products' },
     { key: 'process', id: 'process', label: 'Process' },
-    { key: 'social', id: 'social', label: 'Portfolio' },
-    { key: 'contact-form', id: 'contact-form', label: 'Get Free Quote' },
     { key: 'faqs', id: 'faqs', label: 'FAQs' },
   ];
 
-  // Mobile full-screen menu links (order/content preserved from original)
+  // Mobile full-screen menu links — primary CTA pinned to the top,
+  // remaining links follow the CRO page flow
   const mobileNavItems = [
-    { id: 'hero', label: 'Home' },
-    { id: 'products', label: 'Products' },
-    { id: 'process', label: 'Process' },
-    { id: 'brands', label: 'Brands' },
-    { id: 'social', label: 'Portfolio' },
     { id: 'contact-form', label: 'Get Free Quote', isCTA: true },
+    { id: 'hero', label: 'Home' },
+    { id: 'benefits', label: 'Benefits' },
     { id: 'gallery', label: 'Gallery' },
     { id: 'testimonials', label: 'Testimonials' },
+    { id: 'swiftrooms-solution', label: 'Why Us' },
+    { id: 'products', label: 'Products' },
+    { id: 'process', label: 'Process' },
     { id: 'faqs', label: 'FAQs' },
   ];
 
@@ -187,6 +187,13 @@ export function Navigation() {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           console.log(`[Navigation] ✅ Scrolled to ${id} using scrollIntoView`);
         }
+      }
+
+      // For the quote CTA, also open the lead form (parity with the sticky CTA,
+      // hero and other entry points) so tapping "Get Free Quote" in the menu
+      // expands the form instead of just scrolling near it.
+      if (id === 'contact-form') {
+        setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 400);
       }
     }, 150); // 150ms delay to let menu close animation start
   };

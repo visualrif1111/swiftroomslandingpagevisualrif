@@ -7,10 +7,14 @@ import { FloatingOrnament } from './FloatingOrnament';
 import { ImmersiveBackgroundAnimations } from './ImmersiveBackgroundAnimations';
 
 const stats = [
-  { value: '30K', label: 'Instagram Followers' },
-  { value: '500+', label: 'Projects Shared' },
-  { value: '98%', label: 'Customer Satisfaction' },
-  { value: '4.9★', label: 'Average Rating' },
+  { value: '3,400+', label: 'Happy Customers' },
+  { value: '3,500+', label: 'Projects Completed' },
+  { value: '14+', label: 'Years in the UAE' },
+  { value: '70+', label: 'Team Members' },
+  { value: '130+', label: 'Google Reviews' },
+  { value: '4.4★', label: 'Google Rating' },
+  { value: '2011', label: 'Established' },
+  { value: 'Dubai', label: 'UAE Showroom' },
 ];
 
 const communities = [
@@ -250,7 +254,7 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
+            <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
               Our Portfolio
             </h2>
             <p className="font-body text-xs lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 relative z-40">
@@ -276,10 +280,11 @@ export function SocialProofSection() {
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
                   WebkitOverflowScrolling: 'touch',
-                  touchAction: 'none',
+                  // pan-y: vertical page scroll passes through; horizontal handled by useMultiAxisScroll
+                  touchAction: 'pan-y',
                   scrollBehavior: 'auto',
                   willChange: 'scroll-position',
-                  overscrollBehavior: 'auto',
+                  overscrollBehavior: 'contain',
                   pointerEvents: 'auto',
                 }}
                 onTouchStart={handleTouchStart}
