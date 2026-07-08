@@ -18,7 +18,10 @@ and **Preview** (never commit real values — `.env*` is gitignored).
 
 | Name | Scope | Required? | Purpose |
 |------|-------|-----------|---------|
-| `VITE_LEAD_ENDPOINT` | Prod + Preview | **YES — highest priority** | Lead-form target (Formspree form URL / webhook). **Until set, the form silently drops submissions.** |
+| `VITE_LEAD_ENDPOINT` | Prod + Preview | **YES — highest priority** | Lead-form direct/fallback target (Formspree form URL / webhook). **Until set (and with Turnstile off), the form drops submissions.** |
+| `VITE_TURNSTILE_SITE_KEY` | Prod + Preview | Optional (client) | Cloudflare Turnstile **public** site key. Enables the protected `/api/lead` path + invisible bot check (§5). |
+| `LEAD_ENDPOINT` | Prod + Preview | For `/api/lead` | **Server-only** (NO `VITE_`). Forward target the proxy delivers to. |
+| `TURNSTILE_SECRET_KEY` | Prod + Preview | For verification | **Server-only** (NO `VITE_`). Enables Turnstile `siteverify` in `/api/lead`. |
 | `GOOGLE_PLACES_API_KEY` | Prod + Preview | Optional | Server-only (NO `VITE_` prefix). Enables live Google reviews via `/api/reviews`. |
 | `GOOGLE_PLACE_ID` | Prod + Preview | Optional | Paired with the key above. |
 
@@ -72,20 +75,26 @@ Forces an interstitial browser challenge for **all** visitors.
 
 ---
 
-## 5. (Optional) Cloudflare Turnstile on the lead form — next layer
-Only if client-side anti-spam (honeypot + timing + duplicate guard, already
-shipped) proves insufficient. This is a **code + config** change, not just
-dashboard, and it touches the form, so validate CRO impact:
+## 5. Cloudflare Turnstile on the lead form — ✅ CODE SHIPPED, needs keys
+The code is implemented and inert by default (`api/lead.ts`,
+`src/app/utils/turnstile.ts`; CSP already allows `challenges.cloudflare.com`).
+Enable it by adding keys — no code change, no redeploy risk to the form design:
 
-1. Create a Turnstile widget (Cloudflare dashboard) → get site key + secret.
-2. Add an `api/lead.ts` edge function that: validates the Turnstile token via
-   `siteverify` (secret server-side), then forwards to `VITE_LEAD_ENDPOINT`.
-   Point the form at same-origin `/api/lead` instead of the raw endpoint (this
-   also hides the endpoint from the bundle).
-3. Render the Turnstile widget (invisible/managed mode to preserve UX).
-4. **CSP change required** in `vercel.json`: add `https://challenges.cloudflare.com`
-   to `script-src` and `frame-src`. Re-verify no console CSP violations on a
-   preview before promoting.
+1. Cloudflare dashboard → Turnstile → create a widget for the site's domain(s)
+   (add both `*.vercel.app` preview and the prod domain). Choose **Managed**;
+   the integration renders it **invisible** so there's no visible UI. Copy the
+   **site key** and **secret**.
+2. Set env (§1): `VITE_TURNSTILE_SITE_KEY` (public), plus server-only
+   `LEAD_ENDPOINT` and `TURNSTILE_SECRET_KEY`. Redeploy.
+3. Staged rollout options:
+   - Site key only (no secret) → widget runs client-side, `/api/lead` forwards
+     without hard verification. Good for a canary.
+   - Add the secret → server-side `siteverify` is enforced; unverified/bot
+     submissions are rejected `403`.
+4. **Verify on a preview:** submit the form (should succeed silently, no visible
+   challenge for a real browser), confirm the lead arrives, and check DevTools
+   console for **zero CSP violations**. If the site key is unset the whole
+   Turnstile path is tree-shaken out — the form behaves exactly as before.
 
 ---
 
@@ -121,5 +130,6 @@ npm audit --omit=dev --audit-level=high                           # expect: foun
 | OWASP managed ruleset | ⏳ TODO (§2b) |
 | BotID | ⏳ TODO (§3) |
 | `VITE_LEAD_ENDPOINT` | ⏳ **TODO — form drops leads until set (§1)** |
+| Turnstile + `/api/lead` proxy | ✅ Code shipped; ⏳ needs keys to activate (§5) |
 | Attack Challenge Mode owner | ⏳ Assign (§4) |
 | Domain `swiftrooms.ae` on Vercel | ⛔ Deferred by owner (`SECURITY.md` §12) |

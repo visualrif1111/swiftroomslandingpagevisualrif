@@ -113,6 +113,11 @@ Rationale / known conflicts:
   still blocks plaintext `http:` and non-web protocols. **Tighten** once the
   endpoint host is known, e.g. `connect-src 'self' https://formspree.io` (add
   `https://maps.googleapis.com` only if the reviews proxy is bypassed).
+- **`script-src`/`frame-src` include `https://challenges.cloudflare.com`** for
+  the optional Cloudflare Turnstile widget (loads a script + a challenge iframe).
+  This only *permits* the source; nothing loads it unless
+  `VITE_TURNSTILE_SITE_KEY` is set (see §7). Turnstile's network calls are
+  covered by `connect-src 'self' https:`.
 - **`frame-src`** allows YouTube (hero + reels embeds). `img-src https:` covers
   YouTube thumbnails and Google review avatars; can be tightened to
   `i.ytimg.com lh3.googleusercontent.com` if you want a stricter policy.
@@ -207,11 +212,31 @@ Implemented client-side (no server exists to enforce more):
   domain blocking, double-submit lock.
 
 **CSRF: N/A** — there is no authenticated, cookie-based server endpoint on our
-origin; the form is an unauthenticated cross-origin POST to Formspree, so a CSRF
-token would add nothing. **For a stronger guarantee, add Cloudflare Turnstile**:
-render the widget on the lead form, and validate the token in a small
-`api/lead.ts` proxy (with `siteverify`) instead of posting to Formspree directly.
-This is the recommended next step if spam becomes a problem.
+origin; the form is an unauthenticated POST, so a CSRF token would add nothing.
+
+### Turnstile-protected proxy (`api/lead.ts` + `src/app/utils/turnstile.ts`)
+The stronger anti-spam path is now **implemented and inert-by-default** (parity
+with the reviews proxy):
+
+- When `VITE_TURNSTILE_SITE_KEY` is set, the form lazy-loads Cloudflare Turnstile
+  (invisible, one-off widget per submit — **no visible UI, no UX/CRO change**),
+  mints a token, and POSTs the payload to the **same-origin `/api/lead`**
+  instead of exposing a third-party endpoint in the bundle.
+- `api/lead.ts` (edge) then: validates the request **Origin** (same-origin
+  only), re-checks the **honeypot + submit-timing** server-side (defence in
+  depth — a bot hitting the endpoint directly can't bypass the client checks),
+  verifies the Turnstile token via **`siteverify`** when `TURNSTILE_SECRET_KEY`
+  is set, and forwards to a **server-only `LEAD_ENDPOINT`**. Size-capped body,
+  request timeouts, sanitised error responses.
+- **Staged rollout / never breaks:** with no site key the entire Turnstile path
+  is tree-shaken out of the bundle and the form uses its existing direct
+  endpoint. If the site key is set but `LEAD_ENDPOINT` isn't, `/api/lead` returns
+  `501` and the client falls back to the direct endpoint so no lead is lost.
+- Verification is only *enforced* once `TURNSTILE_SECRET_KEY` exists, so you can
+  enable the widget and the server check independently.
+
+Server-only env: `LEAD_ENDPOINT`, `TURNSTILE_SECRET_KEY` (no `VITE_` prefix).
+Client env: `VITE_TURNSTILE_SITE_KEY` (public site key).
 
 ---
 
