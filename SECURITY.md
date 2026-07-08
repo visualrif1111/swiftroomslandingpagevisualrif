@@ -275,3 +275,28 @@ This is the recommended next step if spam becomes a problem.
 4. Set up **Dependabot**/`npm audit` in CI for continuous dependency scanning.
 5. Consider serving Google Fonts self-hosted to drop the two `fonts.g*` CSP
    entries and remove a third-party dependency.
+
+---
+
+## 12. Deployment / domain status (OPEN — verified live 2026-07-08)
+
+Live header verification found that **the hardening in this repo currently
+protects only the Vercel deployment, not the primary customer-facing domain.**
+
+| Host | Server | Security posture |
+|------|--------|------------------|
+| `swiftroomslandingpagevisualrif.vercel.app` | Vercel | ✅ Full hardened suite (CSP, HSTS w/ `includeSubDomains; preload`, `X-Frame-Options: DENY`, COOP/CORP, Permissions-Policy); middleware blocks `/.env` (404), scanner UAs (403); `/api/reviews` → 501 safe fallback. |
+| `www.swiftrooms.ae` (canonical prod) | **nginx** (not Vercel) | ⚠️ Weak: `X-Frame-Options: SAMEORIGIN`, near-empty CSP (`frame-ancestors 'self'` only — no script/style/connect rules), HSTS `max-age=31536000` without `includeSubDomains`/`preload`. |
+| `swiftrooms.ae` | nginx | 301 → `www` |
+| `swiftrooms-newbuild.vercel.app` | Vercel | Separate deployment. |
+
+**Decision (2026-07-08): do NOT attach `swiftrooms.ae` to this Vercel project
+yet.** The domain remains on its existing nginx origin by owner instruction.
+Consequence: none of the header/CSP/middleware/WAF hardening in this repo reaches
+real visitors until the domain is cut over. Two future paths when ready:
+1. **Cutover** — point `swiftrooms.ae` DNS at this Vercel project; hardening then
+   applies automatically. (Re-verify canonical/redirects and lead endpoint first.)
+2. **Harden nginx in place** — if the domain stays on nginx, replicate the
+   `vercel.json` header suite in the nginx `server` block.
+
+This is a DNS/ops action, not a code change; tracked here so it isn't forgotten.
