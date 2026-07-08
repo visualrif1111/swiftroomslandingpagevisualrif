@@ -258,8 +258,11 @@ This is the recommended next step if spam becomes a problem.
 - [ ] Enable Vercel WAF managed ruleset + rate-limit rules (§5).
 - [ ] Enable BotID; document Attack Challenge Mode runbook.
 - [ ] Tighten CSP `connect-src` to the real endpoint host once known.
-- [x] `npm audit` — **0 vulnerabilities** (prod + dev) as of 2026-07 audit;
-      schedule recurring review (Dependabot) to keep it there.
+- [x] `npm audit` — **0 vulnerabilities** (prod + dev) as of 2026-07 audit.
+- [x] Automated recurring dependency scanning — **Dependabot**
+      (`.github/dependabot.yml`, weekly) + a **Security Audit CI workflow**
+      (`.github/workflows/security-audit.yml`) that fails any PR introducing a
+      HIGH+ production vulnerability and rebuilds to catch bad dep bumps.
 - [ ] Confirm no `.env`/`.env.local` is tracked (`git ls-files | grep -i env`
       should show only `.env.example`).
 
@@ -272,7 +275,8 @@ This is the recommended next step if spam becomes a problem.
 2. Tighten CSP `connect-src` and `img-src` to explicit hosts once finalised.
 3. Add **Vercel Web Analytics + Speed Insights** and a **Log Drain** for
    security/error monitoring (failed requests, 4xx/5xx, bot blocks).
-4. Set up **Dependabot**/`npm audit` in CI for continuous dependency scanning.
+4. ~~Set up **Dependabot**/`npm audit` in CI for continuous dependency
+   scanning.~~ ✅ Done — `.github/dependabot.yml` + `.github/workflows/security-audit.yml`.
 5. Consider serving Google Fonts self-hosted to drop the two `fonts.g*` CSP
    entries and remove a third-party dependency.
 
