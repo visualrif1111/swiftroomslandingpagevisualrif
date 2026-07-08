@@ -304,3 +304,29 @@ real visitors until the domain is cut over. Two future paths when ready:
    `vercel.json` header suite in the nginx `server` block.
 
 This is a DNS/ops action, not a code change; tracked here so it isn't forgotten.
+
+---
+
+## 13. Logging & monitoring — CSP violation reporting (Phases 16–17)
+
+The enforcing CSP now reports what it blocks. `vercel.json` adds
+`report-uri /api/csp-report; report-to csp-endpoint` to the policy plus a
+`Reporting-Endpoints: csp-endpoint="/api/csp-report"` header; the collector is
+`api/csp-report.ts`.
+
+- **Passive & free** — browsers POST a small JSON report **only on an actual
+  violation**, so normal page loads are unaffected (no critical-path cost).
+- **What it catches** — a newly-added third-party script that the policy blocks,
+  an injected inline event handler (a possible XSS attempt), or a directive
+  that's too strict for a legitimate resource.
+- **Where it lands** — one compact, bounded, **sanitised** structured line per
+  report in the Vercel function log (`[csp-report] {...}`), visible in the
+  dashboard and **drainable to a SIEM via a Log Drain**. Only URL/directive
+  diagnostic fields are logged — never the full untrusted body, never secrets.
+- **Hardening of the collector itself** — POST-only (405 otherwise), 16 KB body
+  cap, per-field length clipping, fails closed to `204` on malformed input,
+  `no-store`.
+
+This is the recommended hook for external monitoring: point a **Vercel Log
+Drain** (or Datadog/Sentry) at the function logs to alert on `[csp-report]`
+lines and on 4xx/5xx spikes from the middleware bot/probe blocks.
