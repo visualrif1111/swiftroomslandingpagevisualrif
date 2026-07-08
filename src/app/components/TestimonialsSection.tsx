@@ -631,7 +631,7 @@ export function TestimonialsSection() {
   const [error, setError] = useState(false);
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 600,
     slidesToShow: 1,
