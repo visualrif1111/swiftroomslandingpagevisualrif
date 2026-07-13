@@ -205,7 +205,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     Designed for UAE climates. Installed by specialists with over 3,500 completed projects.
                   </p>
                   <p className="hidden lg:block font-['Barlow',sans-serif] text-lg text-white/90 leading-relaxed max-w-xl">
-                    Premium aluminium windows, sliding doors &amp; glass rooms — designed for UAE climates, manufactured locally, and installed by specialists with over 3,500 completed projects.
+                    Premium aluminium windows, sliding doors &amp; glass rooms, designed for the UAE climate, manufactured locally, and installed by our Swift Rooms team, with over 3,500 successful projects across the UAE.
                   </p>
 
                   {/* Above-fold trust strip — hard credibility numbers */}
