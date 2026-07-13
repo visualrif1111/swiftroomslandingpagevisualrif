@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import { FAQCADElements } from './CADFloatingElements';
-import { track } from '../utils/analytics';
 
 interface FAQItem {
   question: string;
@@ -48,7 +47,6 @@ export function FAQSection() {
   };
 
   const scrollToForm = () => {
-    track('cta_click', { ctaLabel: 'Get Free Consultation', location: 'faq', leadType: 'quote' });
     const formSection = document.getElementById('contact-form');
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });

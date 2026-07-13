@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle } from 'lucide-react';
-import { track } from '../utils/analytics';
 
 const WHATSAPP_HREF =
   'https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa.';
@@ -79,7 +78,6 @@ export function StickyMobileCTA() {
   }, []);
 
   const handleQuote = () => {
-    track('cta_click', { ctaLabel: 'Get Free Quote', location: 'sticky-mobile', leadType: 'quote' });
     const formSection = document.getElementById('contact-form');
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -114,7 +112,6 @@ export function StickyMobileCTA() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => track('whatsapp_click', { ctaLabel: 'WhatsApp', location: 'sticky-mobile', leadType: 'whatsapp', detail: 'whatsapp' })}
               className="btn-whatsapp flex-1"
             >
               <MessageCircle className="w-4 h-4" />

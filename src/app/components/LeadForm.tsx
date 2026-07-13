@@ -4,8 +4,6 @@ import { ChevronRight, ChevronLeft, Check, ArrowRight, Building, Home, Store, Do
 import svgPaths from '../../imports/svg-c8s3lgkv08';
 import svgPathsSelection from '../../imports/svg-ws080e5oua';
 import { turnstileEnabled, getTurnstileToken } from '../utils/turnstile';
-import { track, resetConversionGuards } from '../utils/analytics';
-import { getAttribution } from '../utils/attribution';
 
 // Country codes for phone number validation
 const countryCodes = [
@@ -145,20 +143,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   // Signature of the last successfully-sent enquiry, to prevent duplicate
   // submissions (e.g. double-tap / retry) hitting the endpoint twice.
   const submittedSignatureRef = useRef<string | null>(null);
-  // Analytics guards: fire "open" once, and "start" on the first real edit.
-  const openTrackedRef = useRef(false);
-  const startedRef = useRef(false);
 
-  // Reset the anti-bot timer each time the form is (re)opened, and record a
-  // one-time "quote_form_open" conversion-funnel event.
+  // Reset the anti-bot timer each time the form is (re)opened.
   useEffect(() => {
-    if (isFormOpen) {
-      setFormOpenedAt(Date.now());
-      if (!openTrackedRef.current) {
-        openTrackedRef.current = true;
-        track('quote_form_open', { location: 'contact-form', leadType: 'quote' });
-      }
-    }
+    if (isFormOpen) setFormOpenedAt(Date.now());
   }, [isFormOpen]);
 
   // Validate attachments on selection: allowed types, per-file size, max count.
@@ -343,13 +331,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   const totalSteps = isMobile ? MOBILE_STEP_KEYS.length : 2;
 
   const handleNext = () => {
-    // First forward move counts as "form started" (funnel step).
-    if (!startedRef.current) {
-      startedRef.current = true;
-      track('quote_form_start', { location: 'contact-form', leadType: 'quote' });
-    }
     if (currentStep < totalSteps) {
-      track('quote_form_step_complete', { location: 'contact-form', leadType: 'quote', step: currentStep + 1 });
       setCurrentStep(currentStep + 1);
     }
   };
@@ -381,14 +363,6 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       return;
     }
 
-    const leadType = journeyType === 'showroom' ? 'showroom' : 'quote';
-    // Funnel event: submission attempted (non-PII props only).
-    track('quote_form_submit', {
-      location: 'contact-form',
-      leadType,
-      productInterest: formData.productsNeeded.join(','),
-    });
-
     setIsSubmitting(true);
 
     const payload = {
@@ -405,11 +379,6 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       privacyConsent: formData.privacyConsent,
       marketingConsent: formData.marketingConsent,
       journeyType,
-      // LeadOptimizer routing + attribution (Phases 2, 3, 4).
-      leadType,
-      sourceSection: 'contact-form',
-      ctaLabel: 'Submit Enquiry',
-      attribution: getAttribution(),
       source: 'landing-page',
       submittedAt: new Date().toISOString(),
     };
@@ -475,16 +444,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       }
       // Remember this enquiry so an accidental resubmit doesn't double-send.
       submittedSignatureRef.current = signature;
-      // Conversion events (one-shot, de-duplicated in the analytics layer).
-      track(leadType === 'showroom' ? 'showroom_booking_success' : 'quote_form_success', {
-        location: 'contact-form',
-        leadType,
-      });
-      track('lead_created_in_crm', { location: 'contact-form', leadType });
       setCurrentStep(totalSteps);
     } catch (err) {
       console.error('[LeadForm] submission error:', err);
-      track('quote_form_error', { location: 'contact-form', leadType });
       setSubmitError('Something went wrong sending your request. Please try again, or reach us on WhatsApp.');
     } finally {
       setIsSubmitting(false);
@@ -848,7 +810,6 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => track('whatsapp_click', { ctaLabel: 'Send to My Phone', location: 'contact-form-success', leadType: 'quote', detail: 'whatsapp' })}
                 className="btn-whatsapp w-full text-sm lg:text-base shadow-md hover:shadow-lg transition-all duration-300"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -879,10 +840,6 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 setFiles([]);
                 setCurrentStep(0);
                 setJourneyType('quote');
-                // Allow a genuine second enquiry to re-fire conversion events.
-                startedRef.current = false;
-                submittedSignatureRef.current = null;
-                resetConversionGuards();
 
                 if (isMobile) {
                   // On mobile: Close form WITHOUT showing the menu button

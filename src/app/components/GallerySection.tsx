@@ -2,7 +2,6 @@ import { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Instagram, MessageCircle, MapPin } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { track } from '../utils/analytics';
 
 // Figma-hosted project imagery (same assets as the previous showcase)
 import imgComponent42 from "figma:asset/b652f7273996c3088ffbdf6b375a00ac50d72203.png";
@@ -127,7 +126,6 @@ const FILTERS: { label: string; type: ProjectType | 'All' }[] = [
 ];
 
 function scrollToLeadForm() {
-  track('cta_click', { ctaLabel: 'Get Free Quote', location: 'gallery', leadType: 'quote' });
   const formSection = document.getElementById('contact-form');
   if (formSection) {
     formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -394,7 +392,6 @@ export function GallerySection() {
               href={WHATSAPP_EXPERT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => track('whatsapp_click', { ctaLabel: 'WhatsApp Expert', location: 'gallery', leadType: 'whatsapp', detail: 'whatsapp' })}
               className="btn-whatsapp w-full sm:w-auto"
             >
               <MessageCircle className="h-5 w-5" />
