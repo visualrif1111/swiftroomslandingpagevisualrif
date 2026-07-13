@@ -50,7 +50,7 @@ export function PrivacyPolicySection() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#007969] to-[#007969] rounded-2xl mb-6">
               <Shield className="w-10 h-10 text-white" />
             </div>
-            <h2 className="font-['Exo',sans-serif] text-4xl font-bold text-[#1c1c1e] mb-4">
+            <h2 className="font-['Exo',sans-serif] text-3xl sm:text-4xl font-bold text-[#1c1c1e] mb-4">
               Privacy Policy
             </h2>
             <p className="font-['Barlow',sans-serif] text-lg text-[#3a3a3c] max-w-2xl mx-auto">

@@ -65,7 +65,7 @@ function ReelOverlay({ caption, hashtags }: { caption: string; hashtags: string[
           </p>
 
           {/* Caption */}
-          <p className="font-['Barlow',sans-serif] text-white text-sm font-normal leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+          <p className="font-['Barlow',sans-serif] text-white text-sm font-normal leading-relaxed line-clamp-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
             {caption}
           </p>
 

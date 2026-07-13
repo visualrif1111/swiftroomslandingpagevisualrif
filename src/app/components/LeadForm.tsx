@@ -528,7 +528,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   <select
                     value={selectedCountryCode}
                     onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
-                    className="px-2 py-3.5 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-sm text-[#1c1c1e] cursor-pointer max-w-[92px]"
+                    className="px-2 py-3.5 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-base text-[#1c1c1e] cursor-pointer max-w-[92px]"
                     aria-label="Country code"
                   >
                     {countryCodes.map((c) => (
@@ -710,7 +710,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   {files.map((f, i) => (
                     <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
                       <span className="truncate max-w-[140px]">{f.name}</span>
-                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="text-[#007969]/70 hover:text-[#007969]" aria-label="Remove file">
+                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#007969]/70 hover:text-[#007969]" aria-label="Remove file">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -750,7 +750,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             </div>
 
             <div>
-              <h3 className="font-heading text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3">
+              <h3 className="font-heading text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3 break-words">
                 Thank You, {formData.name}!
               </h3>
               <p className="font-body text-base lg:text-lg text-[#3a3a3c] mb-2">
@@ -910,7 +910,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               <select
                 value={selectedCountryCode}
                 onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
-                className="px-2 py-4 bg-white border border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] font-body text-sm text-[#1c1c1e] max-w-[96px]"
+                className="px-2 py-4 bg-white border border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] font-body text-base text-[#1c1c1e] max-w-[96px]"
                 aria-label="Country code"
               >
                 {countryCodes.map((c) => (<option key={c.code} value={c.code}>{c.flag} {c.code}</option>))}
@@ -1065,7 +1065,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 {files.map((f, i) => (
                   <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
                     <span className="truncate max-w-[140px]">{f.name}</span>
-                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="text-[#007969]/70" aria-label="Remove file">
+                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#007969]/70" aria-label="Remove file">
                       <X className="w-3 h-3" />
                     </button>
                   </span>

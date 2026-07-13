@@ -94,11 +94,9 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center lg:snap-center"
+      className="relative min-h-[100svh] flex items-start justify-center pt-24 pb-10 lg:items-center lg:pt-0 lg:pb-0 lg:snap-center"
       style={{
         contain: 'layout style',
-        minHeight: '100vh',
-        height: '100vh',
         contentVisibility: 'auto',
         containIntrinsicSize: '100vw 100vh',
       }}
@@ -160,7 +158,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
       )}
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-5 lg:px-6 w-full py-6 lg:py-0">
+      <div className="relative z-10 container mx-auto max-w-[1600px] px-5 lg:px-6 w-full py-6 lg:py-0">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           {/* Left Side - Content (Mobile switches between content and form) */}
           <div className="text-white space-y-3 lg:space-y-6">

@@ -129,7 +129,7 @@ export function CookieConsent() {
             {/* Settings Panel */}
             {showSettings && (
               <motion.div
-                className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 lg:p-6"
+                className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 lg:p-6 max-h-[85dvh] overflow-y-auto"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.2 }}
@@ -140,7 +140,8 @@ export function CookieConsent() {
                   </h3>
                   <button
                     onClick={() => setShowSettings(false)}
-                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+                    className="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+                    aria-label="Close cookie preferences"
                   >
                     <X className="w-5 h-5 text-gray-500" />
                   </button>
@@ -185,7 +186,10 @@ export function CookieConsent() {
                       </div>
                       <button
                         onClick={() => setPreferences({ ...preferences, analytics: !preferences.analytics })}
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 inline-flex items-center justify-center min-h-11 min-w-11"
+                        role="switch"
+                        aria-checked={preferences.analytics}
+                        aria-label="Analytics cookies"
                       >
                         <div className={`w-12 h-6 rounded-full relative transition-colors duration-200 ${
                           preferences.analytics ? 'bg-[#007969]' : 'bg-gray-300'
@@ -211,7 +215,10 @@ export function CookieConsent() {
                       </div>
                       <button
                         onClick={() => setPreferences({ ...preferences, marketing: !preferences.marketing })}
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 inline-flex items-center justify-center min-h-11 min-w-11"
+                        role="switch"
+                        aria-checked={preferences.marketing}
+                        aria-label="Marketing cookies"
                       >
                         <div className={`w-12 h-6 rounded-full relative transition-colors duration-200 ${
                           preferences.marketing ? 'bg-[#007969]' : 'bg-gray-300'

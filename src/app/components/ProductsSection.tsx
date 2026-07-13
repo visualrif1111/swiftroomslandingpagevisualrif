@@ -341,7 +341,7 @@ export function ProductsSection() {
       {/* CAD Floating Elements */}
       <ProductsCADElements />
       
-      <div className="container mx-auto px-3 sm:px-4 relative z-10 py-4 lg:py-0">
+      <div className="container mx-auto max-w-[1600px] px-3 sm:px-4 relative z-10 py-4 lg:py-0">
         {/* Section Header */}
         <motion.div
           className="text-center mb-6 lg:mb-16 px-2"
@@ -360,7 +360,7 @@ export function ProductsSection() {
         </motion.div>
 
         {/* Mobile: Horizontal Scroll */}
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <div
             ref={scrollContainerRef}
             className="flex overflow-x-auto scrollbar-hide pb-4"
@@ -413,7 +413,7 @@ export function ProductsSection() {
 
         {/* Desktop: React Slick Carousel */}
         <motion.div
-          className="hidden lg:block products-carousel relative pb-8 sm:pb-8"
+          className="hidden md:block products-carousel relative pb-8 sm:pb-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
