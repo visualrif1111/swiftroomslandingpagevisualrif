@@ -202,7 +202,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
 
                   {/* Subheadline — concise on mobile, fuller on desktop */}
                   <p className="lg:hidden font-['Barlow',sans-serif] text-[0.95rem] text-white/90 leading-relaxed max-w-md">
-                    Designed for UAE climates. Installed by specialists with over 3,500 completed projects.
+                    Designed for the UAE climate. Installed by our Swift Rooms team, with over 3,500 successful projects.
                   </p>
                   <p className="hidden lg:block font-['Barlow',sans-serif] text-lg text-white/90 leading-relaxed max-w-xl">
                     Premium aluminium windows, sliding doors &amp; glass rooms, designed for the UAE climate, manufactured locally, and installed by our Swift Rooms team, with over 3,500 successful projects across the UAE.
