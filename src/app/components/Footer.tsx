@@ -3,6 +3,7 @@ import { SwiftRoomsLogo } from './SwiftRoomsLogo';
 import { useState } from 'react';
 import { PrivacyModal } from './PrivacyModal';
 import { TermsModal } from './TermsModal';
+import { track } from '../utils/analytics';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -40,6 +41,7 @@ export function Footer() {
             <div className="space-y-2 lg:space-y-3">
               <a
                 href="tel:+97143474240"
+                onClick={() => track('phone_click', { ctaLabel: '04 347 4240', location: 'footer' })}
                 className="flex items-center gap-3 min-h-[44px] lg:min-h-0 text-gray-300 hover:text-[#007969] transition-colors group"
               >
                 <div className="w-8 h-8 bg-[#007969]/20 rounded-lg flex items-center justify-center group-hover:bg-[#007969]/30 transition-colors">
@@ -50,6 +52,7 @@ export function Footer() {
               
               <a
                 href="mailto:sales@swiftrooms.ae"
+                onClick={() => track('email_click', { ctaLabel: 'sales@swiftrooms.ae', location: 'footer' })}
                 className="flex items-center gap-3 min-h-[44px] lg:min-h-0 text-gray-300 hover:text-[#007969] transition-colors group"
               >
                 <div className="w-8 h-8 bg-[#007969]/20 rounded-lg flex items-center justify-center group-hover:bg-[#007969]/30 transition-colors">
@@ -110,7 +113,11 @@ export function Footer() {
                   FAQs
                 </button>
                 <button
-                  onClick={() => scrollToSection('contact-form')}
+                  onClick={() => {
+                    track('cta_click', { ctaLabel: 'Get Quote', location: 'footer', leadType: 'quote' });
+                    scrollToSection('contact-form');
+                    setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 500);
+                  }}
                   className="font-body text-sm text-gray-300 hover:text-[#007969] hover:bg-[#007969]/10 flex items-center min-h-[44px] px-3 py-2 rounded transition-all duration-200 text-left lg:block lg:min-h-0 lg:px-2 lg:py-1"
                 >
                   Get Quote

@@ -4,6 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import svgPaths from '../../imports/svg-xtdnlxzlx3';
 import { HeroCADElements } from './CADFloatingElements';
 import { CTADecoration } from './InteractiveDecorations';
+import { track } from '../utils/analytics';
 
 // Lazy load heavy form components to reduce initial bundle
 const LeadForm = lazy(() => import('./LeadForm').then(m => ({ default: m.LeadForm })));
@@ -78,6 +79,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
   }, []);
 
   const handleMobileCTA = () => {
+    track('cta_click', { ctaLabel: 'Get Free Quote', location: 'hero', leadType: 'quote' });
     // On mobile, show the form in place
     if (window.innerWidth < 1024) {
       setShowMobileForm(true);
@@ -296,6 +298,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                       href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => track('whatsapp_click', { ctaLabel: 'WhatsApp Expert', location: 'hero', leadType: 'whatsapp', detail: 'whatsapp' })}
                       className="btn-whatsapp w-full shadow-lg"
                     >
                       <MessageCircle className="w-5 h-5" />
@@ -307,6 +310,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                       href="https://maps.google.com/?q=ETJAR+J1+Complex+Block+A+Warehouse+11-12+Jebel+Ali+Industrial+Area+1+Dubai"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => track('cta_click', { ctaLabel: 'Visit Showroom', location: 'hero', leadType: 'showroom', detail: 'maps' })}
                       className="flex items-center justify-center w-full min-h-[44px] text-center text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm active:opacity-80 transition-opacity"
                     >
                       Visit Showroom
@@ -319,6 +323,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                       href="https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa."
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => track('whatsapp_click', { ctaLabel: 'WhatsApp Expert', location: 'hero', leadType: 'whatsapp', detail: 'whatsapp' })}
                       className="btn-whatsapp shadow-lg"
                     >
                       <MessageCircle className="w-5 h-5" />
@@ -328,6 +333,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                       href="https://maps.google.com/?q=ETJAR+J1+Complex+Block+A+Warehouse+11-12+Jebel+Ali+Industrial+Area+1+Dubai"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => track('cta_click', { ctaLabel: 'Visit Showroom', location: 'hero', leadType: 'showroom', detail: 'maps' })}
                       className="inline-flex items-center min-h-[44px] text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm hover:text-white transition-colors"
                     >
                       Visit Showroom

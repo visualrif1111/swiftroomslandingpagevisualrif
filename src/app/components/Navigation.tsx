@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FullLogo, LogoIcon, CompactLogo } from './NewLogo';
 import { motion, AnimatePresence } from 'motion/react';
 import { CTADecoration } from './InteractiveDecorations';
+import { track } from '../utils/analytics';
 
 // Brand teal used across the navigation
 const BRAND_TEAL = '#007969';
@@ -193,6 +194,7 @@ export function Navigation() {
       // hero and other entry points) so tapping "Get Free Quote" in the menu
       // expands the form instead of just scrolling near it.
       if (id === 'contact-form') {
+        track('cta_click', { ctaLabel: 'Get Free Quote', location: 'navigation', leadType: 'quote' });
         setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 400);
       }
     }, 150); // 150ms delay to let menu close animation start
@@ -463,7 +465,13 @@ export function Navigation() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.8 }}
                   >
-                    hello@swiftrooms.ae
+                    <a
+                      href="mailto:hello@swiftrooms.ae"
+                      onClick={() => track('email_click', { ctaLabel: 'hello@swiftrooms.ae', location: 'navigation-menu' })}
+                      className="hover:text-[#007969] transition-colors"
+                    >
+                      hello@swiftrooms.ae
+                    </a>
                   </motion.p>
 
                   {/* Phone */}
@@ -473,7 +481,13 @@ export function Navigation() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.9 }}
                   >
-                    050 526 9149
+                    <a
+                      href="tel:+971505269149"
+                      onClick={() => track('phone_click', { ctaLabel: '050 526 9149', location: 'navigation-menu' })}
+                      className="hover:text-[#007969] transition-colors"
+                    >
+                      050 526 9149
+                    </a>
                   </motion.p>
                 </motion.div>
               </div>

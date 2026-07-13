@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Slider from 'react-slick';
 import { ProductsCADElements } from './CADFloatingElements';
 import { CTADecoration } from './InteractiveDecorations';
+import { track } from '../utils/analytics';
 import imgImageAluminumSlidingDoors from "figma:asset/d6422ad60ba0d7acbef896831a31188dca8bc66a.png";
 import imgImageUpvcWindowsAndDoors from "figma:asset/d76e6c1b22e3f7ed8fc8e68c24b7ccfae1eb3155.png";
 import imgImageBiFoldDoors from "figma:asset/a873a74894e42cdff9ecd2c1fb02a14d38a18687.png";
@@ -191,9 +192,11 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
+                  track('cta_click', { ctaLabel: 'Get A Quote', location: 'products', leadType: 'product' });
                   const formSection = document.getElementById('contact-form');
                   if (formSection) {
                     formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    setTimeout(() => window.dispatchEvent(new Event('openLeadForm')), 500);
                   }
                 }}
                 whileHover={{ scale: 1.05 }}

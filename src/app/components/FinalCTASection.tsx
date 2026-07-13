@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight, MessageCircle, MapPin, Star, CalendarCheck, Ruler, FileText, BookOpen } from 'lucide-react';
+import { track } from '../utils/analytics';
 
 const WHATSAPP_HREF =
   'https://wa.me/971505269149?text=Hi%20Swiftrooms%2C%20I%27d%20like%20to%20speak%20with%20an%20expert%20about%20windows%2C%20doors%20or%20a%20glass%20room%20for%20my%20villa.';
@@ -19,6 +20,7 @@ const leadMagnets = [
 ];
 
 function openQuoteForm() {
+  track('cta_click', { ctaLabel: 'Get Free Quote', location: 'final-cta', leadType: 'quote' });
   const formSection = document.getElementById('contact-form');
   if (formSection) {
     formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -97,6 +99,7 @@ export function FinalCTASection() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track('whatsapp_click', { ctaLabel: 'WhatsApp Expert', location: 'final-cta', leadType: 'whatsapp', detail: 'whatsapp' })}
               className="btn-whatsapp w-full sm:w-auto shadow-lg"
             >
               <MessageCircle className="w-5 h-5" />
@@ -109,6 +112,7 @@ export function FinalCTASection() {
             href={SHOWROOM_MAPS_HREF}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track('cta_click', { ctaLabel: 'Visit our Dubai showroom', location: 'final-cta', leadType: 'showroom', detail: 'maps' })}
             className="inline-flex items-center justify-center gap-1.5 mt-4 text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm hover:text-white transition-colors"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -139,6 +143,7 @@ export function FinalCTASection() {
                     href={magnet.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track('lead_magnet_request', { ctaLabel: magnet.label, location: 'final-cta', leadType: 'lead-magnet', detail: 'whatsapp' })}
                     className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-3 py-2.5 text-left transition-colors duration-200"
                   >
                     <Icon className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0 text-[#FFC857]" />
