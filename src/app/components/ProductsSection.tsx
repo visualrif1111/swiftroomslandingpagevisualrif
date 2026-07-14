@@ -331,7 +331,7 @@ export function ProductsSection() {
   return (
     <section
       id="products"
-      className="relative bg-gray-50 min-h-screen overflow-hidden lg:snap-center flex items-center"
+      className="relative bg-gray-50 min-h-screen overflow-hidden lg:snap-center flex items-center lg:pt-32 lg:pb-12"
       style={{
         contain: 'layout style',
         contentVisibility: 'auto',

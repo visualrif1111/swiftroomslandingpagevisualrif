@@ -71,7 +71,7 @@ export function FAQSection() {
   };
 
   return (
-    <section id="faqs" className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-hidden lg:snap-center flex items-start pt-20 pb-14 lg:items-center lg:pt-0 lg:pb-0">
+    <section id="faqs" className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-hidden lg:snap-center flex items-start pt-20 pb-14 lg:items-center lg:pt-32 lg:pb-12">
       {/* FAQ structured data for SEO rich results */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
