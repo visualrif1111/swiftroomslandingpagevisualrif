@@ -515,6 +515,185 @@ html, body { overflow-x: clip; }
   html { scroll-behavior: smooth; }
 }
 
+/* ==========================================================================
+   EDITORIAL LAYER — "Brevan Howard" heavy-redesign design system
+   --------------------------------------------------------------------------
+   A muted, minimal, institutional visual language layered on top of the
+   existing brand. Monochrome-first (near-black ink on warm paper), with the
+   Swift Rooms teal retained only as a sparing accent (index numbers, rules,
+   one primary CTA). Introduces the reference motifs: numbered sections,
+   hexagon icons, dot-grid texture, hairline rules, and restrained motion.
+   Everything is opt-in via `.bh-*` classes so rollout is section-by-section
+   and fully reversible.
+   ========================================================================== */
+:root {
+  /* Ink & paper — monochrome core */
+  --bh-ink:        #0b0b0c;   /* near-black, primary text            */
+  --bh-ink-soft:   #3d3d42;   /* secondary text                     */
+  --bh-muted:      #6f6f76;   /* tertiary / captions                */
+  --bh-faint:      #9a9aa1;   /* disabled / meta                    */
+  --bh-paper:      #f5f4f0;   /* warm off-white page background      */
+  --bh-paper-2:    #ebe9e3;   /* alt surface / cards                */
+  --bh-line:       #dcdad3;   /* hairline rules on paper            */
+  --bh-white:      #ffffff;
+  /* Dark surfaces (for inverted sections) */
+  --bh-noir:       #0e0e11;   /* dark section background            */
+  --bh-noir-2:     #16161a;   /* dark card / raised                 */
+  --bh-line-dk:    #2a2a30;   /* hairline rules on dark             */
+  --bh-on-noir:    #eceae4;   /* text on dark                       */
+  --bh-on-noir-sf: #a8a8ad;   /* secondary text on dark             */
+  /* Accent — teal, used sparingly */
+  --bh-accent:     #007969;
+  --bh-accent-dk:  #005a50;
+  /* Motion — calm, editorial easing */
+  --bh-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+  --bh-dur:        0.8s;
+}
+
+/* Editorial type scale — large, light, tightly-tracked headings.
+   Uses the already-loaded Exo (display) + Barlow (body); no new webfonts. */
+.bh-display {
+  font-family: 'Exo', sans-serif;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--bh-ink);
+}
+.bh-h2 {
+  font-family: 'Exo', sans-serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--bh-ink);
+}
+.bh-h3 {
+  font-family: 'Exo', sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--bh-ink);
+}
+.bh-lead {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.4vw, 1.375rem);
+  line-height: 1.6;
+  color: var(--bh-ink-soft);
+}
+.bh-body {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--bh-ink-soft);
+}
+
+/* Eyebrow + numbered-section marker (the "01 — LABEL" motif). */
+.bh-eyebrow {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bh-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.bh-index {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--bh-accent);
+}
+.bh-index::after {
+  content: '';
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  margin-left: 0.75rem;
+  vertical-align: middle;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+/* Hairline rules — the thin full-width dividers between editorial blocks. */
+.bh-rule   { height: 1px; width: 100%; background: var(--bh-line); border: 0; }
+.bh-rule-dk{ height: 1px; width: 100%; background: var(--bh-line-dk); border: 0; }
+
+/* Hexagon icon frame (core-competency motif). */
+.bh-hex {
+  --hex-size: 3.5rem;
+  width: var(--hex-size);
+  height: var(--hex-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  background: var(--bh-paper-2);
+  color: var(--bh-accent);
+}
+.bh-hex-outline {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--bh-line);
+}
+
+/* Dot-grid / dot-map texture (subtle background, references the reference). */
+.bh-dotgrid {
+  background-image: radial-gradient(var(--bh-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.bh-dotgrid-dk {
+  background-image: radial-gradient(var(--bh-line-dk) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Minimal buttons — sharp, monochrome, hairline. Teal primary kept for the
+   single most important CTA; everything else is ink/paper. */
+.bh-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  padding: 0.95rem 1.9rem;
+  font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.8rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  border-radius: 0; cursor: pointer; border: 1px solid transparent;
+  transition: background var(--bh-dur) var(--bh-ease), color var(--bh-dur) var(--bh-ease), border-color var(--bh-dur) var(--bh-ease);
+}
+.bh-btn-primary { background: var(--bh-ink); color: var(--bh-white); }
+.bh-btn-primary:hover { background: var(--bh-accent); }
+.bh-btn-ghost { background: transparent; color: var(--bh-ink); border-color: var(--bh-line); }
+.bh-btn-ghost:hover { border-color: var(--bh-ink); }
+.bh-btn-on-noir { background: transparent; color: var(--bh-on-noir); border-color: var(--bh-line-dk); }
+.bh-btn-on-noir:hover { border-color: var(--bh-on-noir); }
+
+/* Muted meta chip — replaces the coloured trust pills with a minimal marker. */
+.bh-chip {
+  display: inline-flex; align-items: baseline; gap: 0.5rem;
+  font-family: 'Barlow', sans-serif; font-size: 0.8rem; color: var(--bh-muted);
+  letter-spacing: 0.02em;
+}
+.bh-chip strong {
+  font-family: 'Exo', sans-serif; font-weight: 600; font-size: 1rem; color: var(--bh-ink);
+}
+.bh-chip-on-noir { color: var(--bh-on-noir-sf); }
+.bh-chip-on-noir strong { color: var(--bh-on-noir); }
+
+/* Restrained reveal — calm fade+rise for editorial content. */
+@media (prefers-reduced-motion: no-preference) {
+  .bh-reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: bh-rise var(--bh-dur) var(--bh-ease) forwards;
+  }
+  @keyframes bh-rise {
+    to { opacity: 1; transform: none; }
+  }
+}
+
 /* Large-screen type upscaling — the design system is rem-based, so nudging the
    root font-size on 2K/4K scales the whole type ramp and rem spacing up with the
    viewport, preventing the "tiny island in a huge gutter" look. 1920 (Full HD)

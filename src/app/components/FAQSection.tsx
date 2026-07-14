@@ -71,7 +71,7 @@ export function FAQSection() {
   };
 
   return (
-    <section id="faqs" className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-hidden lg:snap-center flex items-start pt-20 pb-14 lg:items-center lg:pt-32 lg:pb-12">
+    <section id="faqs" className="relative min-h-screen bg-[#f5f4f0] overflow-hidden lg:snap-center flex items-start pt-20 pb-14 lg:items-center lg:pt-32 lg:pb-12">
       {/* FAQ structured data for SEO rich results */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
@@ -88,11 +88,15 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#007969] tabular-nums">13</span>
+              <span className="h-px w-10 bg-[#dcdad3]" />
+              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76]">Frequently Asked Questions</span>
+            </div>
+            <h2 className="font-['Exo',sans-serif] font-medium tracking-[-0.02em] sr-heading lg:text-4xl text-[#0b0b0c] mb-2 lg:mb-4">
               Frequently Asked Questions
             </h2>
-            <div className="divider-brand mx-auto mb-3 lg:mb-4" />
-            <p className="font-body text-sm lg:text-lg text-[#3a3a3c]">
+            <p className="font-body text-sm lg:text-lg text-[#3d3d42]">
               Find answers to common questions about our products and services
             </p>
           </motion.div>
@@ -109,13 +113,13 @@ export function FAQSection() {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className={`w-full bg-white rounded-xl border card-hover min-h-[44px] px-5 py-4 lg:px-6 lg:py-5 flex items-center justify-between gap-3 text-left transition-all duration-200 shadow-sm lg:shadow-none ${openIndex === index ? 'border-[#007969] shadow-md lg:shadow-none' : 'border-[#e5e7eb]'}`}
+                  className={`w-full bg-white rounded-md border min-h-[44px] px-5 py-4 lg:px-6 lg:py-5 flex items-center justify-between gap-3 text-left transition-all duration-200 shadow-sm ${openIndex === index ? 'border-[#0b0b0c]' : 'border-[#dcdad3] hover:border-[#6f6f76]'}`}
                 >
-                  <span className={`font-body font-medium text-base sm:text-lg leading-7 tracking-tight transition-colors ${openIndex === index ? 'text-[#007969] lg:text-[#1c1c1e]' : 'text-[#1c1c1e]'}`}>
+                  <span className="font-['Exo',sans-serif] font-medium text-base sm:text-lg leading-7 tracking-[-0.02em] text-[#0b0b0c]">
                     {faq.question}
                   </span>
                   <motion.div
-                    className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 lg:w-5 lg:h-5 lg:rounded-none lg:bg-transparent lg:text-[#007969] ${openIndex === index ? 'bg-[#007969] text-white' : 'bg-[#e6f4f1] text-[#007969]'}`}
+                    className={`flex-shrink-0 flex items-center justify-center w-6 h-6 transition-colors duration-200 ${openIndex === index ? 'text-[#007969]' : 'text-[#6f6f76]'}`}
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -132,8 +136,8 @@ export function FAQSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="bg-white rounded-b-xl px-5 lg:px-6 pb-5 pt-3 lg:pt-2 -mt-2">
-                        <p className="font-body text-[#3a3a3c] text-[15px] sm:text-base leading-7">
+                      <div className="bg-white rounded-b-md border-x border-b border-[#dcdad3] px-5 lg:px-6 pb-5 pt-3 lg:pt-2 -mt-2">
+                        <p className="font-body text-[#3d3d42] text-[15px] sm:text-base leading-7">
                           {faq.answer}
                         </p>
                       </div>
@@ -152,12 +156,12 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            <p className="font-body text-lg text-[#3a3a3c] leading-7 tracking-tight mb-6">
+            <p className="font-body text-lg text-[#3d3d42] leading-7 tracking-tight mb-6">
               Still have questions?
             </p>
             <button
               onClick={scrollToForm}
-              className="btn-brand text-lg"
+              className="bh-btn bh-btn-primary"
             >
               Get Free Consultation
             </button>

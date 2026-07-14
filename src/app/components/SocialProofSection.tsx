@@ -218,7 +218,7 @@ export function SocialProofSection() {
   }, [isMobile, totalReels]);
 
   return (
-    <section id="social" className="relative bg-white min-h-screen overflow-hidden lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
+    <section id="social" className="relative bg-[#f5f4f0] min-h-screen overflow-hidden lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
       {/* Animated Background Ornaments - Only on Desktop */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {!isMobile && (
@@ -234,16 +234,21 @@ export function SocialProofSection() {
         {/* Header */}
         {isMobile ? (
           <div className="relative text-center mb-4 z-40">
-            <h2 className="font-heading text-base font-medium text-[#1c1c1e] mb-1 relative z-40">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#007969] tabular-nums">08</span>
+              <span className="h-px w-10 bg-[#dcdad3]" />
+              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76]">Portfolio</span>
+            </div>
+            <h2 className="font-['Exo',sans-serif] text-base font-medium tracking-[-0.02em] text-[#0b0b0c] mb-1 relative z-40">
               Our Portfolio
             </h2>
-            <p className="font-body text-xs text-[#3a3a3c] mb-2 relative z-40">
+            <p className="font-body text-xs text-[#6f6f76] mb-2 relative z-40">
               Watch our latest installations
             </p>
-            <div className="inline-flex items-center gap-1.5 font-body text-[#007969] cursor-default relative z-40">
-              <Instagram className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 font-body text-[#3d3d42] cursor-default relative z-40">
+              <Instagram className="w-3.5 h-3.5 text-[#007969]" />
               <span className="font-medium text-xs">@swiftrooms.ae</span>
-              <span className="text-[10px]">• Follow for more</span>
+              <span className="text-[10px] text-[#6f6f76]">• Follow for more</span>
             </div>
           </div>
         ) : (
@@ -254,16 +259,21 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-2 relative z-40">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#007969] tabular-nums">08</span>
+              <span className="h-px w-10 bg-[#dcdad3]" />
+              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76]">Portfolio</span>
+            </div>
+            <h2 className="font-['Exo',sans-serif] sr-heading font-medium lg:text-4xl tracking-[-0.02em] text-[#0b0b0c] mb-2 lg:mb-2 relative z-40">
               Our Portfolio
             </h2>
-            <p className="font-body text-xs lg:text-base text-[#3a3a3c] mb-2 lg:mb-3 relative z-40">
+            <p className="font-body text-xs lg:text-base text-[#6f6f76] mb-2 lg:mb-3 relative z-40">
               Watch our latest installations
             </p>
-            <div className="inline-flex items-center gap-1.5 font-body text-[#007969] cursor-default relative z-40">
-              <Instagram className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+            <div className="inline-flex items-center gap-1.5 font-body text-[#3d3d42] cursor-default relative z-40">
+              <Instagram className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#007969]" />
               <span className="font-medium text-xs lg:text-sm">@swiftrooms.ae</span>
-              <span className="text-[10px] lg:text-xs">• Follow for more</span>
+              <span className="text-[10px] lg:text-xs text-[#6f6f76]">• Follow for more</span>
             </div>
           </motion.div>
         )}
@@ -322,10 +332,10 @@ export function SocialProofSection() {
                     aria-label={`Go to video ${index + 1}`}
                   >
                     <span
-                      className={`block rounded-full transition-all duration-300 ${
+                      className={`block transition-all duration-300 ${
                         activeReel === index
-                          ? 'bg-[#007969] w-8 h-2'
-                          : 'bg-gray-300 hover:bg-[#007969]/50 w-2 h-2'
+                          ? 'bg-[#0b0b0c] w-8 h-1'
+                          : 'bg-[#dcdad3] hover:bg-[#6f6f76] w-2 h-1'
                       }`}
                     />
                   </button>
@@ -361,16 +371,16 @@ export function SocialProofSection() {
                   <button
                     key={index}
                     onClick={() => scrollToSlide(index)}
-                    className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg border-2 transition-all duration-300 ${
+                    className={`w-8 h-8 lg:w-10 lg:h-10 rounded-none border transition-all duration-300 ${
                       activeReel === index
-                        ? 'border-[#007969] bg-[#007969]/10 scale-110'
-                        : 'border-gray-300 hover:border-[#007969] hover:bg-[#007969]/5'
+                        ? 'border-[#0b0b0c] bg-white'
+                        : 'border-[#dcdad3] hover:border-[#6f6f76] bg-white'
                     }`}
                     aria-label={`View reel ${index + 1}`}
                   >
                     <div className="flex items-center justify-center">
-                      <div className={`w-4 h-4 lg:w-5 lg:h-5 rounded flex items-center justify-center ${
-                        activeReel === index ? 'bg-[#007969]' : 'bg-gray-400'
+                      <div className={`w-4 h-4 lg:w-5 lg:h-5 rounded-none flex items-center justify-center ${
+                        activeReel === index ? 'bg-[#0b0b0c]' : 'bg-[#dcdad3]'
                       }`}>
                         <svg className="w-2 h-2 lg:w-2.5 lg:h-2.5 text-white" fill="currentColor" viewBox="0 0 16 16">
                           <path d="M3 2v12l10-6L3 2z"/>
@@ -389,7 +399,7 @@ export function SocialProofSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
               >
-                <div className="inline-flex items-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-full font-body text-xs lg:text-sm font-medium shadow-lg cursor-default">
+                <div className="inline-flex items-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 bg-[#0b0b0c] text-white rounded-none font-body text-xs lg:text-sm font-medium shadow-sm cursor-default">
                   <Instagram className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
                   Watch All Reels
                 </div>
@@ -398,7 +408,7 @@ export function SocialProofSection() {
 
             {/* Mobile: View More Button */}
             <div className="lg:hidden text-center mt-4">
-              <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-full font-body text-xs font-medium shadow-lg cursor-default">
+              <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#0b0b0c] text-white rounded-none font-body text-xs font-medium shadow-sm cursor-default">
                 <Instagram className="w-3.5 h-3.5" />
                 Watch All Reels
               </div>
@@ -410,11 +420,11 @@ export function SocialProofSection() {
             <div className="relative space-y-6">
               {/* Heading */}
               <div className="relative">
-                <div className="divider-brand mb-3" />
-                <h3 className="font-heading text-xl font-semibold text-[#1c1c1e] mb-2 tracking-tight">
+                <div className="h-px w-full bg-[#dcdad3] mb-3" />
+                <h3 className="font-['Exo',sans-serif] text-xl font-medium tracking-[-0.02em] text-[#0b0b0c] mb-2">
                   Real Projects, Real Results
                 </h3>
-                <p className="font-body text-sm text-[#3a3a3c] leading-relaxed">
+                <p className="font-body text-sm text-[#6f6f76] leading-relaxed">
                   Transforming homes across Dubai's most prestigious communities.
                 </p>
               </div>
@@ -424,12 +434,12 @@ export function SocialProofSection() {
                 {stats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="relative bg-white px-4 py-5 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
+                    className="relative bg-white px-4 py-5 rounded-sm border border-[#dcdad3] shadow-sm flex flex-col items-center justify-center text-center"
                   >
-                    <div className="font-heading font-bold text-3xl sm:text-4xl text-[#007969] leading-none mb-1.5 break-words max-w-full">
+                    <div className="font-['Exo',sans-serif] font-semibold text-3xl sm:text-4xl text-[#0b0b0c] leading-none mb-1.5 break-words max-w-full">
                       {stat.value}
                     </div>
-                    <div className="font-body text-xs text-[#6b7280] leading-snug">
+                    <div className="font-['Rajdhani',sans-serif] text-[11px] text-[#6f6f76] uppercase tracking-[0.14em] leading-snug">
                       {stat.label}
                     </div>
                   </div>
@@ -438,17 +448,17 @@ export function SocialProofSection() {
 
               {/* Featured Communities */}
               <div className="relative">
-                <h4 className="text-label text-[#6b7280] mb-3">
+                <h4 className="font-['Rajdhani',sans-serif] text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6f6f76] mb-3">
                   Featured Communities
                 </h4>
                 <div className="relative grid grid-cols-2 gap-2.5">
                   {communities.flat().map((community) => (
                     <div
                       key={community}
-                      className="relative flex items-center gap-2 bg-white px-3 py-2.5 rounded-lg border border-[#e5e7eb]"
+                      className="relative flex items-center gap-2 bg-white px-3 py-2.5 rounded-sm border border-[#dcdad3]"
                     >
                       <span className="text-[#007969] font-body text-sm leading-none">✓</span>
-                      <span className="font-body text-xs text-[#3a3a3c] leading-tight">
+                      <span className="font-body text-xs text-[#3d3d42] leading-tight">
                         {community}
                       </span>
                     </div>
@@ -466,10 +476,10 @@ export function SocialProofSection() {
             >
               {/* Heading */}
               <div className="relative">
-                <h3 className="font-heading text-lg lg:text-2xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
+                <h3 className="font-['Exo',sans-serif] text-lg lg:text-2xl font-medium tracking-[-0.02em] text-[#0b0b0c] mb-2 lg:mb-3">
                   Real Projects, Real Results
                 </h3>
-                <p className="font-body text-xs lg:text-sm text-[#3a3a3c] leading-relaxed">
+                <p className="font-body text-xs lg:text-sm text-[#6f6f76] leading-relaxed">
                   Transforming homes across Dubai's most prestigious communities.
                 </p>
               </div>
@@ -479,17 +489,17 @@ export function SocialProofSection() {
                 {stats.map((stat, index) => (
                   <motion.div
                     key={stat.label}
-                    className="relative bg-white p-3 lg:p-4 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
+                    className="relative bg-white p-3 lg:p-4 rounded-sm border border-[#dcdad3] shadow-sm flex flex-col items-center justify-center text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                     whileHover={{ y: -2, transition: { duration: 0.2 } }}
                   >
-                    <div className="font-heading font-bold text-2xl lg:text-3xl text-[#007969] leading-tight mb-1">
+                    <div className="font-['Exo',sans-serif] font-semibold text-2xl lg:text-3xl text-[#0b0b0c] leading-tight mb-1">
                       {stat.value}
                     </div>
-                    <div className="font-body text-xs lg:text-sm text-[#3a3a3c]">
+                    <div className="font-['Rajdhani',sans-serif] text-[11px] lg:text-xs text-[#6f6f76] uppercase tracking-[0.14em]">
                       {stat.label}
                     </div>
                   </motion.div>
@@ -498,7 +508,7 @@ export function SocialProofSection() {
 
               {/* Featured Communities */}
               <div className="relative">
-                <h4 className="font-heading text-sm lg:text-lg font-medium text-[#1c1c1e] mb-2 lg:mb-3">
+                <h4 className="font-['Rajdhani',sans-serif] text-[11px] lg:text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76] mb-2 lg:mb-3">
                   Featured Communities
                 </h4>
                 <div className="relative space-y-2">
@@ -514,7 +524,7 @@ export function SocialProofSection() {
                           transition={{ duration: 0.5, delay: 1 + rowIndex * 0.1 + colIndex * 0.05 }}
                         >
                           <span className="text-[#007969] font-body text-xs">✓</span>
-                          <span className="font-body text-xs lg:text-sm text-[#3a3a3c]">
+                          <span className="font-body text-xs lg:text-sm text-[#3d3d42]">
                             {community}
                           </span>
                         </motion.div>

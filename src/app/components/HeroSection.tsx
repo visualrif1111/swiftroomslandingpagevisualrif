@@ -107,7 +107,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
       {/* Base brand backdrop — always rendered as the first layer so the hero
           always has a proper background: on mobile (no mobile video is passed)
           and behind the desktop video/overlay. Prevents white-on-nothing text. */}
-      <div className="absolute inset-0 bg-[#007969]" />
+      <div className="absolute inset-0 bg-[#0e0e11]" />
 
       {/* Desktop Video Background — mounted only once the hero is in view */}
       {enableVideo && videoInView && videoUrl && (
@@ -127,8 +127,10 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
             frameBorder="0"
             loading="lazy"
           />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
+          {/* Gradient Overlay — editorial monochrome ink, denser on the left
+              where the headline sits, letting the footage breathe on the right. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0b0b0c]/88 via-[#0b0b0c]/62 to-[#0b0b0c]/35 pointer-events-none" />
+          <div className="absolute inset-0 bg-[#0b0b0c]/25 pointer-events-none" />
         </div>
       )}
 
@@ -152,8 +154,8 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
             frameBorder="0"
             loading="lazy"
           />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-[#007969]/60 pointer-events-none" />
+          {/* Gradient Overlay — editorial monochrome ink (mobile) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0b0b0c]/70 via-[#0b0b0c]/55 to-[#0b0b0c]/80 pointer-events-none" />
         </div>
       )}
 
@@ -182,15 +184,18 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.05 }}
                   >
-                    <span className="h-px w-6 lg:w-8 bg-white/50" />
-                    <span className="font-['Rajdhani',sans-serif] text-[10px] lg:text-sm font-semibold uppercase tracking-[0.18em] text-white/85">
+                    <span className="font-['Rajdhani',sans-serif] text-[10px] lg:text-xs font-semibold tracking-[0.1em] text-[#3ea99a] tabular-nums">
+                      01
+                    </span>
+                    <span className="h-px w-8 lg:w-10 bg-white/30" />
+                    <span className="font-['Rajdhani',sans-serif] text-[10px] lg:text-sm font-semibold uppercase tracking-[0.22em] text-white/70">
                       Dubai · Abu Dhabi · UAE
                     </span>
                   </motion.div>
 
                   {/* Main Heading — oversized Exo display for maximum impact */}
                   <motion.h1
-                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[1.0] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.5rem] xl:text-[2.85rem]"
+                    className="font-['Exo',sans-serif] font-medium text-white leading-[1.04] lg:leading-[0.98] tracking-[-0.03em] text-[2.15rem] sm:text-4xl lg:text-[2.75rem] xl:text-[3.15rem]"
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
@@ -206,15 +211,21 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
                     Premium aluminium windows, sliding doors &amp; glass rooms, designed for the UAE climate, manufactured locally, and installed by our Swift Rooms team, with over 3,500 successful projects across the UAE.
                   </p>
 
-                  {/* Above-fold trust strip — hard credibility numbers */}
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 pt-1.5 lg:pt-2.5">
-                    {['14+ Years', '3,400+ Customers', '3,500+ Projects', '4.4★ Google'].map((stat) => (
-                      <span
-                        key={stat}
-                        className="inline-flex items-center font-['Barlow',sans-serif] text-[11px] lg:text-xs font-semibold text-white/90 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 lg:px-2.5 lg:py-1"
-                      >
-                        {stat}
-                      </span>
+                  {/* Above-fold trust strip — editorial stat row, hairline-divided */}
+                  <div className="flex flex-wrap items-center gap-x-4 lg:gap-x-6 gap-y-2 pt-2 lg:pt-3">
+                    {[
+                      { v: '14+', l: 'Years' },
+                      { v: '3,400+', l: 'Customers' },
+                      { v: '3,500+', l: 'Projects' },
+                      { v: '4.4★', l: 'Google' },
+                    ].map((s, i) => (
+                      <div key={s.l} className="flex items-center gap-x-4 lg:gap-x-6">
+                        {i > 0 && <span className="hidden sm:block h-5 w-px bg-white/15" />}
+                        <span className="flex items-baseline gap-1.5">
+                          <span className="font-['Exo',sans-serif] font-semibold text-white text-[15px] lg:text-lg leading-none tracking-tight">{s.v}</span>
+                          <span className="font-['Rajdhani',sans-serif] text-[10px] lg:text-xs text-white/55 uppercase tracking-[0.14em]">{s.l}</span>
+                        </span>
+                      </div>
                     ))}
                   </div>
 

@@ -517,7 +517,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   autoComplete="name"
-                  className="w-full px-4 py-3.5 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
+                  className="w-full px-4 py-3.5 text-base text-[#1c1c1e] border border-[#dcdad3] rounded-md focus:ring-1 focus:ring-[#0b0b0c] focus:border-[#0b0b0c] outline-none transition-all font-body placeholder:text-[#6b7280]"
                   placeholder="Enter your full name"
                   autoFocus
                 />
@@ -528,7 +528,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   <select
                     value={selectedCountryCode}
                     onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
-                    className="px-2 py-3.5 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-base text-[#1c1c1e] cursor-pointer max-w-[92px]"
+                    className="px-2 py-3.5 bg-white border border-[#dcdad3] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0b0b0c] focus:border-[#0b0b0c] transition-all font-body text-base text-[#1c1c1e] cursor-pointer max-w-[92px]"
                     aria-label="Country code"
                   >
                     {countryCodes.map((c) => (
@@ -550,7 +550,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                       setIsFocused(false);
                       if (formData.phone) setPhoneError(validatePhone(formData.phone, selectedCountryCode).error);
                     }}
-                    className={`flex-1 min-w-0 px-4 py-3.5 text-base text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${phoneError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'}`}
+                    className={`flex-1 min-w-0 px-4 py-3.5 text-base text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#0b0b0c] outline-none transition-all font-body placeholder:text-[#6b7280] ${phoneError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#dcdad3] focus:border-[#0b0b0c]'}`}
                     placeholder="Phone number"
                   />
                 </div>
@@ -576,7 +576,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setEmailError(''); }}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => { setIsFocused(false); setEmailError(validateEmail(formData.email).error); }}
-                className={`w-full px-4 py-3.5 text-base text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] ${emailError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'}`}
+                className={`w-full px-4 py-3.5 text-base text-[#1c1c1e] border rounded-md focus:ring-1 focus:ring-[#0b0b0c] outline-none transition-all font-body placeholder:text-[#6b7280] ${emailError ? 'border-[#e40014] focus:border-[#e40014]' : 'border-[#dcdad3] focus:border-[#0b0b0c]'}`}
                 placeholder="your@email.com"
               />
               {emailError && (
@@ -592,7 +592,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               <div className="flex items-center justify-between">
                 <label className="font-body text-sm font-medium text-[#1c1c1e]">What are you interested in?</label>
                 {formData.productsNeeded.length > 0 && (
-                  <span className="font-body text-xs text-[#007969] font-medium">{formData.productsNeeded.length} selected</span>
+                  <span className="font-body text-xs text-[#0b0b0c] font-medium">{formData.productsNeeded.length} selected</span>
                 )}
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3">
@@ -608,15 +608,15 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                           ? formData.productsNeeded.filter((p) => p !== product.value)
                           : [...formData.productsNeeded, product.value],
                       })}
-                      className={`relative p-2.5 lg:p-3.5 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${isSelected ? 'border-[#007969] bg-[#007969]/5' : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white'}`}
+                      className={`relative p-2.5 lg:p-3.5 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${isSelected ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04]' : 'border-[#dcdad3] hover:border-[#0b0b0c]/40 bg-white'}`}
                     >
                       {isSelected && (
-                        <div className="absolute top-1 right-1 w-5 h-5 bg-[#007969] rounded-full flex items-center justify-center">
+                        <div className="absolute top-1 right-1 w-5 h-5 bg-[#0b0b0c] rounded-full flex items-center justify-center">
                           <Check className="w-3 h-3 text-white" strokeWidth={3} />
                         </div>
                       )}
-                      <div className="text-[#007969]">{product.icon}</div>
-                      <div className={`font-body text-xs lg:text-sm font-medium leading-tight ${isSelected ? 'text-[#007969]' : 'text-[#1c1c1e]'}`}>{product.label}</div>
+                      <div className="text-[#0b0b0c]">{product.icon}</div>
+                      <div className={`font-body text-xs lg:text-sm font-medium leading-tight ${isSelected ? 'text-[#0b0b0c]' : 'text-[#1c1c1e]'}`}>{product.label}</div>
                     </button>
                   );
                 })}
@@ -644,8 +644,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 {propertyTypes.map((type) => (
                   <button key={type.value} type="button"
                     onClick={() => setFormData({ ...formData, propertyType: formData.propertyType === type.value ? '' : type.value })}
-                    className={`p-3 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${formData.propertyType === type.value ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white text-[#1c1c1e]'}`}>
-                    <div className="text-[#007969]">{type.icon}</div>
+                    className={`p-3 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${formData.propertyType === type.value ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04] text-[#0b0b0c]' : 'border-[#dcdad3] hover:border-[#0b0b0c]/40 bg-white text-[#1c1c1e]'}`}>
+                    <div className="text-[#0b0b0c]">{type.icon}</div>
                     <div className="font-body text-xs lg:text-sm font-medium leading-tight">{type.label}</div>
                   </button>
                 ))}
@@ -659,8 +659,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 {projectTypes.map((type) => (
                   <button key={type.value} type="button"
                     onClick={() => setFormData({ ...formData, projectType: formData.projectType === type.value ? '' : type.value })}
-                    className={`p-3 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${formData.projectType === type.value ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] hover:border-[#007969]/40 bg-white text-[#1c1c1e]'}`}>
-                    <div className="text-[#007969]">{type.icon}</div>
+                    className={`p-3 rounded-[4px] border-2 transition-all text-center group flex flex-col items-center justify-center gap-1.5 active:scale-95 ${formData.projectType === type.value ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04] text-[#0b0b0c]' : 'border-[#dcdad3] hover:border-[#0b0b0c]/40 bg-white text-[#1c1c1e]'}`}>
+                    <div className="text-[#0b0b0c]">{type.icon}</div>
                     <div className="font-body text-xs lg:text-sm font-medium leading-tight">{type.label}</div>
                   </button>
                 ))}
@@ -674,14 +674,14 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 <input type="text" value={formData.siteLocation}
                   onChange={(e) => setFormData({ ...formData, siteLocation: e.target.value })}
                   onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
-                  className="w-full px-4 py-3.5 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280]"
+                  className="w-full px-4 py-3.5 text-base text-[#1c1c1e] border border-[#dcdad3] rounded-md focus:ring-1 focus:ring-[#0b0b0c] focus:border-[#0b0b0c] outline-none transition-all font-body placeholder:text-[#6b7280]"
                   placeholder="e.g. Dubai Hills, Dubai" />
               </div>
               <div className="space-y-1.5">
                 <label className="font-body text-sm font-medium text-[#1c1c1e]">Ideal timeline</label>
                 <select value={formData.timeline}
                   onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                  className={`w-full px-4 py-3.5 text-base border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body cursor-pointer bg-white ${formData.timeline ? 'text-[#1c1c1e]' : 'text-[#6b7280]'}`}>
+                  className={`w-full px-4 py-3.5 text-base border border-[#dcdad3] rounded-md focus:ring-1 focus:ring-[#0b0b0c] focus:border-[#0b0b0c] outline-none transition-all font-body cursor-pointer bg-white ${formData.timeline ? 'text-[#1c1c1e]' : 'text-[#6b7280]'}`}>
                   <option value="" disabled>Select a timeline</option>
                   {timelines.map((t) => (<option key={t.value} value={t.value}>{t.label}</option>))}
                 </select>
@@ -693,8 +693,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               <label className="font-body text-sm font-medium text-[#1c1c1e]">
                 Upload plans or photos <span className="text-[#6b7280] font-normal">(optional)</span>
               </label>
-              <label className="flex items-center gap-3 w-full px-4 py-3.5 border-2 border-dashed border-[#e5e7eb] rounded-md cursor-pointer hover:border-[#007969]/50 transition-colors">
-                <Upload className="w-5 h-5 text-[#007969] flex-shrink-0" />
+              <label className="flex items-center gap-3 w-full px-4 py-3.5 border-2 border-dashed border-[#dcdad3] rounded-md cursor-pointer hover:border-[#0b0b0c]/50 transition-colors">
+                <Upload className="w-5 h-5 text-[#0b0b0c] flex-shrink-0" />
                 <span className="font-body text-sm text-[#6b7280] truncate">
                   {files.length > 0 ? `${files.length} file${files.length !== 1 ? 's' : ''} selected` : 'Browse to attach (PDF, JPG, PNG)'}
                 </span>
@@ -708,9 +708,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               {files.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {files.map((f, i) => (
-                    <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
+                    <span key={i} className="inline-flex items-center gap-1 bg-[#f5f4f0] border border-[#dcdad3] rounded px-2 py-1 text-xs font-body text-[#0b0b0c] max-w-full">
                       <span className="truncate max-w-[140px]">{f.name}</span>
-                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#007969]/70 hover:text-[#007969]" aria-label="Remove file">
+                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#0b0b0c]/70 hover:text-[#0b0b0c]" aria-label="Remove file">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -728,7 +728,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
                 rows={3}
-                className="w-full px-4 py-3 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-md focus:ring-1 focus:ring-[#007969] focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#6b7280] resize-none"
+                className="w-full px-4 py-3 text-base text-[#1c1c1e] border border-[#dcdad3] rounded-md focus:ring-1 focus:ring-[#0b0b0c] focus:border-[#0b0b0c] outline-none transition-all font-body placeholder:text-[#6b7280] resize-none"
                 placeholder="Tell us anything that will help us prepare your quote…" />
             </div>
           </div>
@@ -745,7 +745,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             key="step-success"
             className="text-center py-12 space-y-6"
           >
-            <div className="w-20 h-20 lg:w-24 lg:h-24 bg-[#007969] rounded-full flex items-center justify-center mx-auto">
+            <div className="w-20 h-20 lg:w-24 lg:h-24 bg-[#0b0b0c] rounded-full flex items-center justify-center mx-auto">
               <Check className="w-10 h-10 lg:w-12 lg:h-12 text-white" strokeWidth={3} />
             </div>
 
@@ -761,8 +761,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               </p>
             </div>
 
-            <div className="bg-[#e6f4f1] border border-[#00796933] rounded-[4px] p-6 max-w-md mx-auto">
-              <div className="flex items-center justify-center gap-3 text-[#007969]">
+            <div className="bg-[#f5f4f0] border border-[#dcdad3] rounded-[4px] p-6 max-w-md mx-auto">
+              <div className="flex items-center justify-center gap-3 text-[#0b0b0c]">
                 <Check className="w-6 h-6 flex-shrink-0" strokeWidth={2.5} />
                 <p className="font-body text-base lg:text-lg font-medium">
                   We respond within 12 hours
@@ -771,7 +771,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             </div>
 
             {/* WhatsApp CTA Card - Minimized Version */}
-            <div className="bg-white border border-[#25D366]/30 rounded-[4px] p-4 lg:p-5 max-w-sm mx-auto shadow-[0_16px_40px_#0079691f] hover:shadow-xl transition-shadow">
+            <div className="bg-white border border-[#25D366]/30 rounded-[4px] p-4 lg:p-5 max-w-sm mx-auto shadow-[0_16px_40px_#0b0b0c1f] hover:shadow-xl transition-shadow">
               {/* Compact Header with Icon and Text - Center Aligned */}
               <div className="flex flex-col items-center text-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-[#25D366] rounded-full flex items-center justify-center flex-shrink-0">
@@ -860,7 +860,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   // Keep form open and return to the first step
                 }
               }}
-              className="text-[#007969] font-body text-sm lg:text-base font-medium hover:underline"
+              className="text-[#0b0b0c] font-body text-sm lg:text-base font-medium hover:underline"
             >
               {window.innerWidth < 1024 ? 'Return to Home' : 'Submit another request'}
             </button>
@@ -871,7 +871,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
   // Typeform-style single-question screen for mobile. `wrap` is a plain JSX
   // helper (not a component) so inputs keep focus across re-renders.
   const inputClass =
-    'w-full px-4 py-4 text-base text-[#1c1c1e] border border-[#e5e7eb] rounded-xl focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] outline-none transition-all font-body placeholder:text-[#9ca3af]';
+    'w-full px-4 py-4 text-base text-[#1c1c1e] border border-[#dcdad3] rounded-xl focus:ring-2 focus:ring-[#0b0b0c]/30 focus:border-[#0b0b0c] outline-none transition-all font-body placeholder:text-[#9ca3af]';
 
   const renderMobileStep = () => {
     const key = MOBILE_STEP_KEYS[currentStep];
@@ -879,7 +879,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
     const wrap = (title: string, hint: string, children: ReactNode) => (
       <div key={key} className="space-y-5">
         <div>
-          <span className="font-accent text-xs font-semibold uppercase tracking-[.14em] text-[#007969]">
+          <span className="font-accent text-xs font-semibold uppercase tracking-[.14em] text-[#0b0b0c]">
             Question {currentStep + 1}
           </span>
           <h3 className="font-heading text-[1.6rem] font-semibold text-[#1c1c1e] leading-[1.15] mt-1.5">
@@ -910,7 +910,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               <select
                 value={selectedCountryCode}
                 onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
-                className="px-2 py-4 bg-white border border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] font-body text-base text-[#1c1c1e] max-w-[96px]"
+                className="px-2 py-4 bg-white border border-[#dcdad3] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0b0b0c]/30 focus:border-[#0b0b0c] font-body text-base text-[#1c1c1e] max-w-[96px]"
                 aria-label="Country code"
               >
                 {countryCodes.map((c) => (<option key={c.code} value={c.code}>{c.flag} {c.code}</option>))}
@@ -919,7 +919,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 type="tel" inputMode="numeric" autoComplete="tel" autoFocus value={formData.phone}
                 onChange={(e) => { setFormData({ ...formData, phone: e.target.value.replace(/[^\d\s\-\(\)]/g, '') }); if (phoneError) setPhoneError(''); }}
                 onBlur={() => { if (formData.phone) setPhoneError(validatePhone(formData.phone, selectedCountryCode).error); }}
-                className={`flex-1 min-w-0 px-4 py-4 text-base text-[#1c1c1e] border rounded-xl focus:ring-2 focus:ring-[#007969]/30 outline-none font-body placeholder:text-[#9ca3af] ${phoneError ? 'border-[#e40014]' : 'border-[#e5e7eb] focus:border-[#007969]'}`}
+                className={`flex-1 min-w-0 px-4 py-4 text-base text-[#1c1c1e] border rounded-xl focus:ring-2 focus:ring-[#0b0b0c]/30 outline-none font-body placeholder:text-[#9ca3af] ${phoneError ? 'border-[#e40014]' : 'border-[#dcdad3] focus:border-[#0b0b0c]'}`}
                 placeholder="Phone number"
               />
             </div>
@@ -963,15 +963,15 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                       ? formData.productsNeeded.filter((p) => p !== product.value)
                       : [...formData.productsNeeded, product.value],
                   })}
-                  className={`relative p-4 rounded-xl border-2 transition-all text-center flex flex-col items-center justify-center gap-2 active:scale-95 min-h-[92px] ${isSelected ? 'border-[#007969] bg-[#007969]/5' : 'border-[#e5e7eb] bg-white'}`}
+                  className={`relative p-4 rounded-xl border-2 transition-all text-center flex flex-col items-center justify-center gap-2 active:scale-95 min-h-[92px] ${isSelected ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04]' : 'border-[#dcdad3] bg-white'}`}
                 >
                   {isSelected && (
-                    <div className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#007969] rounded-full flex items-center justify-center">
+                    <div className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#0b0b0c] rounded-full flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" strokeWidth={3} />
                     </div>
                   )}
-                  <div className="text-[#007969]">{product.icon}</div>
-                  <div className={`font-body text-[13px] font-medium leading-tight ${isSelected ? 'text-[#007969]' : 'text-[#1c1c1e]'}`}>{product.label}</div>
+                  <div className="text-[#0b0b0c]">{product.icon}</div>
+                  <div className={`font-body text-[13px] font-medium leading-tight ${isSelected ? 'text-[#0b0b0c]' : 'text-[#1c1c1e]'}`}>{product.label}</div>
                 </button>
               );
             })}
@@ -986,10 +986,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               return (
                 <button key={type.value} type="button"
                   onClick={() => setFormData({ ...formData, propertyType: isSel ? '' : type.value })}
-                  className={`${optionBtn} ${isSel ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] bg-white text-[#1c1c1e]'}`}>
-                  <span className="text-[#007969]">{type.icon}</span>
+                  className={`${optionBtn} ${isSel ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04] text-[#0b0b0c]' : 'border-[#dcdad3] bg-white text-[#1c1c1e]'}`}>
+                  <span className="text-[#0b0b0c]">{type.icon}</span>
                   <span className="font-medium text-[15px]">{type.label}</span>
-                  {isSel && <Check className="w-5 h-5 ml-auto text-[#007969]" strokeWidth={3} />}
+                  {isSel && <Check className="w-5 h-5 ml-auto text-[#0b0b0c]" strokeWidth={3} />}
                 </button>
               );
             })}
@@ -1004,10 +1004,10 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               return (
                 <button key={type.value} type="button"
                   onClick={() => setFormData({ ...formData, projectType: isSel ? '' : type.value })}
-                  className={`${optionBtn} ${isSel ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] bg-white text-[#1c1c1e]'}`}>
-                  <span className="text-[#007969]">{type.icon}</span>
+                  className={`${optionBtn} ${isSel ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04] text-[#0b0b0c]' : 'border-[#dcdad3] bg-white text-[#1c1c1e]'}`}>
+                  <span className="text-[#0b0b0c]">{type.icon}</span>
                   <span className="font-medium text-[15px]">{type.label}</span>
-                  {isSel && <Check className="w-5 h-5 ml-auto text-[#007969]" strokeWidth={3} />}
+                  {isSel && <Check className="w-5 h-5 ml-auto text-[#0b0b0c]" strokeWidth={3} />}
                 </button>
               );
             })}
@@ -1022,9 +1022,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               return (
                 <button key={t.value} type="button"
                   onClick={() => setFormData({ ...formData, timeline: isSel ? '' : t.value })}
-                  className={`${optionBtn} justify-between ${isSel ? 'border-[#007969] bg-[#007969]/5 text-[#007969]' : 'border-[#e5e7eb] bg-white text-[#1c1c1e]'}`}>
+                  className={`${optionBtn} justify-between ${isSel ? 'border-[#0b0b0c] bg-[#0b0b0c]/[0.04] text-[#0b0b0c]' : 'border-[#dcdad3] bg-white text-[#1c1c1e]'}`}>
                   <span className="font-medium text-[15px]">{t.label}</span>
-                  {isSel && <Check className="w-5 h-5 text-[#007969]" strokeWidth={3} />}
+                  {isSel && <Check className="w-5 h-5 text-[#0b0b0c]" strokeWidth={3} />}
                 </button>
               );
             })}
@@ -1049,8 +1049,8 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               className={`${inputClass} resize-none`}
               placeholder="Tell us anything that helps us prepare your quote…"
             />
-            <label className="flex items-center gap-3 w-full px-4 py-3.5 border-2 border-dashed border-[#e5e7eb] rounded-xl cursor-pointer active:border-[#007969]/50">
-              <Upload className="w-5 h-5 text-[#007969] flex-shrink-0" />
+            <label className="flex items-center gap-3 w-full px-4 py-3.5 border-2 border-dashed border-[#dcdad3] rounded-xl cursor-pointer active:border-[#0b0b0c]/50">
+              <Upload className="w-5 h-5 text-[#0b0b0c] flex-shrink-0" />
               <span className="font-body text-sm text-[#6b7280] truncate">
                 {files.length > 0 ? `${files.length} file${files.length !== 1 ? 's' : ''} selected` : 'Attach plans or photos (PDF, JPG, PNG)'}
               </span>
@@ -1063,9 +1063,9 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             {files.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
                 {files.map((f, i) => (
-                  <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
+                  <span key={i} className="inline-flex items-center gap-1 bg-[#f5f4f0] border border-[#dcdad3] rounded px-2 py-1 text-xs font-body text-[#0b0b0c] max-w-full">
                     <span className="truncate max-w-[140px]">{f.name}</span>
-                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#007969]/70" aria-label="Remove file">
+                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#0b0b0c]/70" aria-label="Remove file">
                       <X className="w-3 h-3" />
                     </button>
                   </span>
@@ -1091,7 +1091,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               setShowMenu(false);
               setIsFormOpen(true);
             }}
-            className={`group relative inline-flex items-center gap-3 px-8 py-4 lg:px-12 lg:py-5 rounded-[4px] font-accent uppercase tracking-[.12em] text-lg lg:text-2xl font-semibold shadow-2xl transition-all duration-300 overflow-hidden active:scale-95 ${ctaVariant === 'white' ? 'bg-white text-[#007969] hover:bg-[#007969] hover:text-white' : 'bg-[#007969] text-white hover:bg-white hover:text-[#007969]'}`}
+            className={`group relative inline-flex items-center gap-3 px-8 py-4 lg:px-12 lg:py-5 rounded-[4px] font-accent uppercase tracking-[.12em] text-lg lg:text-2xl font-semibold shadow-2xl transition-all duration-300 overflow-hidden active:scale-95 ${ctaVariant === 'white' ? 'bg-white text-[#0b0b0c] hover:bg-[#0b0b0c] hover:text-white' : 'bg-[#0b0b0c] text-white hover:bg-[#007969] hover:text-white'}`}
           >
             {/* Button content */}
             <span className="relative z-10">Get Free Quote</span>
@@ -1102,15 +1102,15 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               teal hero (ctaVariant='white'), dark text on light sections. */}
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm font-body ${ctaVariant === 'white' ? 'text-white' : 'text-[#3a3a3c]'}`}>
             <div className="flex items-center gap-2">
-              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#007969]'}`} />
+              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#0b0b0c]'}`} />
               <span>Free Consultation</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#007969]'}`} />
+              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#0b0b0c]'}`} />
               <span>24-Hour Response</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#007969]'}`} />
+              <Check className={`w-5 h-5 ${ctaVariant === 'white' ? 'text-white' : 'text-[#0b0b0c]'}`} />
               <span>No Obligation</span>
             </div>
           </div>
@@ -1121,7 +1121,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       {isFormOpen && (
         <div
           id="form"
-          className="bg-white rounded-xl border border-[#e5e7eb] shadow-[0_16px_40px_#0079691f] p-5 lg:p-8 w-full relative"
+          className="bg-white rounded-xl border border-[#dcdad3] shadow-[0_16px_40px_#0b0b0c1f] p-5 lg:p-8 w-full relative"
         >
           {/* Honeypot — hidden from real users & assistive tech; bots fill it. */}
           <input
@@ -1142,13 +1142,13 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 <span className="font-accent text-[13px] lg:text-sm text-[#1c1c1e] font-semibold uppercase tracking-[.1em]">
                   Step {currentStep + 1} of {totalSteps}
                 </span>
-                <span className="font-body text-xs lg:text-sm text-[#007969] font-semibold">
+                <span className="font-body text-xs lg:text-sm text-[#0b0b0c] font-semibold">
                   {Math.round(((currentStep + 1) / totalSteps) * 100)}%
                 </span>
               </div>
-              <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-[#dcdad3] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#007969] to-[#00a88f] rounded-full transition-[width] duration-500 ease-out"
+                  className="h-full bg-[#0b0b0c] rounded-full transition-[width] duration-500 ease-out"
                   style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                 />
               </div>
@@ -1163,7 +1163,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
           {/* Reassurance at the point of submission */}
           {currentStep === totalSteps - 1 && (
             <p className="mt-5 flex items-center justify-center gap-1.5 text-xs lg:text-sm text-center font-body text-[#6b7280]">
-              <svg className="w-3.5 h-3.5 flex-shrink-0 text-[#007969]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-3.5 h-3.5 flex-shrink-0 text-[#0b0b0c]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               Your details are safe with us — no spam. A specialist replies within 12 hours.
@@ -1193,7 +1193,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 className={`flex-1 !py-4 lg:!py-3.5 text-sm lg:text-base transition-all ${
                   isStepValid() && !isSubmitting
                     ? 'btn-brand'
-                    : 'inline-flex items-center justify-center gap-2 px-8 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#e5e7eb] text-[#6b7280] cursor-not-allowed'
+                    : 'inline-flex items-center justify-center gap-2 px-8 rounded-[2px] font-accent uppercase tracking-[.12em] font-semibold bg-[#dcdad3] text-[#6b7280] cursor-not-allowed'
                 }`}
               >
                 {isSubmitting ? 'Sending…' : currentStep === totalSteps - 1 ? 'Submit Enquiry' : 'Continue'}
