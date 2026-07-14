@@ -3,26 +3,26 @@ import { FullLogo, LogoIcon, CompactLogo } from './NewLogo';
 import { motion, AnimatePresence } from 'motion/react';
 import { CTADecoration } from './InteractiveDecorations';
 
-// Accent teal — used sparingly (active-link underline) in the light bar
+// Brand teal used across the navigation
 const BRAND_TEAL = '#007969';
 
-// Three evenly-spaced ink bars forming the hamburger icon
+// Three evenly-spaced teal bars forming the hamburger icon
 function HamburgerIcon() {
   return (
     <div className="flex h-6 w-6 flex-col justify-center gap-1.5">
-      <span className="h-px w-6 bg-[#0b0b0c]" />
-      <span className="h-px w-6 bg-[#0b0b0c]" />
-      <span className="h-px w-6 bg-[#0b0b0c]" />
+      <span className="h-0.5 w-6 rounded bg-[#007969]" />
+      <span className="h-0.5 w-6 rounded bg-[#007969]" />
+      <span className="h-0.5 w-6 rounded bg-[#007969]" />
     </div>
   );
 }
 
-// Two rotated ink bars forming the close (X) icon
+// Two rotated teal bars forming the close (X) icon
 function CloseIcon() {
   return (
     <div className="relative h-6 w-6">
-      <span className="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[#0b0b0c]" />
-      <span className="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-[#0b0b0c]" />
+      <span className="absolute left-1/2 top-1/2 h-0.5 w-6 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded bg-[#007969]" />
+      <span className="absolute left-1/2 top-1/2 h-0.5 w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded bg-[#007969]" />
     </div>
   );
 }
@@ -235,7 +235,7 @@ export function Navigation() {
       <motion.nav
         initial={{ y: 0, opacity: 1 }}
         animate={{ y: 0, opacity: 1 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#f5f4f0]/95 backdrop-blur-md border-b border-[#dcdad3]"
+        className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md"
         style={{ willChange: 'auto' }}
       >
         <div className="container mx-auto max-w-[1600px] px-4 lg:px-6">
@@ -263,7 +263,7 @@ export function Navigation() {
               {/* Hamburger menu button */}
               <motion.button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-md hover:bg-[#dcdad3]/40 transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-md hover:bg-gray-50 transition-colors"
                 aria-label="Toggle menu"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -303,24 +303,18 @@ export function Navigation() {
                   <motion.button
                     key={item.key}
                     onClick={() => scrollToSection(item.id)}
-                    className={`relative px-3 py-2 text-[13px] font-medium tracking-wide transition-colors duration-200 whitespace-nowrap flex-shrink-0 ${
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
                       isActive
-                        ? 'text-[#0b0b0c]'
-                        : 'text-[#3d3d42] hover:text-[#0b0b0c]'
+                        ? 'text-[#007969] bg-[#f0fdf4] font-semibold'
+                        : 'text-[#3a3a3c] hover:text-[#007969] hover:bg-[#f0fdf4]'
                     }`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05, duration: 0.3 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     {item.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-active-underline"
-                        className="absolute left-3 right-3 -bottom-px h-0.5 bg-[#007969]"
-                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                      />
-                    )}
                   </motion.button>
                 );
               })}
@@ -336,7 +330,7 @@ export function Navigation() {
                     window.dispatchEvent(new Event('openLeadForm'));
                   }, 500); // Small delay to ensure smooth scroll then form opens
                 }}
-                className="bh-btn bh-btn-primary"
+                className="btn-brand"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
@@ -374,7 +368,7 @@ export function Navigation() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.03 }}
               transition={{ type: 'tween', duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
-              className="fixed inset-0 bg-[#f5f4f0]/95 backdrop-blur-2xl z-50 lg:hidden overflow-hidden"
+              className="fixed inset-0 bg-white/90 backdrop-blur-2xl z-50 lg:hidden overflow-hidden"
               style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
               role="dialog"
               aria-modal="true"
@@ -400,7 +394,7 @@ export function Navigation() {
                 {/* Close button */}
                 <motion.button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-md hover:bg-[#dcdad3]/40 transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-md hover:bg-gray-50 transition-colors"
                   aria-label="Close menu"
                   initial={{ scale: 0, rotate: 90 }}
                   animate={{ scale: 1, rotate: 0 }}
@@ -424,7 +418,7 @@ export function Navigation() {
                       <button
                         onClick={() => scrollToSection(item.id)}
                         className={`inline-flex min-h-11 items-center justify-center px-4 font-['Rajdhani',sans-serif] font-medium uppercase text-2xl leading-none tracking-wide ${
-                          isActive ? 'text-[#0b0b0c]' : 'text-[#3d3d42]'
+                          isActive ? 'text-[#007969]' : 'text-[#3a3a3c]'
                         } active:scale-95 transition-transform touch-manipulation`}
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
@@ -444,7 +438,7 @@ export function Navigation() {
                         <motion.div
                           className="h-px w-16 mt-1 mx-auto"
                           style={{
-                            backgroundColor: isActive ? BRAND_TEAL : '#dcdad3',
+                            backgroundColor: isActive ? BRAND_TEAL : '#e5e7eb',
                             transition: 'background-color 0.3s ease'
                           }}
                           initial={{ scaleX: 0 }}
@@ -465,7 +459,7 @@ export function Navigation() {
                 >
                   {/* Tagline */}
                   <motion.p
-                    className="font-['Barlow',sans-serif] text-sm text-[#6f6f76] text-center tracking-tight"
+                    className="font-['Barlow',sans-serif] text-sm text-[#99a1af] text-center tracking-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.7 }}
@@ -475,7 +469,7 @@ export function Navigation() {
 
                   {/* Email */}
                   <motion.p
-                    className="font-['Barlow',sans-serif] text-sm text-[#6f6f76] text-center tracking-tight"
+                    className="font-['Barlow',sans-serif] text-sm text-[#99a1af] text-center tracking-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.8 }}
@@ -485,7 +479,7 @@ export function Navigation() {
 
                   {/* Phone */}
                   <motion.p
-                    className="font-['Barlow',sans-serif] text-sm text-[#6f6f76] text-center tracking-tight"
+                    className="font-['Barlow',sans-serif] text-sm text-[#99a1af] text-center tracking-tight"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.9 }}
