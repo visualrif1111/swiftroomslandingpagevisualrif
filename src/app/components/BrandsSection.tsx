@@ -243,7 +243,7 @@ export function BrandsSection() {
   };
 
   return (
-    <section id="brands" className="relative bg-[#007969] min-h-screen overflow-hidden lg:snap-center flex items-center">
+    <section id="brands" className="relative bg-[#0e0e11] min-h-screen overflow-hidden lg:snap-center flex items-center border-t border-b border-[#2a2a30]">
       <div className="container mx-auto max-w-[1600px] px-4 py-8 lg:py-12 w-full">
         {/* Section Header */}
         <motion.div
@@ -253,7 +253,13 @@ export function BrandsSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-white tracking-wide">
+          {/* Numbered editorial motif */}
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#3ea99a] tabular-nums">07</span>
+            <span className="h-px w-10 bg-[#2a2a30]" />
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#a8a8ad]">Trusted Brands</span>
+          </div>
+          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#eceae4] tracking-[-0.02em]">
             Brands We Work With
           </h2>
         </motion.div>
@@ -303,8 +309,8 @@ export function BrandsSection() {
                 <span
                   className={`block rounded-full transition-all duration-300 ${
                     activeSlide === index
-                      ? 'bg-white w-8 h-2'
-                      : 'bg-white/40 hover:bg-white/60 w-2 h-2'
+                      ? 'bg-[#eceae4] w-8 h-2'
+                      : 'bg-[#eceae4]/30 hover:bg-[#eceae4]/50 w-2 h-2'
                   }`}
                 />
               </button>

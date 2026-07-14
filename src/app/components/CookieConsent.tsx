@@ -75,7 +75,7 @@ export function CookieConsent() {
                   {/* Icon & Content */}
                   <div className="flex-1 flex gap-3 lg:gap-4">
                     <div className="flex-shrink-0">
-                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-[#007969] rounded-xl flex items-center justify-center">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-[#0b0b0c] rounded-xl flex items-center justify-center">
                         <Cookie className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                       </div>
                     </div>
@@ -117,7 +117,7 @@ export function CookieConsent() {
                     </button>
                     <button
                       onClick={acceptAll}
-                      className="px-4 py-2.5 lg:px-5 lg:py-3 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+                      className="px-4 py-2.5 lg:px-5 lg:py-3 bg-[#0b0b0c] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:bg-[#007969] transition-all duration-200"
                     >
                       Accept All
                     </button>
@@ -241,7 +241,7 @@ export function CookieConsent() {
                   </button>
                   <button
                     onClick={savePreferences}
-                    className="flex-1 px-4 py-2.5 lg:px-5 lg:py-3 bg-gradient-to-r from-[#007969] to-[#007969] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+                    className="flex-1 px-4 py-2.5 lg:px-5 lg:py-3 bg-[#0b0b0c] text-white rounded-lg font-['Rajdhani',sans-serif] text-sm lg:text-base font-bold hover:bg-[#007969] transition-all duration-200"
                   >
                     Save Preferences
                   </button>

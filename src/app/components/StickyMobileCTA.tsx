@@ -102,7 +102,7 @@ export function StickyMobileCTA() {
             {/* Primary CTA - Get Free Quote (dominant) */}
             <button
               onClick={handleQuote}
-              className="btn-brand flex-[2] shadow-lg !px-3 min-h-11 whitespace-nowrap"
+              className="bh-btn bh-btn-primary flex-[2] shadow-lg !px-3 min-h-11 whitespace-nowrap"
             >
               Get Free Quote
             </button>

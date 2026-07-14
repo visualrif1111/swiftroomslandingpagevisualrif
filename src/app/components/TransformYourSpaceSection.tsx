@@ -105,7 +105,7 @@ export function TransformYourSpaceSection() {
   }, [totalCards]);
 
   return (
-    <section id="transform-space" className="relative bg-white min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
+    <section id="transform-space" className="relative bg-[#0e0e11] min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
       <div className="container mx-auto max-w-[1600px] px-4 relative z-30 py-6 lg:py-8 w-full">
 
         {/* Main Header */}
@@ -116,10 +116,15 @@ export function TransformYourSpaceSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 lg:mb-12 relative z-40"
         >
-          <h2 className="font-['Exo',sans-serif] text-2xl sm:text-3xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#3ea99a] tabular-nums">06</span>
+            <span className="h-px w-10 bg-[#2a2a30]" />
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#a8a8ad]">Transform Your Space</span>
+          </div>
+          <h2 className="font-['Exo',sans-serif] text-2xl sm:text-3xl lg:text-4xl font-medium tracking-[-0.02em] text-[#eceae4] mb-2 lg:mb-3 relative z-40">
             Transform Your Space
           </h2>
-          <p className="font-['Barlow',sans-serif] text-sm sm:text-base lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto">
+          <p className="font-['Barlow',sans-serif] text-sm sm:text-base lg:text-lg text-[#a8a8ad] max-w-2xl mx-auto">
             Premium aluminum solutions engineered for UAE's climate
           </p>
         </motion.div>
@@ -128,7 +133,7 @@ export function TransformYourSpaceSection() {
         <div className="relative">
           {/* Swipe hint for mobile */}
           <div className="md:hidden text-center mb-3">
-            <p className="font-['Barlow',sans-serif] text-xs text-gray-400 flex items-center justify-center gap-1.5 animate-pulse">
+            <p className="font-['Barlow',sans-serif] text-xs text-[#a8a8ad] flex items-center justify-center gap-1.5 animate-pulse">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 8L22 12L18 16M6 8L2 12L6 16"/>
               </svg>
@@ -159,35 +164,35 @@ export function TransformYourSpaceSection() {
                 <div key={`card-${idx}`} className="w-full flex-shrink-0 px-2"
                   style={{ touchAction: 'pan-y' }}
                 >
-                  <div className="rounded-xl p-5 h-full border-2 transition-all duration-300 flex flex-col items-center text-center pointer-events-none" style={{ backgroundColor: card.bg, borderColor: card.border }}>
-                    <div className="mb-4 w-14 h-14 rounded-xl flex items-center justify-center transition-transform duration-300" style={{ backgroundColor: card.iconBg }}>
+                  <div className="rounded-sm p-5 h-full border transition-all duration-300 flex flex-col items-center text-center pointer-events-none bg-[#16161a] border-[#2a2a30]">
+                    <div className="bh-hex mb-4" style={{ backgroundColor: '#0e0e11', boxShadow: 'inset 0 0 0 1px #2a2a30' }}>
                       {card.id === 1 && (
                         <svg className="w-7 h-7 pointer-events-none" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          <rect x="9" y="9" width="6" height="7" stroke="#007969" strokeWidth="1.5" fill="none" />
-                          <line x1="12" y1="9" x2="12" y2="16" stroke="#007969" strokeWidth="1.5" />
-                          <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#007969" strokeWidth="1.5" />
+                          <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#eceae4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <rect x="9" y="9" width="6" height="7" stroke="#eceae4" strokeWidth="1.5" fill="none" />
+                          <line x1="12" y1="9" x2="12" y2="16" stroke="#eceae4" strokeWidth="1.5" />
+                          <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#eceae4" strokeWidth="1.5" />
                         </svg>
                       )}
                       {card.id === 2 && (
-                        <Gem className="w-7 h-7 text-[#007969] stroke-[2] pointer-events-none" />
+                        <Gem className="w-7 h-7 text-[#eceae4] stroke-[2] pointer-events-none" />
                       )}
                       {card.id === 3 && (
                         <svg className="w-7 h-7 pointer-events-none" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 3L4 10H20L12 3Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                          <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          <line x1="12" y1="3" x2="12" y2="20" stroke="#007969" strokeWidth="1.5" />
-                          <line x1="8" y1="10" x2="8" y2="20" stroke="#007969" strokeWidth="1.5" />
-                          <line x1="16" y1="10" x2="16" y2="20" stroke="#007969" strokeWidth="1.5" />
-                          <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#007969" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                          <circle cx="12" cy="18" r="0.8" fill="#007969" />
+                          <path d="M12 3L4 10H20L12 3Z" stroke="#eceae4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                          <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#eceae4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <line x1="12" y1="3" x2="12" y2="20" stroke="#eceae4" strokeWidth="1.5" />
+                          <line x1="8" y1="10" x2="8" y2="20" stroke="#eceae4" strokeWidth="1.5" />
+                          <line x1="16" y1="10" x2="16" y2="20" stroke="#eceae4" strokeWidth="1.5" />
+                          <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#eceae4" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                          <circle cx="12" cy="18" r="0.8" fill="#eceae4" />
                         </svg>
                       )}
                     </div>
-                    <h3 className="font-['Exo',sans-serif] text-lg font-semibold text-[#1c1c1e] mb-3">
+                    <h3 className="font-['Exo',sans-serif] text-lg font-medium tracking-[-0.02em] text-[#eceae4] mb-3">
                       {card.title}
                     </h3>
-                    <p className="font-['Barlow',sans-serif] text-sm text-gray-600 leading-relaxed">
+                    <p className="font-['Barlow',sans-serif] text-sm text-[#a8a8ad] leading-relaxed">
                       {card.desc}
                     </p>
                   </div>
@@ -200,35 +205,35 @@ export function TransformYourSpaceSection() {
           <div className="hidden md:grid md:grid-cols-3 gap-6 lg:max-w-6xl lg:mx-auto">
             {cards.map((card) => (
               <div key={card.id}>
-                <div className="rounded-xl p-6 lg:p-8 h-full border-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center" style={{ backgroundColor: card.bg, borderColor: card.border }}>
-                  <div className="mb-4 w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: card.iconBg }}>
+                <div className="rounded-sm p-6 lg:p-8 h-full border hover:border-[#3ea99a]/40 hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center bg-[#16161a] border-[#2a2a30]">
+                  <div className="bh-hex mb-4 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#0e0e11', boxShadow: 'inset 0 0 0 1px #2a2a30' }}>
                     {card.id === 1 && (
                       <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <rect x="9" y="9" width="6" height="7" stroke="#007969" strokeWidth="1.5" fill="none" />
-                        <line x1="12" y1="9" x2="12" y2="16" stroke="#007969" strokeWidth="1.5" />
-                        <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#007969" strokeWidth="1.5" />
+                        <path d="M12 2L4 6V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V6L12 2Z" stroke="#eceae4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <rect x="9" y="9" width="6" height="7" stroke="#eceae4" strokeWidth="1.5" fill="none" />
+                        <line x1="12" y1="9" x2="12" y2="16" stroke="#eceae4" strokeWidth="1.5" />
+                        <line x1="9" y1="12.5" x2="15" y2="12.5" stroke="#eceae4" strokeWidth="1.5" />
                       </svg>
                     )}
                     {card.id === 2 && (
-                      <Gem className="w-9 h-9 text-[#007969] stroke-[2]" />
+                      <Gem className="w-9 h-9 text-[#eceae4] stroke-[2]" />
                     )}
                     {card.id === 3 && (
                       <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 3L4 10H20L12 3Z" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#007969" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <line x1="12" y1="3" x2="12" y2="20" stroke="#007969" strokeWidth="1.5" />
-                        <line x1="8" y1="10" x2="8" y2="20" stroke="#007969" strokeWidth="1.5" />
-                        <line x1="16" y1="10" x2="16" y2="20" stroke="#007969" strokeWidth="1.5" />
-                        <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#007969" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                        <circle cx="12" cy="18" r="0.8" fill="#007969" />
+                        <path d="M12 3L4 10H20L12 3Z" stroke="#eceae4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        <path d="M4 10V19C4 19.5 4.5 20 5 20H19C19.5 20 20 19.5 20 19V10" stroke="#eceae4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <line x1="12" y1="3" x2="12" y2="20" stroke="#eceae4" strokeWidth="1.5" />
+                        <line x1="8" y1="10" x2="8" y2="20" stroke="#eceae4" strokeWidth="1.5" />
+                        <line x1="16" y1="10" x2="16" y2="20" stroke="#eceae4" strokeWidth="1.5" />
+                        <path d="M10 17C10 17 10.5 15 12 15C13.5 15 14 17 14 17" stroke="#eceae4" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                        <circle cx="12" cy="18" r="0.8" fill="#eceae4" />
                       </svg>
                     )}
                   </div>
-                  <h3 className="font-['Exo',sans-serif] text-2xl font-semibold text-[#1c1c1e] mb-3">
+                  <h3 className="font-['Exo',sans-serif] text-2xl font-medium tracking-[-0.02em] text-[#eceae4] mb-3">
                     {card.title}
                   </h3>
-                  <p className="font-['Barlow',sans-serif] text-lg text-gray-600 leading-relaxed">
+                  <p className="font-['Barlow',sans-serif] text-lg text-[#a8a8ad] leading-relaxed">
                     {card.desc}
                   </p>
                 </div>
@@ -248,8 +253,8 @@ export function TransformYourSpaceSection() {
               <span
                 className={`block rounded-full transition-all duration-300 ${
                   activeCard === i
-                    ? 'bg-[#007969] w-6 h-1.5'
-                    : 'bg-gray-300 group-hover:bg-[#007969]/50 w-1.5 h-1.5'
+                    ? 'bg-[#3ea99a] w-6 h-1.5'
+                    : 'bg-[#2a2a30] group-hover:bg-[#3ea99a]/50 w-1.5 h-1.5'
                 }`}
               />
             </button>

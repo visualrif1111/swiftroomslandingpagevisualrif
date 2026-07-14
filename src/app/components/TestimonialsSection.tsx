@@ -439,7 +439,7 @@ function NextArrow({ onClick }: ArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="hidden lg:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-2 lg:p-3 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95"
+      className="hidden lg:flex items-center justify-center absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-10 bg-white text-[#0b0b0c] border border-[#dcdad3] hover:border-[#0b0b0c] rounded-full p-2 lg:p-3 shadow-sm transition-colors duration-200"
       aria-label="Next testimonial"
     >
       <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -451,7 +451,7 @@ function PrevArrow({ onClick }: ArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="hidden lg:block absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-2 lg:p-3 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95"
+      className="hidden lg:flex items-center justify-center absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-10 bg-white text-[#0b0b0c] border border-[#dcdad3] hover:border-[#0b0b0c] rounded-full p-2 lg:p-3 shadow-sm transition-colors duration-200"
       aria-label="Previous testimonial"
     >
       <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -499,12 +499,12 @@ function getInitials(name: string): string {
 function ReviewMetaTags({ projectType, location }: { projectType: string; location: string }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="inline-flex items-center gap-1 bg-[#007969]/8 text-[#007969] rounded-full px-2.5 py-1 font-body text-xs font-medium">
-        <Hammer className="w-3 h-3" />
+      <span className="inline-flex items-center gap-1 border border-[#dcdad3] text-[#3d3d42] rounded-sm px-2.5 py-1 font-body text-xs font-medium">
+        <Hammer className="w-3 h-3 text-[#6f6f76]" />
         {projectType}
       </span>
-      <span className="inline-flex items-center gap-1 bg-[#f3f4f6] text-[#3a3a3c] rounded-full px-2.5 py-1 font-body text-xs font-medium">
-        <MapPin className="w-3 h-3 text-[#007969]" />
+      <span className="inline-flex items-center gap-1 border border-[#dcdad3] text-[#3d3d42] rounded-sm px-2.5 py-1 font-body text-xs font-medium">
+        <MapPin className="w-3 h-3 text-[#6f6f76]" />
         {location}
       </span>
     </div>
@@ -514,7 +514,7 @@ function ReviewMetaTags({ projectType, location }: { projectType: string; locati
 function ReviewAvatar({ name }: { name: string }) {
   return (
     <div
-      className="w-11 h-11 flex-shrink-0 rounded-full bg-gradient-to-br from-[#007969] to-[#005a50] text-white flex items-center justify-center font-heading text-base font-semibold shadow-sm"
+      className="w-11 h-11 flex-shrink-0 rounded-full bg-[#ebe9e3] text-[#0b0b0c] border border-[#dcdad3] flex items-center justify-center font-heading text-base font-semibold"
       aria-hidden="true"
     >
       {getInitials(name)}
@@ -531,11 +531,11 @@ function ReviewCard({ review }: { review: Review }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="bg-white sr-card-premium lg:rounded-2xl lg:border lg:border-[#e5e7eb] lg:shadow-none p-6 lg:p-8 card-hover relative overflow-hidden group max-w-4xl mx-auto"
+        className="bg-white border border-[#dcdad3] rounded-md shadow-sm p-6 lg:p-8 relative overflow-hidden group max-w-4xl mx-auto"
       >
         {/* Quote Icon Background */}
-        <div className="absolute top-3 right-3 lg:top-4 lg:right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-300">
-          <Quote className="w-16 h-16 lg:w-24 lg:h-24 text-[#007969]" />
+        <div className="absolute top-3 right-3 lg:top-4 lg:right-4 opacity-100 transition-opacity duration-300">
+          <Quote className="w-16 h-16 lg:w-24 lg:h-24 text-[#dcdad3]" />
         </div>
 
         {/* Mobile Content — identity up top, comfortable quote */}
@@ -545,20 +545,20 @@ function ReviewCard({ review }: { review: Review }) {
             <div className="flex items-center gap-3 min-w-0">
               <ReviewAvatar name={review.author} />
               <div className="min-w-0">
-                <p className="font-heading text-base font-semibold text-[#1c1c1e] truncate">
+                <p className="font-heading text-base font-semibold text-[#0b0b0c] truncate">
                   {review.author}
                 </p>
                 {/* Stars — emphasized */}
                 <div className="flex items-center gap-0.5 mt-0.5">
                   {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#FFA500] text-[#FFA500]" />
+                    <Star key={i} className="w-4 h-4 fill-[#c9a227] text-[#c9a227]" />
                   ))}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 bg-[#007969]/5 px-2.5 py-1 rounded-full shrink-0 self-start">
+            <div className="flex items-center gap-1.5 border border-[#dcdad3] px-2.5 py-1 rounded-sm shrink-0 self-start">
               <GoogleGlyph className="w-3.5 h-3.5" />
-              <span className="font-body text-xs font-medium text-[#007969]">
+              <span className="font-body text-xs font-medium text-[#6f6f76]">
                 Google
               </span>
             </div>
@@ -570,7 +570,7 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
 
           {/* Review Text */}
-          <p className="font-body text-[17px] text-[#2a2a2c] leading-[1.65]">
+          <p className="font-body text-[17px] text-[#3d3d42] leading-[1.65]">
             "{review.text}"
           </p>
         </div>
@@ -583,7 +583,7 @@ function ReviewCard({ review }: { review: Review }) {
               {[...Array(review.rating)].map((_, i) => (
                 <Star
                   key={i}
-                  className="w-4 h-4 lg:w-5 lg:h-5 fill-[#FFA500] text-[#FFA500]"
+                  className="w-4 h-4 lg:w-5 lg:h-5 fill-[#c9a227] text-[#c9a227]"
                 />
               ))}
             </div>
@@ -591,28 +591,28 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
 
           {/* Review Text */}
-          <p className="font-body text-sm lg:text-lg text-[#3a3a3c] leading-relaxed mb-4 lg:mb-6">
+          <p className="font-body text-sm lg:text-lg text-[#3d3d42] leading-relaxed mb-4 lg:mb-6">
             "{review.text}"
           </p>
 
           {/* Author Info */}
-          <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-[#e5e7eb]">
+          <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-[#dcdad3]">
             <div className="flex items-center gap-3">
               <ReviewAvatar name={review.author} />
               <div>
-                <p className="font-heading text-sm lg:text-base font-semibold text-[#1c1c1e]">
+                <p className="font-heading text-sm lg:text-base font-semibold text-[#0b0b0c]">
                   {review.author}
                 </p>
-                <p className="font-body text-xs lg:text-sm text-[#6b7280] mt-0.5">
+                <p className="font-body text-xs lg:text-sm text-[#6f6f76] mt-0.5">
                   Verified Google review
                 </p>
               </div>
             </div>
 
             {/* Google Badge */}
-            <div className="flex items-center gap-1.5 lg:gap-2 bg-[#007969]/5 px-2.5 lg:px-3 py-1 lg:py-1.5 rounded-full">
+            <div className="flex items-center gap-1.5 lg:gap-2 border border-[#dcdad3] px-2.5 lg:px-3 py-1 lg:py-1.5 rounded-sm">
               <GoogleGlyph className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
-              <span className="font-body text-xs font-medium text-[#007969]">
+              <span className="font-body text-xs font-medium text-[#6f6f76]">
                 Google
               </span>
             </div>
@@ -662,7 +662,7 @@ export function TestimonialsSection() {
   }, []);
 
   return (
-    <section id="testimonials" className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#f0f7f6] pt-20 lg:pt-24 pb-12 lg:pb-16 lg:snap-start overflow-hidden">
+    <section id="testimonials" className="relative bg-[#f5f4f0] pt-20 lg:pt-24 pb-12 lg:pb-16 lg:snap-start overflow-hidden">
       {/* CAD Elements Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <TestimonialsCADElements />
@@ -678,10 +678,16 @@ export function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 lg:mb-10"
         >
-          <h2 className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 tracking-tight">
+          {/* Numbered section motif */}
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#007969] tabular-nums">04</span>
+            <span className="h-px w-10 bg-[#dcdad3]" />
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76]">Testimonials</span>
+          </div>
+          <h2 className="font-['Exo',sans-serif] font-medium sr-heading lg:text-4xl text-[#0b0b0c] mb-2 lg:mb-3 tracking-[-0.02em]">
             What Our Clients Say
           </h2>
-          <p className="font-body text-sm lg:text-lg text-[#6b7280] max-w-2xl mx-auto">
+          <p className="font-body text-sm lg:text-lg text-[#6f6f76] max-w-2xl mx-auto">
             Don't just take our word for it—hear from our satisfied customers across the UAE
           </p>
 
@@ -691,14 +697,14 @@ export function TestimonialsSection() {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className="w-4 h-4 lg:w-5 lg:h-5 fill-[#FFA500] text-[#FFA500]"
+                  className="w-4 h-4 lg:w-5 lg:h-5 fill-[#c9a227] text-[#c9a227]"
                 />
               ))}
             </div>
-            <span className="font-heading text-base lg:text-xl font-bold text-[#1c1c1e]">
+            <span className="font-['Exo',sans-serif] text-base lg:text-xl font-medium text-[#0b0b0c]">
               4.4
             </span>
-            <span className="font-body text-xs lg:text-sm text-[#6b7280]">
+            <span className="font-body text-xs lg:text-sm text-[#6f6f76]">
               Based on 130+ Google reviews
             </span>
           </div>

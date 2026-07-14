@@ -32,30 +32,43 @@ export function FinalCTASection() {
   return (
     <section
       id="final-cta"
-      className="relative bg-[#007969] overflow-hidden lg:snap-center flex items-center py-16 lg:py-24"
+      className="relative bg-[#0e0e11] overflow-hidden lg:snap-center flex items-center py-16 lg:py-24"
     >
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
-        <div className="max-w-3xl mx-auto text-center text-white">
-          {/* Rating strip */}
+        <div className="max-w-3xl mx-auto text-center text-[#eceae4]">
+          {/* Numbered section motif */}
           <motion.div
-            className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 mb-5"
+            className="flex items-center justify-center gap-3 mb-6"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#3ea99a] tabular-nums">12</span>
+            <span className="h-px w-10 bg-[#2a2a30]" />
+            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#a8a8ad]">Get Started</span>
+          </motion.div>
+
+          {/* Rating strip — monochrome trust marker */}
+          <motion.div
+            className="inline-flex items-center gap-2.5 border border-[#2a2a30] rounded-none px-4 py-1.5 mb-7"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+          >
             <div className="flex items-center gap-0.5">
               {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="w-4 h-4 text-[#FFC857]" fill="#FFC857" />
+                <Star key={i} className="w-3.5 h-3.5 text-[#eceae4]" fill="#eceae4" />
               ))}
             </div>
-            <span className="font-['Barlow',sans-serif] text-xs lg:text-sm text-white/90">
+            <span className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#a8a8ad]">
               4.4★ on 130+ Google reviews · 3,500+ projects
             </span>
           </motion.div>
 
           <motion.h2
-            className="font-['Exo',sans-serif] text-2xl lg:text-5xl font-semibold mb-3 lg:mb-4 leading-tight"
+            className="font-['Exo',sans-serif] font-medium tracking-[-0.03em] text-[#eceae4] leading-[1.02] mb-4 lg:mb-5 text-[clamp(2rem,5vw,3.5rem)]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -65,7 +78,7 @@ export function FinalCTASection() {
           </motion.h2>
 
           <motion.p
-            className="font-['Barlow',sans-serif] text-sm lg:text-xl text-white/90 mb-7 lg:mb-9 max-w-2xl mx-auto"
+            className="font-['Barlow',sans-serif] text-sm lg:text-xl text-[#a8a8ad] mb-7 lg:mb-9 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -83,13 +96,13 @@ export function FinalCTASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {/* Primary */}
+            {/* Primary — inverted white for strong contrast on noir */}
             <button
               onClick={openQuoteForm}
-              className="group btn-brand w-full sm:w-auto !bg-white !text-[#007969] hover:!bg-[#FFC857] hover:!text-[#1c1c1e] shadow-2xl"
+              className="group bh-btn w-full sm:w-auto bg-white text-[#0e0e11] hover:bg-[#007969] hover:text-white"
             >
               Get Free Quote
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
 
             {/* Secondary */}
@@ -109,7 +122,7 @@ export function FinalCTASection() {
             href={SHOWROOM_MAPS_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 mt-4 text-white/90 underline underline-offset-4 font-['Barlow',sans-serif] text-sm hover:text-white transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 mt-5 text-[#a8a8ad] underline underline-offset-4 font-['Barlow',sans-serif] text-sm hover:text-[#eceae4] transition-colors"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -121,13 +134,13 @@ export function FinalCTASection() {
 
           {/* Lead magnets - low-friction options for those not ready to enquire */}
           <motion.div
-            className="mt-10 lg:mt-12 pt-7 border-t border-white/15"
+            className="mt-10 lg:mt-14 pt-8 border-t border-[#2a2a30]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.35 }}
           >
-            <p className="font-['Barlow',sans-serif] text-xs lg:text-sm text-white/80 mb-4">
+            <p className="font-['Barlow',sans-serif] text-xs lg:text-sm text-[#a8a8ad] mb-4">
               Not ready to enquire? Ask us on WhatsApp for a free resource:
             </p>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 lg:gap-3">
@@ -139,10 +152,10 @@ export function FinalCTASection() {
                     href={magnet.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-3 py-2.5 text-left transition-colors duration-200"
+                    className="flex items-center gap-2 bg-[#16161a] hover:border-[#a8a8ad] border border-[#2a2a30] rounded-none px-3 py-2.5 text-left transition-colors duration-200"
                   >
-                    <Icon className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0 text-[#FFC857]" />
-                    <span className="font-['Barlow',sans-serif] text-[11px] lg:text-sm text-white font-medium leading-tight">
+                    <Icon className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0 text-[#a8a8ad]" />
+                    <span className="font-['Barlow',sans-serif] text-[11px] lg:text-sm text-[#eceae4] font-medium leading-tight">
                       {magnet.label}
                     </span>
                   </a>
