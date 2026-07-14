@@ -94,7 +94,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-[100svh] flex items-start justify-center pt-24 pb-10 lg:items-center lg:pt-0 lg:pb-0 lg:snap-center"
+      className="relative min-h-[100svh] flex items-start justify-center pt-24 pb-10 lg:items-center lg:pt-28 lg:pb-12 lg:snap-center"
       style={{
         contain: 'layout style',
         contentVisibility: 'auto',
@@ -190,7 +190,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
 
                   {/* Main Heading — oversized Exo display for maximum impact */}
                   <motion.h1
-                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[0.98] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
+                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[1.0] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.5rem] xl:text-[2.85rem]"
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
