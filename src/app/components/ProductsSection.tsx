@@ -65,7 +65,7 @@ function NextArrow({ onClick }: ArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white border border-[#dcdad3] hover:border-[#0b0b0c] text-[#0b0b0c] rounded-full p-3 transition-colors duration-300"
+      className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110"
       aria-label="Next slide"
     >
       <ChevronRight className="w-6 h-6" />
@@ -77,7 +77,7 @@ function PrevArrow({ onClick }: ArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white border border-[#dcdad3] hover:border-[#0b0b0c] text-[#0b0b0c] rounded-full p-3 transition-colors duration-300"
+      className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-[#007969] rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110"
       aria-label="Previous slide"
     >
       <ChevronLeft className="w-6 h-6" />
@@ -118,7 +118,7 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
   return (
     <div className="px-2 sm:px-3 lg:px-4 py-2 sm:py-4">
       <motion.div
-        className="group relative flex flex-col overflow-hidden rounded-md bg-white border border-[#dcdad3] shadow-sm cursor-pointer h-full pointer-events-none lg:pointer-events-auto"
+        className="relative overflow-hidden rounded-xl bg-white border border-[#e5e7eb] card-hover cursor-pointer h-full pointer-events-none lg:pointer-events-auto"
         onMouseEnter={() => !isTouched && !isMobile && setIsHovered(true)}
         onMouseLeave={() => !isTouched && !isMobile && setIsHovered(false)}
         onTouchStart={handleTouchStart}
@@ -135,61 +135,74 @@ const ProductCard = memo(({ product }: ProductCardProps) => {
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
             animate={{
-              scale: isHovered ? 1.05 : 1,
+              scale: isHovered ? 1.1 : 1,
             }}
             transition={{ duration: 0.4 }}
           />
+          
+          {/* Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"
+            animate={{
+              opacity: isHovered ? 1 : 0.85,
+            }}
+            transition={{ duration: 0.3 }}
+          />
 
-          {/* Category chip — monochrome hairline */}
-          <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-            <span className="bg-white/90 backdrop-blur-sm border border-[#dcdad3] text-[#3d3d42] px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-['Rajdhani',sans-serif] font-semibold tracking-[0.14em] uppercase">
+          {/* Category Badge */}
+          <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+            <span className="bg-[#007969] text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-accent font-medium tracking-wide uppercase">
               {product.category}
             </span>
           </div>
-        </div>
 
-        {/* Content — white surface, ink text */}
-        <div className="flex flex-col flex-1 p-5 sm:p-5 lg:p-6">
-          <motion.h3
-            className="font-['Exo',sans-serif] font-medium tracking-[-0.02em] text-[#0b0b0c] text-xl sm:text-xl lg:text-2xl mb-2 leading-tight"
-            animate={{
-              y: isHovered ? -2 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            {product.name}
-          </motion.h3>
-
-          <motion.p
-            className="font-body text-sm sm:text-base text-[#3d3d42] leading-snug sm:leading-relaxed mb-4"
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {product.description}
-          </motion.p>
-
-          {/* Get A Quote Button - Always visible, no animation on mobile */}
-          <CTADecoration>
-            <motion.button
-              className="mt-auto bh-btn bh-btn-ghost pointer-events-auto"
-              initial={false}
+          {/* Content */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-5 lg:p-6">
+            <motion.h3
+              className="font-heading text-xl sm:text-xl lg:text-2xl font-medium text-white mb-2 leading-tight"
               animate={{
-                opacity: 1,
-                y: 0
+                y: isHovered ? -5 : 0,
               }}
-              onClick={(e) => {
-                e.stopPropagation();
-                const formSection = document.getElementById('contact-form');
-                if (formSection) {
-                  formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
-              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.3 }}
             >
-              Get A Quote
-            </motion.button>
-          </CTADecoration>
+              {product.name}
+            </motion.h3>
+            
+            <motion.p
+              className="font-body text-sm sm:text-base text-white/90 leading-snug sm:leading-relaxed mb-3 sm:mb-1"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{
+                opacity: isHovered ? 1 : 0.7,
+                y: isHovered ? 0 : 10,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {product.description}
+            </motion.p>
+
+            {/* Get A Quote Button - Always visible, no animation on mobile */}
+            <CTADecoration>
+              <motion.button
+                className="mt-4 btn-brand pointer-events-auto"
+                initial={false}
+                animate={{
+                  opacity: 1,
+                  y: 0
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const formSection = document.getElementById('contact-form');
+                  if (formSection) {
+                    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get A Quote
+              </motion.button>
+            </CTADecoration>
+          </div>
         </div>
       </motion.div>
     </div>
@@ -318,7 +331,7 @@ export function ProductsSection() {
   return (
     <section
       id="products"
-      className="relative bg-[#f5f4f0] min-h-screen overflow-hidden lg:snap-center flex items-center lg:pt-32 lg:pb-12"
+      className="relative bg-gray-50 min-h-screen overflow-hidden lg:snap-center flex items-center lg:pt-32 lg:pb-12"
       style={{
         contain: 'layout style',
         contentVisibility: 'auto',
@@ -337,15 +350,11 @@ export function ProductsSection() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#007969] tabular-nums">05</span>
-            <span className="h-px w-10 bg-[#dcdad3]" />
-            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76]">Featured Products</span>
-          </div>
-          <h2 className="font-['Exo',sans-serif] text-2xl sm:text-3xl lg:text-4xl font-medium tracking-[-0.02em] text-[#0b0b0c] mb-3 lg:mb-4">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3">
             Featured Products
           </h2>
-          <p className="font-body text-sm sm:text-base lg:text-xl text-[#3d3d42] max-w-2xl mx-auto px-4">
+          <div className="divider-brand mx-auto mb-3 lg:mb-4" />
+          <p className="font-body text-sm sm:text-base lg:text-xl text-[#3a3a3c] max-w-2xl mx-auto px-4">
             Premium systems engineered for comfort, lower cooling costs and brighter living in the UAE climate
           </p>
         </motion.div>
@@ -393,8 +402,8 @@ export function ProductsSection() {
                 <span
                   className={`block rounded-full transition-all duration-300 ${
                     activeSlide === index
-                      ? 'bg-[#0b0b0c] w-8 h-2'
-                      : 'bg-[#dcdad3] group-hover:bg-[#6f6f76] w-2 h-2'
+                      ? 'bg-[#007969] w-8 h-2'
+                      : 'bg-gray-300 group-hover:bg-[#007969]/50 w-2 h-2'
                   }`}
                 />
               </button>
@@ -430,19 +439,18 @@ export function ProductsSection() {
         }
         
         .products-carousel .slick-dots li button:before {
-          color: #dcdad3;
-          opacity: 1;
+          color: #007969;
           font-size: 6px;
         }
-
+        
         @media (min-width: 640px) {
           .products-carousel .slick-dots li button:before {
             font-size: 10px;
           }
         }
-
+        
         .products-carousel .slick-dots li.slick-active button:before {
-          color: #0b0b0c;
+          color: #007969;
           opacity: 1;
         }
 

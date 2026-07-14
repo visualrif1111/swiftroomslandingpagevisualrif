@@ -8,7 +8,7 @@ export function SwiftroomsSolutionSection() {
   const [activeTab, setActiveTab] = useState<'problems' | 'solutions'>('problems');
 
   return (
-    <section id="swiftrooms-solution" className="relative bg-[#f5f4f0] min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start lg:items-start pt-20 lg:pt-24">
+    <section id="swiftrooms-solution" className="relative bg-gradient-to-b from-gray-50 to-white min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start lg:items-start pt-20 lg:pt-24">
       {/* CAD Floating Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ProblemsCADElements />
@@ -19,50 +19,45 @@ export function SwiftroomsSolutionSection() {
         {/* Solutions Comparison Section */}
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6 lg:mb-10 relative z-40">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#007969] tabular-nums">09</span>
-              <span className="h-px w-10 bg-[#dcdad3]" />
-              <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#6f6f76]">Why Choose Swiftrooms</span>
-            </div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-['Exo',sans-serif] font-medium tracking-[-0.02em] sr-heading lg:text-4xl text-[#0b0b0c] mb-2 lg:mb-3 relative z-40"
+              className="font-heading sr-heading font-semibold lg:font-medium lg:text-4xl text-[#1c1c1e] mb-2 lg:mb-3 relative z-40"
             >
               Why Choose Swiftrooms
             </motion.h2>
-            <div className="h-px w-16 bg-[#dcdad3] mx-auto mb-3 lg:mb-4" />
+            <div className="divider-brand mx-auto mb-3 lg:mb-4" />
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-body text-sm lg:text-lg text-[#3d3d42] max-w-2xl mx-auto leading-relaxed relative z-40"
+              className="font-body text-sm lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto leading-relaxed relative z-40"
             >
               UAE climate expertise and premium systems — from common problems to premium solutions
             </motion.p>
           </div>
 
           {/* Mobile Tabs */}
-          <div className="lg:hidden flex p-1 bg-[#ebe9e3] border border-[#dcdad3] rounded-[2px] mb-6 mx-auto max-w-sm relative z-40">
+          <div className="lg:hidden flex p-1 bg-gray-100 rounded-xl mb-6 mx-auto max-w-sm relative z-40">
             <button
               onClick={() => setActiveTab('problems')}
-              className={`flex-1 py-2.5 px-4 min-h-[44px] rounded-[2px] text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-2.5 px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-all duration-200 ${
                 activeTab === 'problems'
-                  ? 'bg-white text-[#0b0b0c] shadow-sm'
-                  : 'text-[#6f6f76] hover:text-[#0b0b0c]'
+                  ? 'bg-white text-red-600 shadow-md'
+                  : 'text-gray-500 hover:text-white hover:bg-red-500'
               }`}
             >
               Problems
             </button>
             <button
               onClick={() => setActiveTab('solutions')}
-              className={`flex-1 py-2.5 px-4 min-h-[44px] rounded-[2px] text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-2.5 px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-all duration-200 ${
                 activeTab === 'solutions'
-                  ? 'bg-white text-[#007969] shadow-sm'
-                  : 'text-[#6f6f76] hover:text-[#0b0b0c]'
+                  ? 'bg-[#007969] text-white shadow-md'
+                  : 'text-gray-500 hover:text-white hover:bg-[#007969]'
               }`}
             >
               Solutions
@@ -78,11 +73,9 @@ export function SwiftroomsSolutionSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-[2px] p-6 lg:p-8 border border-[#dcdad3] shadow-sm h-full relative z-30">
-                <h4 className="font-['Exo',sans-serif] text-lg lg:text-2xl font-medium tracking-[-0.02em] text-[#0b0b0c] mb-6 flex items-center gap-3">
-                  <span className="bh-hex bh-hex-outline flex-shrink-0" style={{ ['--hex-size' as string]: '2rem' }}>
-                    <X className="w-4 h-4 text-[#3d3d42]" />
-                  </span>
+              <div className="bg-white rounded-xl p-6 lg:p-8 border border-[#e5e7eb] card-hover h-full relative z-30">
+                <h4 className="font-heading text-lg lg:text-2xl font-semibold text-[#1c1c1e] mb-6 flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-base">✗</span>
                   Common Frustrations
                 </h4>
 
@@ -100,12 +93,12 @@ export function SwiftroomsSolutionSection() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.1 }}
-                      className="flex items-start gap-3 p-3 rounded-[2px] hover:bg-[#f5f4f0] transition-colors"
+                      className="flex items-start gap-3 p-3 rounded-lg hover:bg-red-50 transition-colors"
                     >
-                      <div className="flex-shrink-0 w-4 h-4 mt-1">
-                        <X className="w-4 h-4 text-[#6f6f76]" strokeWidth={2} />
+                      <div className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full bg-red-100 flex items-center justify-center">
+                        <X className="w-4 h-4 text-red-600" />
                       </div>
-                      <p className="font-body text-[#3d3d42] text-sm lg:text-base leading-relaxed">
+                      <p className="font-body text-gray-700 text-sm lg:text-base leading-relaxed">
                         {item}
                       </p>
                     </motion.div>
@@ -122,15 +115,15 @@ export function SwiftroomsSolutionSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-[2px] p-6 lg:p-8 border border-[#dcdad3] shadow-sm h-full relative overflow-hidden group z-30">
-                <h4 className="relative z-10 font-['Exo',sans-serif] text-lg lg:text-2xl font-medium tracking-[-0.02em] text-[#0b0b0c] mb-3 flex items-center gap-3">
-                  <span className="bh-hex flex-shrink-0" style={{ ['--hex-size' as string]: '2rem' }}>
-                    <Check className="w-4 h-4 text-[#007969]" strokeWidth={2.5} />
-                  </span>
+              <div className="bg-gradient-to-br from-[#007969] to-[#005a50] rounded-xl p-6 lg:p-8 text-white h-full relative overflow-hidden group z-30">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-700" />
+
+                <h4 className="relative z-10 font-heading text-lg lg:text-2xl font-semibold mb-3 flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center text-base">✓</span>
                   SWIFTROOMS Advantage
                 </h4>
 
-                <p className="relative z-10 font-body text-[#3d3d42] mb-5 text-sm lg:text-base leading-relaxed">
+                <p className="relative z-10 font-body text-white/90 mb-5 text-sm lg:text-base leading-relaxed">
                   Engineered specifically for UAE climate conditions, our premium aluminum systems transform your living experience.
                 </p>
 
@@ -149,23 +142,23 @@ export function SwiftroomsSolutionSection() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.1 }}
-                      className="flex items-start gap-3 p-2.5 rounded-[2px] hover:bg-[#f5f4f0] transition-colors"
+                      className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-white/10 transition-colors"
                     >
-                      <div className="flex-shrink-0 w-4 h-4 mt-1">
-                        <Check className="w-4 h-4 text-[#007969]" strokeWidth={2.5} />
+                      <div className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full bg-[#00a63e] flex items-center justify-center shadow-lg">
+                        <Check className="w-4 h-4 text-white" />
                       </div>
-                      <p className="font-body text-[#3d3d42] text-sm lg:text-base leading-relaxed">
+                      <p className="font-body text-white text-sm lg:text-base leading-relaxed">
                         {item}
                       </p>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className="relative z-10 pt-4 border-t border-[#dcdad3]">
+                <div className="relative z-10 pt-4 border-t border-white/20">
                   <CTADecoration>
                     <button
                       onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="bh-btn bh-btn-primary w-full active:scale-95 group/btn"
+                      className="w-full bg-white text-[#007969] px-5 py-3 lg:py-3.5 rounded-[2px] font-accent uppercase tracking-[0.12em] text-base lg:text-lg font-bold hover:bg-[#005a50] hover:text-white active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group/btn"
                     >
                       Explore Our Products
                       <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -201,12 +194,12 @@ export function SwiftroomsSolutionSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="flex items-start gap-3 bg-white rounded-[2px] border border-[#dcdad3] shadow-sm p-4 transition-colors hover:border-[#007969]"
+                  className="flex items-start gap-3 bg-white sr-card-premium lg:rounded-xl lg:border lg:border-[#e5e7eb] lg:shadow-none p-4 card-hover"
                 >
-                  <div className="flex-shrink-0 w-4 h-4 mt-0.5">
-                    <Check className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#007969]" strokeWidth={2.5} />
+                  <div className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full bg-[#007969] flex items-center justify-center">
+                    <Check className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-white" strokeWidth={3} />
                   </div>
-                  <p className="font-body text-[0.9375rem] lg:text-base text-[#0b0b0c] font-medium leading-relaxed">
+                  <p className="font-body text-[0.9375rem] lg:text-base text-[#1c1c1e] font-medium leading-relaxed">
                     {point}
                   </p>
                 </motion.div>
@@ -218,7 +211,7 @@ export function SwiftroomsSolutionSection() {
       </div>
 
       {/* Decorative gradient fade at bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#f5f4f0] to-transparent pointer-events-none z-5" />
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent pointer-events-none z-5" />
     </section>
   );
 }

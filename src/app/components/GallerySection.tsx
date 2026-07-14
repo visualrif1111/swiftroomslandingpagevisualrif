@@ -151,7 +151,7 @@ function ProjectCard({ project, variant }: ProjectCardProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={isCarousel ? undefined : { opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative overflow-hidden rounded-2xl bg-[#16161a] shadow-sm ring-1 ring-white/10 ${
+      className={`group relative overflow-hidden rounded-2xl bg-gray-100 shadow-sm ring-1 ring-black/5 ${
         isCarousel
           ? 'snap-center shrink-0 w-[78vw] max-w-[320px] aspect-[3/4]'
           : 'aspect-[4/5]'
@@ -168,12 +168,12 @@ function ProjectCard({ project, variant }: ProjectCardProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
 
       {/* Type tag — top left */}
-      <span className="absolute top-3 left-3 inline-flex items-center rounded-full border border-white/15 bg-black/40 px-3 py-1 font-accent text-[10px] lg:text-[11px] font-semibold uppercase tracking-[.12em] text-white/90 backdrop-blur">
+      <span className="absolute top-3 left-3 inline-flex items-center rounded-full bg-white/95 px-3 py-1 font-accent text-[10px] lg:text-[11px] font-semibold uppercase tracking-[.12em] text-[#007969] shadow-sm backdrop-blur">
         {project.type}
       </span>
 
       {/* Product tag — top right */}
-      <span className="absolute top-3 right-3 inline-flex items-center rounded-full border border-white/15 bg-black/40 px-3 py-1 font-body text-[10px] lg:text-[11px] font-medium text-white/90 backdrop-blur">
+      <span className="absolute top-3 right-3 inline-flex items-center rounded-full bg-[#007969]/90 px-3 py-1 font-body text-[10px] lg:text-[11px] font-medium text-white shadow-sm backdrop-blur">
         {project.product}
       </span>
 
@@ -185,7 +185,7 @@ function ProjectCard({ project, variant }: ProjectCardProps) {
             United Arab Emirates
           </span>
         </div>
-        <h3 className="mt-1 font-['Exo',sans-serif] text-lg lg:text-xl font-medium text-white tracking-[-0.01em]">
+        <h3 className="mt-1 font-heading text-lg lg:text-xl font-semibold text-white tracking-wide">
           {project.location}
         </h3>
         <p className="mt-0.5 max-h-0 overflow-hidden font-body text-sm leading-relaxed text-white/85 opacity-0 transition-all duration-500 ease-out group-hover:max-h-24 group-hover:opacity-100">
@@ -261,14 +261,14 @@ function MobileCarousel({ items }: { items: Project[] }) {
           >
             <span
               className={`block rounded-full transition-all duration-300 ${
-                active === i ? 'h-1.5 w-6 bg-white' : 'h-1.5 w-1.5 bg-white/25'
+                active === i ? 'h-1.5 w-6 bg-[#007969]' : 'h-1.5 w-1.5 bg-gray-300'
               }`}
             />
           </button>
         ))}
       </div>
 
-      <p className="text-center font-body text-xs text-[#6f6f76]">← Swipe to browse →</p>
+      <p className="text-center font-body text-xs text-gray-400">← Swipe to browse →</p>
     </div>
   );
 }
@@ -284,10 +284,10 @@ export function GallerySection() {
   return (
     <section
       id="gallery"
-      className="relative overflow-hidden bg-[#0e0e11] py-16 lg:py-24"
+      className="relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white py-16 lg:py-24"
     >
-      {/* Subtle accent glow — demoted teal, barely-there */}
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
+      {/* Subtle brand glow accents */}
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-60">
         <div className="absolute top-24 left-10 h-40 w-40 rounded-full bg-[#007969]/10 blur-3xl" />
         <div className="absolute bottom-24 right-10 h-48 w-48 rounded-full bg-[#007969]/10 blur-3xl" />
       </div>
@@ -301,15 +301,11 @@ export function GallerySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold tracking-[0.1em] text-[#3ea99a] tabular-nums">03</span>
-            <span className="h-px w-10 bg-[#2a2a30]" />
-            <span className="font-['Rajdhani',sans-serif] text-xs font-semibold uppercase tracking-[0.22em] text-[#a8a8ad]">Real Projects</span>
-          </div>
-          <h2 className="font-['Exo',sans-serif] font-medium tracking-[-0.02em] text-3xl text-[#eceae4] sm:text-4xl">
+          <h2 className="font-heading text-3xl font-medium text-[#1c1c1e] sm:text-4xl">
             Real Projects Across the UAE
           </h2>
-          <p className="mt-3 font-body text-sm text-[#a8a8ad] lg:text-base">
+          <div className="divider-brand mx-auto my-3" />
+          <p className="font-body text-sm text-[#3a3a3c] lg:text-base">
             Explore a selection of completed Swiftrooms installations across luxury villas,
             residential spaces and commercial projects.
           </p>
@@ -318,13 +314,13 @@ export function GallerySection() {
             href="https://www.instagram.com/swiftrooms.ae/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center justify-center gap-2 font-body text-xs text-[#eceae4] transition-colors hover:text-[#3ea99a] lg:text-sm"
+            className="mt-4 inline-flex items-center justify-center gap-2 font-body text-xs text-[#007969] transition-colors lg:text-sm"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Instagram className="h-4 w-4 lg:h-5 lg:w-5" />
             <span className="tracking-tight">@swiftrooms</span>
-            <span className="text-[10px] text-[#6f6f76] lg:text-xs">• Follow us for more</span>
+            <span className="text-[10px] text-[#6b7280] lg:text-xs">• Follow us for more</span>
           </motion.a>
         </motion.div>
 
@@ -345,14 +341,14 @@ export function GallerySection() {
                 aria-pressed={isActive}
                 className={`relative min-h-[44px] rounded-full px-4 py-2 font-accent text-[11px] font-semibold uppercase tracking-[.12em] ring-1 ring-inset transition-colors duration-200 lg:text-xs ${
                   isActive
-                    ? 'text-[#0e0e11] ring-transparent'
-                    : 'text-[#a8a8ad] ring-[#2a2a30] hover:text-[#eceae4] hover:ring-[#3d3d42]'
+                    ? 'text-white ring-transparent'
+                    : 'text-[#3a3a3c] ring-[#00796933] hover:text-[#007969] hover:ring-[#00796966]'
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="gallery-filter-pill"
-                    className="absolute inset-0 rounded-full bg-white shadow-sm"
+                    className="absolute inset-0 rounded-full bg-[#007969] shadow-sm"
                     transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                   />
                 )}
@@ -385,11 +381,11 @@ export function GallerySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-4 font-['Exo',sans-serif] font-medium tracking-[-0.02em] text-lg text-[#eceae4] sm:text-xl lg:text-2xl">
+          <p className="mb-4 font-heading text-lg font-medium text-[#1c1c1e] sm:text-xl lg:text-2xl">
             Inspired by these projects?
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button onClick={scrollToLeadForm} className="bh-btn bh-btn-on-noir w-full text-base sm:w-auto lg:text-lg">
+            <button onClick={scrollToLeadForm} className="btn-brand w-full text-base sm:w-auto lg:text-lg">
               Get Free Quote
             </button>
             <a

@@ -41,7 +41,7 @@ const SectionLoader = () => (
       height: '100vh',
     }}
   >
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0b0b0c]"></div>
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#007969]"></div>
   </div>
 );
 
