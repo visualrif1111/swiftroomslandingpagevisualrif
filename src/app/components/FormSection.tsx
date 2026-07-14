@@ -21,7 +21,7 @@ const formReviews = [
 
 export function FormSection() {
   return (
-    <section id="contact-form" className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 lg:snap-center flex items-center py-16 lg:py-0">
+    <section id="contact-form" className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 lg:snap-center flex items-center py-16 lg:pt-32 lg:pb-12">
       <div className="container mx-auto px-4 lg:px-8 relative z-10 py-6 lg:py-8">
         {/* Decorative Background */}
         <ImmersiveBackgroundAnimations />
