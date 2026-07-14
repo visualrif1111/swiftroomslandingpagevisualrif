@@ -244,7 +244,7 @@ export function BrandsSection() {
 
   return (
     <section id="brands" className="relative bg-[#007969] min-h-screen overflow-hidden lg:snap-center flex items-center">
-      <div className="container mx-auto px-4 py-8 lg:py-12 w-full">
+      <div className="container mx-auto max-w-[1600px] px-4 py-8 lg:py-12 w-full">
         {/* Section Header */}
         <motion.div
           className="text-center mb-6 lg:mb-12"
@@ -258,7 +258,8 @@ export function BrandsSection() {
           </h2>
         </motion.div>
 
-        {/* Mobile: Horizontal Scroll */}
+        {/* Mobile + tablet: Horizontal Scroll (switch to desktop slick at lg,
+            matching every other section's 1024 breakpoint) */}
         <div className="lg:hidden">
           <div
             ref={scrollContainerRef}
@@ -296,13 +297,17 @@ export function BrandsSection() {
               <button
                 key={index}
                 onClick={() => scrollToSlide(index)}
-                className={`transition-all duration-300 ${
-                  activeSlide === index
-                    ? 'bg-white w-8 h-2'
-                    : 'bg-white/40 hover:bg-white/60 w-2 h-2'
-                } rounded-full`}
+                className="flex items-center justify-center h-11 px-1 -my-4"
                 aria-label={`Go to brand ${index + 1}`}
-              />
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    activeSlide === index
+                      ? 'bg-white w-8 h-2'
+                      : 'bg-white/40 hover:bg-white/60 w-2 h-2'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>

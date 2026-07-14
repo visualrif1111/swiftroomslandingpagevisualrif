@@ -318,13 +318,17 @@ export function SocialProofSection() {
                   <button
                     key={index}
                     onClick={() => scrollToSlide(index)}
-                    className={`transition-all duration-300 ${
-                      activeReel === index
-                        ? 'bg-[#007969] w-8 h-2'
-                        : 'bg-gray-300 hover:bg-[#007969]/50 w-2 h-2'
-                    } rounded-full`}
+                    className="flex items-center justify-center h-11 px-1 -my-4"
                     aria-label={`Go to video ${index + 1}`}
-                  />
+                  >
+                    <span
+                      className={`block rounded-full transition-all duration-300 ${
+                        activeReel === index
+                          ? 'bg-[#007969] w-8 h-2'
+                          : 'bg-gray-300 hover:bg-[#007969]/50 w-2 h-2'
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
             </div>
@@ -422,7 +426,7 @@ export function SocialProofSection() {
                     key={stat.label}
                     className="relative bg-white px-4 py-5 rounded-xl border border-[#e5e7eb] card-hover flex flex-col items-center justify-center text-center"
                   >
-                    <div className="font-heading font-bold text-4xl text-[#007969] leading-none mb-1.5">
+                    <div className="font-heading font-bold text-3xl sm:text-4xl text-[#007969] leading-none mb-1.5 break-words max-w-full">
                       {stat.value}
                     </div>
                     <div className="font-body text-xs text-[#6b7280] leading-snug">

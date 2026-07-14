@@ -1,0 +1,53 @@
+# Security audit — fails a PR if a HIGH/critical vulnerability is introduced,
+# and runs weekly to catch newly-disclosed advisories in existing deps.
+# Complements Dependabot (which opens fix PRs). See SECURITY.md §8/§11.
+name: Security Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Mondays 07:00 UTC — catch advisories disclosed over the week.
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+# Least privilege: this job only reads the repo.
+permissions:
+  contents: read
+
+concurrency:
+  group: security-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: npm audit + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install (locked)
+        # `npm ci` installs exactly from package-lock.json. Install scripts are
+        # kept enabled because native build tools (esbuild, @tailwindcss/oxide)
+        # need their postinstall to link platform binaries — disabling them
+        # would break the build step below.
+        run: npm ci
+
+      # Blocking gate: what actually ships to browsers must be clean.
+      - name: Audit production dependencies (fail on high)
+        run: npm audit --omit=dev --audit-level=high
+
+      # Non-blocking visibility into dev/build-tool advisories.
+      - name: Audit all dependencies (report only)
+        run: npm audit --audit-level=moderate || true
+
+      # Ensure the app still builds (guards against a bad dep bump).
+      - name: Build
+        run: npm run build

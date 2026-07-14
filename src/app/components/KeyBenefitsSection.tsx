@@ -77,7 +77,7 @@ export function KeyBenefitsSection() {
         containIntrinsicSize: '1px 100vh',
       }}
     >
-      <div className="container mx-auto px-5 lg:px-6 relative z-10">
+      <div className="container mx-auto max-w-[1600px] px-5 lg:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
           className="text-center mb-8 lg:mb-12 max-w-3xl mx-auto"

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, ChevronLeft, Check, ArrowRight, Building, Home, Store, DoorOpen, Columns, RectangleVertical, Grid3x3, Sun, HardHat, Wrench, MessageCircle, MapPin, Phone, Mail, Instagram, Globe, Glasses, LayoutGrid, ChevronDown, AlertCircle, Upload, X } from 'lucide-react';
 import svgPaths from '../../imports/svg-c8s3lgkv08';
 import svgPathsSelection from '../../imports/svg-ws080e5oua';
+import { turnstileEnabled, getTurnstileToken } from '../utils/turnstile';
 
 // Country codes for phone number validation
 const countryCodes = [
@@ -391,11 +392,11 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       return;
     }
 
-    // Endpoint is configured via VITE_LEAD_ENDPOINT (Formspree form URL, webhook,
-    // or your own API). Kept in env so no endpoint is hardcoded in the bundle.
+    // Direct fallback: POST straight to VITE_LEAD_ENDPOINT (Formspree/webhook).
+    // Kept in env so no endpoint is hardcoded in the bundle. Used when the
+    // Turnstile-protected proxy is not enabled/configured.
     const endpoint = import.meta.env.VITE_LEAD_ENDPOINT as string | undefined;
-
-    try {
+    const deliverDirect = async () => {
       if (endpoint) {
         const res = await fetch(endpoint, {
           method: 'POST',
@@ -406,6 +407,40 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
       } else {
         // No endpoint set yet — warn loudly so leads aren't silently lost in dev.
         console.warn('[LeadForm] VITE_LEAD_ENDPOINT is not configured — lead was NOT delivered:', payload);
+      }
+    };
+
+    try {
+      if (turnstileEnabled) {
+        // Protected path: mint a Turnstile token and submit through the
+        // same-origin /api/lead proxy, which verifies it server-side.
+        let token: string;
+        try {
+          token = await getTurnstileToken();
+        } catch {
+          setSubmitError('We couldn’t verify your browser. Please try again, or reach us on WhatsApp.');
+          setIsSubmitting(false);
+          return;
+        }
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            payload,
+            turnstileToken: token,
+            honeypot,
+            elapsedMs: Date.now() - formOpenedAt,
+          }),
+        });
+        if (res.status === 501) {
+          // Proxy present but LEAD_ENDPOINT not configured — don't lose the
+          // lead; fall back to the direct endpoint.
+          await deliverDirect();
+        } else if (!res.ok) {
+          throw new Error(`Lead proxy failed with status ${res.status}`);
+        }
+      } else {
+        await deliverDirect();
       }
       // Remember this enquiry so an accidental resubmit doesn't double-send.
       submittedSignatureRef.current = signature;
@@ -493,7 +528,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   <select
                     value={selectedCountryCode}
                     onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
-                    className="px-2 py-3.5 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-sm text-[#1c1c1e] cursor-pointer max-w-[92px]"
+                    className="px-2 py-3.5 bg-white border border-[#e5e7eb] rounded-md focus:outline-none focus:ring-1 focus:ring-[#007969] focus:border-[#007969] transition-all font-body text-base text-[#1c1c1e] cursor-pointer max-w-[92px]"
                     aria-label="Country code"
                   >
                     {countryCodes.map((c) => (
@@ -675,7 +710,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                   {files.map((f, i) => (
                     <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
                       <span className="truncate max-w-[140px]">{f.name}</span>
-                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="text-[#007969]/70 hover:text-[#007969]" aria-label="Remove file">
+                      <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#007969]/70 hover:text-[#007969]" aria-label="Remove file">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -715,7 +750,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
             </div>
 
             <div>
-              <h3 className="font-heading text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3">
+              <h3 className="font-heading text-2xl lg:text-4xl font-semibold text-[#1c1c1e] mb-3 break-words">
                 Thank You, {formData.name}!
               </h3>
               <p className="font-body text-base lg:text-lg text-[#3a3a3c] mb-2">
@@ -875,7 +910,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
               <select
                 value={selectedCountryCode}
                 onChange={(e) => { setSelectedCountryCode(e.target.value); if (phoneError) setPhoneError(''); }}
-                className="px-2 py-4 bg-white border border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] font-body text-sm text-[#1c1c1e] max-w-[96px]"
+                className="px-2 py-4 bg-white border border-[#e5e7eb] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007969]/30 focus:border-[#007969] font-body text-base text-[#1c1c1e] max-w-[96px]"
                 aria-label="Country code"
               >
                 {countryCodes.map((c) => (<option key={c.code} value={c.code}>{c.flag} {c.code}</option>))}
@@ -1030,7 +1065,7 @@ export function LeadForm({ autoOpen = false, ctaVariant = 'green', listenForOpen
                 {files.map((f, i) => (
                   <span key={i} className="inline-flex items-center gap-1 bg-[#e6f4f1] border border-[#00796933] rounded px-2 py-1 text-xs font-body text-[#007969] max-w-full">
                     <span className="truncate max-w-[140px]">{f.name}</span>
-                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="text-[#007969]/70" aria-label="Remove file">
+                    <button type="button" onClick={() => setFiles(files.filter((_, idx) => idx !== i))} className="inline-flex items-center justify-center p-2 -m-1 text-[#007969]/70" aria-label="Remove file">
                       <X className="w-3 h-3" />
                     </button>
                   </span>

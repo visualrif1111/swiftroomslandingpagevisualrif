@@ -17,7 +17,7 @@ export function StickyMobileCTA() {
   const visibleRef = useRef(false);
 
   useEffect(() => {
-    const scrollContainer = document.querySelector('.overflow-y-scroll.h-screen') as HTMLElement | null;
+    const scrollContainer = (document.getElementById('app-scroll') || document.querySelector('.overflow-y-scroll')) as HTMLElement | null;
     const target = scrollContainer || window;
 
     const getScrollTop = () =>
@@ -102,20 +102,22 @@ export function StickyMobileCTA() {
             {/* Primary CTA - Get Free Quote (dominant) */}
             <button
               onClick={handleQuote}
-              className="btn-brand flex-[2] shadow-lg"
+              className="btn-brand flex-[2] shadow-lg !px-3 min-h-11 whitespace-nowrap"
             >
               Get Free Quote
             </button>
 
-            {/* Secondary CTA - WhatsApp Expert */}
+            {/* Secondary CTA - WhatsApp Expert. Label collapses to icon-only on
+                the narrowest phones (<380px) so it never clips. */}
             <a
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp flex-1"
+              className="btn-whatsapp flex-1 !px-3 min-h-11 whitespace-nowrap"
+              aria-label="Message a WhatsApp expert"
             >
-              <MessageCircle className="w-4 h-4" />
-              WhatsApp
+              <MessageCircle className="w-4 h-4 shrink-0" />
+              <span className="hidden min-[380px]:inline">WhatsApp</span>
             </a>
           </div>
         </motion.div>

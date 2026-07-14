@@ -135,7 +135,7 @@ export function Navigation() {
     // Give the menu time to start closing animation before scrolling
     setTimeout(() => {
       // Method 1: Try to find the custom scroll container
-      const scrollContainer = document.querySelector('.overflow-y-scroll.h-screen') as HTMLElement;
+      const scrollContainer = (document.getElementById('app-scroll') || document.querySelector('.overflow-y-scroll')) as HTMLElement;
 
       if (scrollContainer) {
         console.log(`[Navigation] Using scroll container method for ${id}`);
@@ -208,7 +208,7 @@ export function Navigation() {
   // Lock background scrolling while the mobile menu is open. The app scrolls
   // via an inner container, so lock that too — not just the body.
   useEffect(() => {
-    const inner = document.querySelector('.overflow-y-scroll.h-screen') as HTMLElement | null;
+    const inner = (document.getElementById('app-scroll') || document.querySelector('.overflow-y-scroll')) as HTMLElement | null;
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
       if (inner) inner.style.overflow = 'hidden';
@@ -217,9 +217,16 @@ export function Navigation() {
       if (inner) inner.style.overflow = '';
     }
 
+    // Close the mobile menu on Escape (keyboard / AT users).
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) setMobileMenuOpen(false);
+    };
+    if (mobileMenuOpen) window.addEventListener('keydown', onKeyDown);
+
     return () => {
       document.body.style.overflow = 'unset';
       if (inner) inner.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
     };
   }, [mobileMenuOpen]);
 
@@ -231,7 +238,7 @@ export function Navigation() {
         className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md"
         style={{ willChange: 'auto' }}
       >
-        <div className="container mx-auto px-4 lg:px-6">
+        <div className="container mx-auto max-w-[1600px] px-4 lg:px-6">
           <div className="flex items-center justify-between h-20">
             {/* Mobile / tablet header: centered logo with hamburger on the right */}
             <div className="flex lg:hidden items-center justify-center w-full relative h-20">
@@ -363,6 +370,9 @@ export function Navigation() {
               transition={{ type: 'tween', duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
               className="fixed inset-0 bg-white/90 backdrop-blur-2xl z-50 lg:hidden overflow-hidden"
               style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Site menu"
             >
               {/* Menu header: centered logo, close button on the right */}
               <motion.div
@@ -397,9 +407,10 @@ export function Navigation() {
               </motion.div>
 
               {/* Menu body: links (scrollable) with contact details pinned below */}
-              <div className="relative h-[calc(100vh-5rem)] flex flex-col justify-between py-6">
-                {/* Navigation links */}
-                <div className="flex-1 flex flex-col justify-center items-center gap-6 overflow-y-auto px-4">
+              <div className="relative h-[calc(100svh-5rem)] flex flex-col justify-between py-6">
+                {/* Navigation links — justify-start (not center) so an overflowing
+                    list scrolls from the top instead of clipping the first item. */}
+                <div className="flex-1 min-h-0 flex flex-col justify-start items-center gap-6 overflow-y-auto px-4">
                   {mobileNavItems.map((item, index) => {
                     const isActive = activeSection === item.id;
                     const itemDelay = 0.1 + index * 0.05;

@@ -238,7 +238,7 @@ function MobileCarousel({ items }: { items: Project[] }) {
   };
 
   return (
-    <div className="lg:hidden">
+    <div className="md:hidden">
       <div
         ref={scrollerRef}
         onScroll={handleScroll}
@@ -257,7 +257,7 @@ function MobileCarousel({ items }: { items: Project[] }) {
             key={project.id}
             onClick={() => scrollToIndex(i)}
             aria-label={`Go to project ${i + 1}`}
-            className="flex h-9 items-center justify-center px-0.5"
+            className="flex h-11 items-center justify-center px-0.5"
           >
             <span
               className={`block rounded-full transition-all duration-300 ${
@@ -339,7 +339,7 @@ export function GallerySection() {
                 key={filter.label}
                 onClick={() => setActiveFilter(filter.type)}
                 aria-pressed={isActive}
-                className={`relative min-h-[40px] rounded-full px-4 py-2 font-accent text-[11px] font-semibold uppercase tracking-[.12em] ring-1 ring-inset transition-colors duration-200 lg:text-xs ${
+                className={`relative min-h-[44px] rounded-full px-4 py-2 font-accent text-[11px] font-semibold uppercase tracking-[.12em] ring-1 ring-inset transition-colors duration-200 lg:text-xs ${
                   isActive
                     ? 'text-white ring-transparent'
                     : 'text-[#3a3a3c] ring-[#00796933] hover:text-[#007969] hover:ring-[#00796966]'
@@ -361,7 +361,7 @@ export function GallerySection() {
         {/* Desktop: premium masonry-style grid */}
         <motion.div
           layout
-          className="mt-8 hidden grid-cols-2 gap-5 lg:mt-12 lg:grid lg:grid-cols-3 lg:gap-6"
+          className="mt-8 hidden md:grid grid-cols-2 gap-5 lg:mt-12 lg:grid-cols-3 lg:gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (

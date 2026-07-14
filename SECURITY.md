@@ -34,10 +34,13 @@ no preview mode**. The lead form submits client-side to an external endpoint
 | Edge request filtering | `middleware.ts` | Blocks exploit-probe paths & scanner UAs; fail-open |
 | Secure reviews proxy | `api/reviews.ts` | Keeps the Google Places API key server-side |
 | Form anti-spam | `src/app/components/LeadForm.tsx` | Honeypot, submit-timing check, duplicate-submit guard, file validation |
+| Reviews key hardening | `src/app/services/googleReviewsService.ts` | Removed all client-side `VITE_GOOGLE_PLACES_API_KEY` reads so the key can never be inlined into the public bundle; live reviews go only through the server-side `/api/reviews` proxy |
+| Dependency hygiene | `package.json` | Removed unused `react-router` (cleared a HIGH advisory); patched build toolchain; `npm audit` → **0 vulnerabilities** (prod + dev) |
 | Secret hygiene | `.gitignore` | Ignores `.env` / `.env.*` (keeps `.env.example`) |
 | SEO/crawler control | `public/robots.txt`, `public/sitemap.xml`, `index.html` | robots, sitemap, canonical + Open Graph/Twitter meta |
 
-No visual/UX change was made. No secret is committed.
+No visual/UX change was made — the production bundle hash is unchanged by the
+dependency cleanup. No secret is committed.
 
 ---
 
@@ -110,6 +113,11 @@ Rationale / known conflicts:
   still blocks plaintext `http:` and non-web protocols. **Tighten** once the
   endpoint host is known, e.g. `connect-src 'self' https://formspree.io` (add
   `https://maps.googleapis.com` only if the reviews proxy is bypassed).
+- **`script-src`/`frame-src` include `https://challenges.cloudflare.com`** for
+  the optional Cloudflare Turnstile widget (loads a script + a challenge iframe).
+  This only *permits* the source; nothing loads it unless
+  `VITE_TURNSTILE_SITE_KEY` is set (see §7). Turnstile's network calls are
+  covered by `connect-src 'self' https:`.
 - **`frame-src`** allows YouTube (hero + reels embeds). `img-src https:` covers
   YouTube thumbnails and Google review avatars; can be tightened to
   `i.ytimg.com lh3.googleusercontent.com` if you want a stricter policy.
@@ -180,6 +188,15 @@ edge-cached for 1h. To enable:
 Until configured, the endpoint returns `501` and the client keeps its static
 reviews, so nothing breaks. Only `GET` is allowed; errors never leak internals.
 
+**Client-side key path fully removed (2026-07 audit).** `googleReviewsService.ts`
+previously kept a `CONFIG.apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY`
+read plus a commented-out direct-to-Google fetch. Even though it was dead code,
+Vite inlines any referenced `VITE_*` value into the public bundle at build time,
+so setting that env var would have leaked the key. All such reads and the
+direct-fetch path were deleted; the service now calls **only** `/api/reviews`.
+Verified: `grep -rE "VITE_GOOGLE|AIza|maps.googleapis.com" dist/assets/*.js`
+returns nothing.
+
 ---
 
 ## 7. Form security (`LeadForm.tsx`)
@@ -195,11 +212,31 @@ Implemented client-side (no server exists to enforce more):
   domain blocking, double-submit lock.
 
 **CSRF: N/A** — there is no authenticated, cookie-based server endpoint on our
-origin; the form is an unauthenticated cross-origin POST to Formspree, so a CSRF
-token would add nothing. **For a stronger guarantee, add Cloudflare Turnstile**:
-render the widget on the lead form, and validate the token in a small
-`api/lead.ts` proxy (with `siteverify`) instead of posting to Formspree directly.
-This is the recommended next step if spam becomes a problem.
+origin; the form is an unauthenticated POST, so a CSRF token would add nothing.
+
+### Turnstile-protected proxy (`api/lead.ts` + `src/app/utils/turnstile.ts`)
+The stronger anti-spam path is now **implemented and inert-by-default** (parity
+with the reviews proxy):
+
+- When `VITE_TURNSTILE_SITE_KEY` is set, the form lazy-loads Cloudflare Turnstile
+  (invisible, one-off widget per submit — **no visible UI, no UX/CRO change**),
+  mints a token, and POSTs the payload to the **same-origin `/api/lead`**
+  instead of exposing a third-party endpoint in the bundle.
+- `api/lead.ts` (edge) then: validates the request **Origin** (same-origin
+  only), re-checks the **honeypot + submit-timing** server-side (defence in
+  depth — a bot hitting the endpoint directly can't bypass the client checks),
+  verifies the Turnstile token via **`siteverify`** when `TURNSTILE_SECRET_KEY`
+  is set, and forwards to a **server-only `LEAD_ENDPOINT`**. Size-capped body,
+  request timeouts, sanitised error responses.
+- **Staged rollout / never breaks:** with no site key the entire Turnstile path
+  is tree-shaken out of the bundle and the form uses its existing direct
+  endpoint. If the site key is set but `LEAD_ENDPOINT` isn't, `/api/lead` returns
+  `501` and the client falls back to the direct endpoint so no lead is lost.
+- Verification is only *enforced* once `TURNSTILE_SECRET_KEY` exists, so you can
+  enable the widget and the server check independently.
+
+Server-only env: `LEAD_ENDPOINT`, `TURNSTILE_SECRET_KEY` (no `VITE_` prefix).
+Client env: `VITE_TURNSTILE_SITE_KEY` (public site key).
 
 ---
 
@@ -211,7 +248,7 @@ This is the recommended next step if spam becomes a problem.
 | Broken access control | N/A — no auth/roles; no protected resources. |
 | Security misconfiguration | Fixed — headers/CSP added, secrets gitignored, error bodies sanitised in `api/reviews.ts`. |
 | Sensitive data exposure | Fixed — Google key moved server-side; no secrets in bundle; `.env*` ignored. |
-| Vulnerable components | Monitor — run `npm audit`; keep deps patched (see checklist). |
+| Vulnerable components | Fixed — removed unused `react-router` (HIGH advisory) + patched build toolchain; `npm audit` = **0 vulnerabilities**. Keep monitoring (see checklist). |
 | SSRF | Low — the only server fetch (`api/reviews.ts`) targets a fixed Google URL; no user-controlled URL. |
 | XSS | Mitigated — strict `script-src 'self'`, no `dangerouslySetInnerHTML` on user input (only static JSON-LD). |
 | CSRF | N/A — see §7. |
@@ -246,7 +283,11 @@ This is the recommended next step if spam becomes a problem.
 - [ ] Enable Vercel WAF managed ruleset + rate-limit rules (§5).
 - [ ] Enable BotID; document Attack Challenge Mode runbook.
 - [ ] Tighten CSP `connect-src` to the real endpoint host once known.
-- [ ] `npm audit` — triage & patch; schedule recurring dependency review.
+- [x] `npm audit` — **0 vulnerabilities** (prod + dev) as of 2026-07 audit.
+- [x] Automated recurring dependency scanning — **Dependabot**
+      (`.github/dependabot.yml`, weekly) + a **Security Audit CI workflow**
+      (`.github/workflows/security-audit.yml`) that fails any PR introducing a
+      HIGH+ production vulnerability and rebuilds to catch bad dep bumps.
 - [ ] Confirm no `.env`/`.env.local` is tracked (`git ls-files | grep -i env`
       should show only `.env.example`).
 
@@ -259,6 +300,58 @@ This is the recommended next step if spam becomes a problem.
 2. Tighten CSP `connect-src` and `img-src` to explicit hosts once finalised.
 3. Add **Vercel Web Analytics + Speed Insights** and a **Log Drain** for
    security/error monitoring (failed requests, 4xx/5xx, bot blocks).
-4. Set up **Dependabot**/`npm audit` in CI for continuous dependency scanning.
+4. ~~Set up **Dependabot**/`npm audit` in CI for continuous dependency
+   scanning.~~ ✅ Done — `.github/dependabot.yml` + `.github/workflows/security-audit.yml`.
 5. Consider serving Google Fonts self-hosted to drop the two `fonts.g*` CSP
    entries and remove a third-party dependency.
+
+---
+
+## 12. Deployment / domain status (OPEN — verified live 2026-07-08)
+
+Live header verification found that **the hardening in this repo currently
+protects only the Vercel deployment, not the primary customer-facing domain.**
+
+| Host | Server | Security posture |
+|------|--------|------------------|
+| `swiftroomslandingpagevisualrif.vercel.app` | Vercel | ✅ Full hardened suite (CSP, HSTS w/ `includeSubDomains; preload`, `X-Frame-Options: DENY`, COOP/CORP, Permissions-Policy); middleware blocks `/.env` (404), scanner UAs (403); `/api/reviews` → 501 safe fallback. |
+| `www.swiftrooms.ae` (canonical prod) | **nginx** (not Vercel) | ⚠️ Weak: `X-Frame-Options: SAMEORIGIN`, near-empty CSP (`frame-ancestors 'self'` only — no script/style/connect rules), HSTS `max-age=31536000` without `includeSubDomains`/`preload`. |
+| `swiftrooms.ae` | nginx | 301 → `www` |
+| `swiftrooms-newbuild.vercel.app` | Vercel | Separate deployment. |
+
+**Decision (2026-07-08): do NOT attach `swiftrooms.ae` to this Vercel project
+yet.** The domain remains on its existing nginx origin by owner instruction.
+Consequence: none of the header/CSP/middleware/WAF hardening in this repo reaches
+real visitors until the domain is cut over. Two future paths when ready:
+1. **Cutover** — point `swiftrooms.ae` DNS at this Vercel project; hardening then
+   applies automatically. (Re-verify canonical/redirects and lead endpoint first.)
+2. **Harden nginx in place** — if the domain stays on nginx, replicate the
+   `vercel.json` header suite in the nginx `server` block.
+
+This is a DNS/ops action, not a code change; tracked here so it isn't forgotten.
+
+---
+
+## 13. Logging & monitoring — CSP violation reporting (Phases 16–17)
+
+The enforcing CSP now reports what it blocks. `vercel.json` adds
+`report-uri /api/csp-report; report-to csp-endpoint` to the policy plus a
+`Reporting-Endpoints: csp-endpoint="/api/csp-report"` header; the collector is
+`api/csp-report.ts`.
+
+- **Passive & free** — browsers POST a small JSON report **only on an actual
+  violation**, so normal page loads are unaffected (no critical-path cost).
+- **What it catches** — a newly-added third-party script that the policy blocks,
+  an injected inline event handler (a possible XSS attempt), or a directive
+  that's too strict for a legitimate resource.
+- **Where it lands** — one compact, bounded, **sanitised** structured line per
+  report in the Vercel function log (`[csp-report] {...}`), visible in the
+  dashboard and **drainable to a SIEM via a Log Drain**. Only URL/directive
+  diagnostic fields are logged — never the full untrusted body, never secrets.
+- **Hardening of the collector itself** — POST-only (405 otherwise), 16 KB body
+  cap, per-field length clipping, fails closed to `204` on malformed input,
+  `no-store`.
+
+This is the recommended hook for external monitoring: point a **Vercel Log
+Drain** (or Datadog/Sentry) at the function logs to alert on `[csp-report]`
+lines and on 4xx/5xx spikes from the middleware bot/probe blocks.

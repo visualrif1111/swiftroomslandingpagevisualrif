@@ -9,20 +9,28 @@ export function ScrollProgressIndicator() {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    // The app scrolls inside the #app-scroll container, not the document, so
+    // read scroll position from it (falling back to window if absent).
+    const el = document.getElementById('app-scroll');
+    const target: HTMLElement | Window = el ?? window;
+
     // Throttled scroll handler - limits to 60fps
     const handleScroll = rafThrottle(() => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
+      const scrollTop = el ? el.scrollTop : window.scrollY;
+      const totalHeight = el
+        ? el.scrollHeight - el.clientHeight
+        : document.documentElement.scrollHeight - window.innerHeight;
+      const progress = totalHeight > 0 ? (scrollTop / totalHeight) * 100 : 0;
       setScrollProgress(progress);
-      
+
       // Hide when near bottom (90%+)
       setIsVisible(progress < 90);
     });
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    target.addEventListener('scroll', handleScroll as EventListener, { passive: true });
     handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => target.removeEventListener('scroll', handleScroll as EventListener);
   }, []);
 
   if (!isVisible) return null;

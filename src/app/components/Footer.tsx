@@ -19,7 +19,7 @@ export function Footer() {
   return (
     <footer id="footer" className="bg-[#1c1c1e] text-white lg:snap-center">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+      <div className="container mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         
         {/* Mobile: Single Column / Desktop: Two Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-8">

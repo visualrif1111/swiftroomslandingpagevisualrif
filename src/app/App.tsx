@@ -153,7 +153,8 @@ export default function App() {
 
       <div
         ref={scrollContainerRef}
-        className="overflow-y-scroll h-screen"
+        id="app-scroll"
+        className="overflow-y-scroll h-[100dvh]"
         style={{
           WebkitOverflowScrolling: 'touch',
           overscrollBehavior: 'contain',

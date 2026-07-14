@@ -94,11 +94,9 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center lg:snap-center"
+      className="relative min-h-[100svh] flex items-start justify-center pt-24 pb-10 lg:items-center lg:pt-32 lg:pb-12 lg:snap-center"
       style={{
         contain: 'layout style',
-        minHeight: '100vh',
-        height: '100vh',
         contentVisibility: 'auto',
         containIntrinsicSize: '100vw 100vh',
       }}
@@ -160,7 +158,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
       )}
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-5 lg:px-6 w-full py-6 lg:py-0">
+      <div className="relative z-10 container mx-auto max-w-[1600px] px-5 lg:px-6 w-full py-6 lg:py-0">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           {/* Left Side - Content (Mobile switches between content and form) */}
           <div className="text-white space-y-3 lg:space-y-6">
@@ -192,7 +190,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
 
                   {/* Main Heading — oversized Exo display for maximum impact */}
                   <motion.h1
-                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[0.98] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
+                    className="font-['Exo',sans-serif] font-extrabold text-white leading-[1.05] lg:leading-[1.0] tracking-[-0.02em] text-[2.15rem] sm:text-4xl lg:text-[2.5rem] xl:text-[2.85rem]"
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
@@ -202,10 +200,10 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
 
                   {/* Subheadline — concise on mobile, fuller on desktop */}
                   <p className="lg:hidden font-['Barlow',sans-serif] text-[0.95rem] text-white/90 leading-relaxed max-w-md">
-                    Designed for UAE climates. Installed by specialists with over 3,500 completed projects.
+                    Designed for the UAE climate. Installed by our Swift Rooms team, with over 3,500 successful projects.
                   </p>
                   <p className="hidden lg:block font-['Barlow',sans-serif] text-lg text-white/90 leading-relaxed max-w-xl">
-                    Premium aluminium windows, sliding doors &amp; glass rooms — designed for UAE climates, manufactured locally, and installed by specialists with over 3,500 completed projects.
+                    Premium aluminium windows, sliding doors &amp; glass rooms, designed for the UAE climate, manufactured locally, and installed by our Swift Rooms team, with over 3,500 successful projects across the UAE.
                   </p>
 
                   {/* Above-fold trust strip — hard credibility numbers */}

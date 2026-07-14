@@ -7,25 +7,39 @@ interface PrivacyModalProps {
 }
 
 export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open + close on Escape
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) onClose();
+    };
+    if (isOpen) window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="relative bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden">
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[85dvh] flex flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Privacy Policy"
+      >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <h2 className="font-['Exo',sans-serif] text-xl lg:text-2xl font-bold text-[#1c1c1e]">
             Privacy Policy
           </h2>
@@ -39,7 +53,7 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
         </div>
 
         {/* Content */}
-        <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-6">
+        <div className="flex-1 min-h-0 overflow-y-auto px-6 py-6">
           <div className="prose prose-sm max-w-none">
             <p className="font-['Barlow',sans-serif] text-sm text-gray-600 mb-6">
               Last Updated: March 2026
@@ -134,7 +148,7 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4">
+        <div className="flex-shrink-0 bg-gray-50 border-t border-gray-200 px-6 py-4">
           <button
             onClick={onClose}
             className="w-full bg-[#007969] text-white px-6 py-3 rounded-lg font-['Rajdhani',sans-serif] font-semibold hover:bg-[#006156] transition-colors"

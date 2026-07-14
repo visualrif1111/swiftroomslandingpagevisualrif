@@ -1,48 +1,43 @@
 /**
  * Google Reviews Service
- * 
- * This service handles fetching reviews from Google Places API.
- * 
- * INTEGRATION INSTRUCTIONS:
- * ========================
- * 
- * 1. Get Google Places API Key:
- *    - Go to https://console.cloud.google.com/
- *    - Enable "Places API"
- *    - Create API key with Places API restrictions
- * 
- * 2. Find your Place ID:
- *    - Use Place ID Finder: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
- *    - Search for "Swift Rooms LLC" and copy the Place ID
- * 
- * 3. Set Environment Variables:
- *    - Create .env.local file in project root
- *    - Add: VITE_GOOGLE_PLACES_API_KEY=your_api_key_here
- *    - Add: VITE_GOOGLE_PLACE_ID=your_place_id_here
- * 
- * 4. Backend Implementation (RECOMMENDED):
- *    - For production, call Google API from your backend to keep API key secure
- *    - Create an endpoint: GET /api/reviews
- *    - Backend fetches from Google and returns sanitized data
- *    - Update fetchGoogleReviews() to call your backend endpoint
- * 
- * 5. Rate Limits:
- *    - Google Places API has usage limits
- *    - Implement caching to reduce API calls
- *    - Consider storing reviews in database and refreshing periodically
+ *
+ * Fetches customer reviews for the Social Proof section. Ships with a bundled
+ * static set of real reviews (default) and can switch to live Google reviews.
+ *
+ * SECURE INTEGRATION (live reviews):
+ * ==================================
+ * The Google Places API key must NEVER live on the client — anything read via
+ * `import.meta.env.VITE_*` is inlined into the public JS bundle. Live reviews
+ * are therefore served through a same-origin server-side proxy that holds the
+ * key in server-only env vars.
+ *
+ * 1. Get a Google Places API key (https://console.cloud.google.com/, enable
+ *    "Places API", restrict the key) and your Place ID.
+ * 2. In Vercel → Project → Settings → Environment Variables set (SERVER-ONLY,
+ *    NO `VITE_` prefix): `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`.
+ * 3. Flip `useStaticReviews` to `false` below. The client then calls the
+ *    same-origin `/api/reviews` edge function (see `api/reviews.ts`), which is
+ *    edge-cached for 1h and never exposes the key.
+ *
+ * Until the proxy env vars are set, `/api/reviews` returns 501 and this service
+ * transparently falls back to the bundled static reviews, so nothing breaks.
  */
 
-import type { Review, ReviewsResponse, GooglePlacesReview } from '../types/reviews';
+import type { Review, ReviewsResponse } from '../types/reviews';
 
 // Configuration
+//
+// SECURITY: This service NEVER references the Google Places API key on the
+// client. The key would be inlined into the public JS bundle by Vite if a
+// `VITE_`-prefixed env var were read here. Live reviews are fetched via the
+// same-origin `/api/reviews` edge function, which holds the key server-side
+// (see `api/reviews.ts`). Keep it that way — do not add `import.meta.env`
+// API-key reads to this file.
 const CONFIG = {
-  // Replace with your actual values or use environment variables
-  apiKey: import.meta.env.VITE_GOOGLE_PLACES_API_KEY || 'YOUR_GOOGLE_PLACES_API_KEY',
-  placeId: import.meta.env.VITE_GOOGLE_PLACE_ID || 'YOUR_GOOGLE_PLACE_ID',
-  // Google Places API endpoint
-  apiEndpoint: 'https://maps.googleapis.com/maps/api/place/details/json',
-  // Set to true to use static reviews, false to use API
-  useStaticReviews: true, // Change to false when API is configured
+  // Set to true to use bundled static reviews, false to fetch live reviews
+  // from the server-side `/api/reviews` proxy (requires the proxy to be
+  // configured in Vercel — until then it 501s and we fall back to static).
+  useStaticReviews: true,
 };
 
 /**
@@ -55,34 +50,15 @@ export async function fetchGoogleReviews(): Promise<ReviewsResponse> {
   }
 
   try {
-    // METHOD 1: Direct API Call (Client-side - NOT RECOMMENDED for production)
-    // This exposes your API key. Use only for testing.
-    /*
-    const response = await fetch(
-      `${CONFIG.apiEndpoint}?place_id=${CONFIG.placeId}&fields=name,rating,reviews,user_ratings_total&key=${CONFIG.apiKey}`
-    );
-    
-    if (!response.ok) {
-      throw new Error(`Google API error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    if (data.status !== 'OK') {
-      throw new Error(`Google API status: ${data.status}`);
-    }
-    
-    return mapGoogleApiResponse(data.result);
-    */
-
-    // METHOD 2: Backend API Call (RECOMMENDED)
-    // Call your own backend which securely calls Google API
+    // Live reviews are served ONLY through our same-origin server-side proxy,
+    // which keeps the Google Places API key off the client. The browser never
+    // talks to Google directly and never sees the key.
     const response = await fetch('/api/reviews');
-    
+
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
 
@@ -95,28 +71,6 @@ export async function fetchGoogleReviews(): Promise<ReviewsResponse> {
       error: error instanceof Error ? error.message : 'Failed to fetch reviews'
     };
   }
-}
-
-/**
- * Map Google Places API response to our Review interface
- */
-function mapGoogleApiResponse(result: any): ReviewsResponse {
-  const reviews: Review[] = (result.reviews || []).map((review: GooglePlacesReview, index: number) => ({
-    id: `google-${result.time || index}`,
-    author: review.author_name,
-    rating: review.rating,
-    date: review.relative_time_description,
-    text: review.text,
-    platform: 'Google' as const,
-    authorPhotoUrl: review.profile_photo_url,
-    relativeTimeDescription: review.relative_time_description,
-  }));
-
-  return {
-    reviews,
-    averageRating: result.rating || 5.0,
-    totalReviews: result.user_ratings_total || reviews.length,
-  };
 }
 
 /**

@@ -1,0 +1,38 @@
+# Dependabot — continuous dependency & CI security scanning.
+# Keeps the `npm audit` = 0-vulnerabilities baseline from regressing and
+# surfaces new advisories as PRs. See SECURITY.md §11 / §8 (vulnerable
+# components). No runtime/bundle/UX impact — this is repo tooling only.
+version: 2
+updates:
+  # Application dependencies (npm — the project uses package-lock.json).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "security"
+    # Batch low-risk updates so review stays lightweight; security fixes
+    # always come through regardless of grouping.
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+
+  # GitHub Actions used by our workflows (pin/patch supply-chain updates).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "ci"

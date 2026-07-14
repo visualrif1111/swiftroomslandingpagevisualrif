@@ -106,7 +106,7 @@ export function TransformYourSpaceSection() {
 
   return (
     <section id="transform-space" className="relative bg-white min-h-screen lg:min-h-screen overflow-y-auto lg:overflow-visible lg:snap-start flex items-start pt-20 lg:pt-24 pb-12">
-      <div className="container mx-auto px-4 relative z-30 py-6 lg:py-8 w-full">
+      <div className="container mx-auto max-w-[1600px] px-4 relative z-30 py-6 lg:py-8 w-full">
 
         {/* Main Header */}
         <motion.div
@@ -116,10 +116,10 @@ export function TransformYourSpaceSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 lg:mb-12 relative z-40"
         >
-          <h2 className="font-['Exo',sans-serif] text-base lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40">
+          <h2 className="font-['Exo',sans-serif] text-2xl sm:text-3xl lg:text-4xl font-medium text-[#1c1c1e] mb-2 lg:mb-3 relative z-40">
             Transform Your Space
           </h2>
-          <p className="font-['Barlow',sans-serif] text-xs lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto">
+          <p className="font-['Barlow',sans-serif] text-sm sm:text-base lg:text-lg text-[#3a3a3c] max-w-2xl mx-auto">
             Premium aluminum solutions engineered for UAE's climate
           </p>
         </motion.div>
@@ -127,7 +127,7 @@ export function TransformYourSpaceSection() {
         {/* Cards - Horizontal Scroll */}
         <div className="relative">
           {/* Swipe hint for mobile */}
-          <div className="lg:hidden text-center mb-3">
+          <div className="md:hidden text-center mb-3">
             <p className="font-['Barlow',sans-serif] text-xs text-gray-400 flex items-center justify-center gap-1.5 animate-pulse">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 8L22 12L18 16M6 8L2 12L6 16"/>
@@ -140,7 +140,7 @@ export function TransformYourSpaceSection() {
           </div>
 
           {/* Mobile: Horizontal Scroll with Infinite Loop */}
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <div
               ref={scrollContainerRef}
               className="flex overflow-x-auto pb-4 hide-scrollbar"
@@ -197,10 +197,10 @@ export function TransformYourSpaceSection() {
           </div>
 
           {/* Desktop: Static Grid (3 cards only) */}
-          <div className="hidden lg:grid lg:grid-cols-3 gap-6 lg:max-w-6xl lg:mx-auto">
+          <div className="hidden md:grid md:grid-cols-3 gap-6 lg:max-w-6xl lg:mx-auto">
             {cards.map((card) => (
               <div key={card.id}>
-                <div className="rounded-xl p-8 h-full border-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center" style={{ backgroundColor: card.bg, borderColor: card.border }}>
+                <div className="rounded-xl p-6 lg:p-8 h-full border-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center" style={{ backgroundColor: card.bg, borderColor: card.border }}>
                   <div className="mb-4 w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: card.iconBg }}>
                     {card.id === 1 && (
                       <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none">
@@ -237,7 +237,7 @@ export function TransformYourSpaceSection() {
           </div>
 
         {/* Mobile Scroll Indicator */}
-        <div className="flex justify-center gap-1.5 lg:hidden mt-4">
+        <div className="flex justify-center gap-1.5 md:hidden mt-4">
           {cards.map((_, i) => (
             <button
               key={i}

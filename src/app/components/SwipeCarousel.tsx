@@ -75,7 +75,7 @@ export function SwipeCarousel({
             key={i}
             onClick={() => scrollToIndex(i)}
             aria-label={`Go to item ${i + 1}`}
-            className="flex h-9 items-center justify-center px-0.5"
+            className="flex h-11 items-center justify-center px-0.5"
           >
             <span
               className={`block rounded-full transition-all duration-300 ${

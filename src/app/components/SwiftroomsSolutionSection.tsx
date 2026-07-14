@@ -44,7 +44,7 @@ export function SwiftroomsSolutionSection() {
           <div className="lg:hidden flex p-1 bg-gray-100 rounded-xl mb-6 mx-auto max-w-sm relative z-40">
             <button
               onClick={() => setActiveTab('problems')}
-              className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-2.5 px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-all duration-200 ${
                 activeTab === 'problems'
                   ? 'bg-white text-red-600 shadow-md'
                   : 'text-gray-500 hover:text-white hover:bg-red-500'
@@ -54,7 +54,7 @@ export function SwiftroomsSolutionSection() {
             </button>
             <button
               onClick={() => setActiveTab('solutions')}
-              className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-2.5 px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-all duration-200 ${
                 activeTab === 'solutions'
                   ? 'bg-[#007969] text-white shadow-md'
                   : 'text-gray-500 hover:text-white hover:bg-[#007969]'
@@ -177,7 +177,7 @@ export function SwiftroomsSolutionSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
               {[
                 "UAE climate expertise since 2011",
                 "Premium aluminium & glazing systems",
