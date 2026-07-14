@@ -94,7 +94,7 @@ export function HeroSection({ enableVideo = false, videoUrl, mobileVideoUrl }: H
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-[100svh] flex items-start justify-center pt-24 pb-10 lg:items-center lg:pt-28 lg:pb-12 lg:snap-center"
+      className="relative min-h-[100svh] flex items-start justify-center pt-24 pb-10 lg:items-center lg:pt-32 lg:pb-12 lg:snap-center"
       style={{
         contain: 'layout style',
         contentVisibility: 'auto',
